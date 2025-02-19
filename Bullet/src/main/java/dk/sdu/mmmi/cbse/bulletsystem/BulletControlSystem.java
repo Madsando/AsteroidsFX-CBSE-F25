@@ -19,7 +19,7 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
             bullet.setY(bullet.getY() + changeY * 3);
 
             // Cull bullet if outside of display
-            if (!((0 < bullet.getX() & bullet.getX() < gameData.getDisplayWidth()) &&
+            if (!((0 < bullet.getX() & bullet.getX() < gameData.getDisplayWidth()) &
                 (0 < bullet.getY() & bullet.getY() < gameData.getDisplayHeight()))) {
                 world.removeEntity(bullet);
             }

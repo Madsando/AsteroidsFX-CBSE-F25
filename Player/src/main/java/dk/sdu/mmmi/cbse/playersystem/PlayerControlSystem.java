@@ -19,6 +19,12 @@ public class PlayerControlSystem implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
             
         for (Entity player : world.getEntities(Player.class)) {
+            if (player.hasCollided()) {
+                player.setHasCollided(false);
+                world.removeEntity(player);
+                continue;
+            }
+
             if (gameData.getKeys().isDown(GameKeys.LEFT)) {
                 player.setRotation(player.getRotation() - 5);                
             }

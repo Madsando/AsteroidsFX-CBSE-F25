@@ -12,6 +12,7 @@ public class Entity implements Serializable {
     private double y;
     private double rotation;
     private float radius;
+    private boolean hasCollided = false;
             
 
     public String getID() {
@@ -59,5 +60,13 @@ public class Entity implements Serializable {
         
     public float getRadius() {
         return this.radius;
+    }
+
+    public boolean hasCollided() {
+        return hasCollided;
+    }
+
+    public void setHasCollided(boolean hasCollided) {
+        this.hasCollided = hasCollided;
     }
 }

@@ -103,7 +103,6 @@ public class Main extends Application {
                 gameData.getKeys().update();
                 drawPerformance(now);
             }
-
         }.start();
     }
 

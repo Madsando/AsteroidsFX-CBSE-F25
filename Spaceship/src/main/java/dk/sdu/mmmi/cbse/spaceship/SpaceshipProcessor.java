@@ -17,6 +17,12 @@ public class SpaceshipProcessor implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
 
         for (Entity spaceship : world.getEntities(Spaceship.class)) {
+            if (spaceship.hasCollided()) {
+                spaceship.setHasCollided(false);
+                world.removeEntity(spaceship);
+                continue;
+            }
+
             double changeX = Math.cos(Math.toRadians(spaceship.getRotation()));
             double changeY = Math.sin(Math.toRadians(spaceship.getRotation()));
 
