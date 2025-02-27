@@ -20,14 +20,11 @@
         <maven.compiler.target>21</maven.compiler.target>
     </properties>
 
-    <repositories>
-    </repositories>
-
     <dependencies>
         <dependency>
-            <groupId>dk.sdu.cbse</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>Common</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

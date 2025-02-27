@@ -4,7 +4,7 @@ import dk.sdu.cbse.common.data.*;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
 import dk.sdu.cbse.commonbullet.Bullet;
 
-public class BulletProcessing implements IEntityProcessingService {
+public class BulletProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity bullet : world.getEntities(Bullet.class)) {
@@ -13,8 +13,8 @@ public class BulletProcessing implements IEntityProcessingService {
             double changeX = Math.cos(angle);
             double changeY = Math.sin(angle);
 
-            bullet.setX(bullet.getX() + changeX * 2);
-            bullet.setY(bullet.getY() + changeY * 2);
+            bullet.setX(bullet.getX() + changeX * 5);
+            bullet.setY(bullet.getY() + changeY * 5);
 
             // CULL IF OUT OF BOUNDS
             if (bullet.getX() < 0 || bullet.getX() > gameData.getDisplayWidth() ||

@@ -30,8 +30,8 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
 
         double changeX = Math.cos(Math.toRadians(shooter.getRotation()));
         double changeY = Math.sin(Math.toRadians(shooter.getRotation()));
-        bullet.setX(shooter.getX() + changeX * (shooter.getRadius() + bullet.getRadius() + 5));
-        bullet.setY(shooter.getY() + changeY * (shooter.getRadius() + bullet.getRadius() + 5));
+        bullet.setX(shooter.getX() + changeX * (shooter.getRadius() + bullet.getRadius()));
+        bullet.setY(shooter.getY() + changeY * (shooter.getRadius() + bullet.getRadius()));
 
         world.addEntity(bullet);
     }

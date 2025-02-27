@@ -1,13 +1,13 @@
 package dk.sdu.cbse.input;
 
-import dk.sdu.cbse.input.spi.IInputService;
+import dk.sdu.cbse.input.spi.IInputSPI;
 import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyEvent;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.GameKeys;
 
-public class InputHandler implements IInputService {
+public class InputHandler implements IInputSPI {
     @Override
     public EventHandler<InputEvent> getInputHandlerPress(GameData gameData) {
         return new EventHandler<InputEvent>() {

@@ -3,7 +3,7 @@ package dk.sdu.cbse.asteroid;
 import dk.sdu.cbse.common.data.*;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
 
-public class AsteroidProcessing implements IEntityProcessingService {
+public class AsteroidProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity asteroid : world.getEntities(Asteroid.class)) {

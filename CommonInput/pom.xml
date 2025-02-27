@@ -20,9 +20,6 @@
         <maven.compiler.target>21</maven.compiler.target>
     </properties>
 
-    <repositories>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
