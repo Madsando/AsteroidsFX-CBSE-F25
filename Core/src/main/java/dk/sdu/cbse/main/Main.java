@@ -1,0 +1,157 @@
+package dk.sdu.cbse.main;
+
+import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.data.GameData;
+import dk.sdu.cbse.common.data.GameKeys;
+import dk.sdu.cbse.common.data.World;
+import dk.sdu.cbse.common.services.IEntityProcessingService;
+import dk.sdu.cbse.common.services.IGamePluginService;
+import dk.sdu.cbse.common.services.IPostEntityProcessingService;
+import java.util.Collection;
+import java.util.Map;
+import java.util.ServiceLoader;
+import java.util.concurrent.ConcurrentHashMap;
+import static java.util.stream.Collectors.toList;
+
+import dk.sdu.cbse.input.spi.IInputService;
+import javafx.animation.AnimationTimer;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Polygon;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+    private final GameData gameData = new GameData();
+    private final World world = new World();
+    private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
+    private final Pane gameWindow = new Pane();
+    private Text fpsText;
+    private Text ramText;
+    private final Runtime runtime = Runtime.getRuntime();
+    private final long[] frameTimes = new long[100];
+    private int frameTimeIndex = 0 ;
+    private boolean arrayFilled = false ;
+
+    public static void main(String[] args) {
+        launch(Main.class);
+    }
+
+    @Override
+    public void start(Stage window) throws Exception {
+        Text text = new Text(10, 20, "Destroyed asteroids: 0");
+        fpsText = new Text(10, 35, "FPS:");
+        ramText = new Text(10, 50, "RAM:");
+        gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+        gameWindow.getChildren().add(text);
+        gameWindow.getChildren().add(fpsText);
+        gameWindow.getChildren().add(ramText);
+
+        Scene scene = new Scene(gameWindow);
+
+        if (getIInputService().stream().findFirst().isPresent()) {
+            scene.setOnKeyPressed(
+                    getIInputService().stream().findFirst().get().getInputHandlerPress(gameData)
+            );
+
+            scene.setOnKeyReleased(
+                    getIInputService().stream().findFirst().get().getInputHandlerRelease(gameData)
+            );
+        }
+
+        // Lookup all Game Plugins using ServiceLoader
+        for (IGamePluginService iGamePlugin : getPluginServices()) {
+            iGamePlugin.start(gameData, world);
+        }
+        for (Entity entity : world.getEntities()) {
+            Polygon polygon = new Polygon(entity.getPolygonCoordinates());
+            polygons.put(entity, polygon);
+            gameWindow.getChildren().add(polygon);
+        }
+
+        render();
+        window.setScene(scene);
+        window.setTitle("ASTEROIDS");
+        window.show();
+    }
+
+    private void render() {
+        new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                update();
+                draw();
+                gameData.getKeys().update();
+                drawPerformance(now);
+            }
+        }.start();
+    }
+
+    private void update() {
+        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
+            entityProcessorService.process(gameData, world);
+        }
+        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
+            postEntityProcessorService.process(gameData, world);
+        }       
+    }
+
+    private void draw() {        
+        for (Entity polygonEntity : polygons.keySet()) {
+            if(!world.getEntities().contains(polygonEntity)){   
+                Polygon removedPolygon = polygons.get(polygonEntity);               
+                polygons.remove(polygonEntity);                      
+                gameWindow.getChildren().remove(removedPolygon);
+            }
+        }
+                
+        for (Entity entity : world.getEntities()) {                      
+            Polygon polygon = polygons.get(entity);
+            if (polygon == null) {
+                polygon = new Polygon(entity.getPolygonCoordinates());
+                polygons.put(entity, polygon);
+                gameWindow.getChildren().add(polygon);
+            }
+            polygon.setTranslateX(entity.getX());
+            polygon.setTranslateY(entity.getY());
+            polygon.setRotate(entity.getRotation());
+        }
+    }
+
+    private void drawPerformance(long now) {
+        long oldFrameTime = frameTimes[frameTimeIndex] ;
+        frameTimes[frameTimeIndex] = now ;
+        frameTimeIndex = (frameTimeIndex + 1) % frameTimes.length ;
+        if (frameTimeIndex == 0) {
+            arrayFilled = true ;
+        }
+        if (arrayFilled) {
+            long elapsedNanos = now - oldFrameTime ;
+            long elapsedNanosPerFrame = elapsedNanos / frameTimes.length ;
+            double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame ;
+            fpsText.setText(String.format("Current frame rate: %.1f", frameRate));
+        }
+
+        int usedMemory = (int) ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024);
+        ramText.setText(String.format("RAM: %d MB", usedMemory));
+    }
+
+    private Collection<? extends IGamePluginService> getPluginServices() {
+        return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
+        return ServiceLoader.load(IEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
+        return ServiceLoader.load(IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private Collection<? extends IInputService> getIInputService() {
+        return ServiceLoader.load(IInputService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+}

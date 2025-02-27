@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>dk.sdu.mmmi.cbse</groupId>
-    <artifactId>asteroids.jpms</artifactId>
+    <groupId>dk.sdu.cbse</groupId>
+    <artifactId>AsteroidsFX</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>AsteroidsFX</name>
@@ -13,19 +13,17 @@
     <modules>
         <module>Core</module>
         <module>Common</module>
+        <module>CommonInput</module>
+        <module>Input</module>
         <module>Player</module>
-        <module>Bullet</module>
-        <module>CommonBullet</module>
-        <module>CommonAsteroids</module>
-        <module>Asteroids</module>
-        <module>Collision</module>
-        <module>Spaceship</module>
+        <module>Asteroid</module>
     </modules>
+
     <properties>
         <java>java</java>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>        
-        <maven.compiler.source>1.9</maven.compiler.source>
-        <maven.compiler.target>1.9</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
     </properties>
     
     <dependencyManagement>
@@ -94,7 +92,7 @@
                         in "java.lang.module.FindException: Module monitor.observer.zero not found";
                         strange... -->
                         <!-- <argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=127.0.0.1:8000</argument> -->
-                        <argument>--module=Core/dk.sdu.mmmi.cbse.main.Main</argument>
+                        <argument>--module=Core/dk.sdu.cbse.main.Main</argument>
                         <argument>--add-modules javafx.graphics</argument>
                     </arguments>
                 </configuration>
