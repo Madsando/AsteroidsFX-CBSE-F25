@@ -2,6 +2,12 @@ package dk.sdu.cbse.player;
 
 import dk.sdu.cbse.common.data.*;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
+import dk.sdu.cbse.commonbullet.IBulletSPI;
+
+import java.util.Collection;
+import java.util.ServiceLoader;
+
+import static java.util.stream.Collectors.toList;
 
 public class PlayerProcessing implements IEntityProcessingService {
     @Override
@@ -23,7 +29,9 @@ public class PlayerProcessing implements IEntityProcessingService {
                 player.setRotation(player.getRotation() + 3);
             }
             if (gameData.getKeys().isDown(GameKeys.SPACE)) {
-                // TODO
+                if (getIBulletSPI().stream().findFirst().isPresent()) {
+                    getIBulletSPI().stream().findFirst().get().createBullet(world, player);
+                }
             }
 
             // CHECK OUT OF BOUNDS
@@ -39,5 +47,9 @@ public class PlayerProcessing implements IEntityProcessingService {
                 player.setY(0);
             }
         }
+    }
+
+    private Collection<? extends IBulletSPI> getIBulletSPI() {
+        return ServiceLoader.load(IBulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }
