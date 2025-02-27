@@ -1,4 +1,4 @@
-package dk.sdu.cbse.asteroid;
+package dk.sdu.cbse.commonasteroid;
 
 import dk.sdu.cbse.common.data.Entity;
 

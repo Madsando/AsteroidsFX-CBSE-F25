@@ -29,8 +29,14 @@ public class PlayerProcessor implements IEntityProcessingService {
                 player.setRotation(player.getRotation() + 3);
             }
             if (gameData.getKeys().isDown(GameKeys.SPACE)) {
-                if (getIBulletSPI().stream().findFirst().isPresent()) {
-                    getIBulletSPI().stream().findFirst().get().createBullet(world, player);
+                Player p = (Player) player;
+
+                if (System.currentTimeMillis() - p.getLastAttack() > p.getCooldown()) {
+                    p.setLastAttack(System.currentTimeMillis());
+
+                    if (getIBulletSPI().stream().findFirst().isPresent()) {
+                        getIBulletSPI().stream().findFirst().get().createBullet(world, player);
+                    }
                 }
             }
 

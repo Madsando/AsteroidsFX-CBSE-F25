@@ -13,8 +13,8 @@ public class BulletProcessor implements IEntityProcessingService {
             double changeX = Math.cos(angle);
             double changeY = Math.sin(angle);
 
-            bullet.setX(bullet.getX() + changeX * 5);
-            bullet.setY(bullet.getY() + changeY * 5);
+            bullet.setX(bullet.getX() + changeX * 3);
+            bullet.setY(bullet.getY() + changeY * 3);
 
             // CULL IF OUT OF BOUNDS
             if (bullet.getX() < 0 || bullet.getX() > gameData.getDisplayWidth() ||

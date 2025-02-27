@@ -20,7 +20,7 @@ public class PlayerPlugin implements IGamePluginService {
     }
 
     private Entity createPlayer(GameData gameData) {
-        Entity player = new Player();
+        Player player = new Player();
 
         double[] polygonCoordinates = {9, 0, -0.25,-2.7, 2, -6, -4.6, -4.4, -9,- 5.5, -9, 5.5, -4.6, 4.4, 2, 6, -0.25, 2.7};
         player.setPolygonCoordinates(polygonCoordinates);
@@ -30,6 +30,9 @@ public class PlayerPlugin implements IGamePluginService {
 
         player.setX((double) gameData.getDisplayWidth() / 2);
         player.setY((double) gameData.getDisplayHeight() / 2);
+
+        player.setCooldown(75);
+        player.setLastAttack(0);
 
         return player;
     }
