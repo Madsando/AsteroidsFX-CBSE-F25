@@ -22,7 +22,12 @@ public class PlayerPlugin implements IGamePluginService {
     private Entity createPlayer(GameData gameData) {
         Entity player = new Player();
 
-        player.setPolygonCoordinates(18, 0, 8.75,-2.7, 11, -6, 4.4, -4.4, 0,- 5.5, 0, 5.5, 4.4, 4.4, 11, 6, 8.75, 2.7);
+        double[] polygonCoordinates = {18, 0, 8.75,-2.7, 11, -6, 4.4, -4.4, 0,- 5.5, 0, 5.5, 4.4, 4.4, 11, 6, 8.75, 2.7};
+        int scalingFactor = 1;
+        for (int i = 0; i < polygonCoordinates.length; i++) {
+            polygonCoordinates[i] *= scalingFactor;
+        }
+        player.setPolygonCoordinates(polygonCoordinates);
 
         player.setRadius(10);
         player.setRotation(270);
