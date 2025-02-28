@@ -14,7 +14,7 @@ public class PlayerProcessor implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
         for (Entity player : world.getEntities(Player.class)) {
             // PROCESS PLAYER INPUT
-            if (gameData.getKeys().isDown(GameKeys.UP)) {
+            if (gameData.getKeys().isDown(EGameKeys.UP)) {
                 double angle = Math.toRadians(player.getRotation());
                 double changeX = Math.cos(angle);
                 double changeY = Math.sin(angle);
@@ -22,13 +22,13 @@ public class PlayerProcessor implements IEntityProcessingService {
                 player.setX(player.getX() + changeX);
                 player.setY(player.getY() + changeY);
             }
-            if (gameData.getKeys().isDown(GameKeys.LEFT)) {
+            if (gameData.getKeys().isDown(EGameKeys.LEFT)) {
                 player.setRotation(player.getRotation() - 3);
             }
-            if (gameData.getKeys().isDown(GameKeys.RIGHT)) {
+            if (gameData.getKeys().isDown(EGameKeys.RIGHT)) {
                 player.setRotation(player.getRotation() + 3);
             }
-            if (gameData.getKeys().isDown(GameKeys.SPACE)) {
+            if (gameData.getKeys().isDown(EGameKeys.ACTION)) {
                 Player p = (Player) player;
 
                 if (System.currentTimeMillis() - p.getLastAttack() > p.getCooldown()) {
