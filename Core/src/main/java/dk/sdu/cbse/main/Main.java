@@ -1,18 +1,11 @@
 package dk.sdu.cbse.main;
 
-import dk.sdu.cbse.common.data.Entity;
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.services.IEntityProcessingService;
-import dk.sdu.cbse.common.services.IGamePluginService;
-import dk.sdu.cbse.common.services.IPostEntityProcessingService;
-import java.util.Collection;
-import java.util.Map;
-import java.util.ServiceLoader;
-import java.util.concurrent.ConcurrentHashMap;
-import static java.util.stream.Collectors.toList;
+import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.services.*;
 
-import dk.sdu.cbse.input.spi.IInputSPI;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -50,18 +43,18 @@ public class Main extends Application {
 
         Scene scene = new Scene(gameWindow);
 
-        if (getIInputService().stream().findFirst().isPresent()) {
+        if (ModuleConfig.getIInputService().stream().findFirst().isPresent()) {
             scene.setOnKeyPressed(
-                    getIInputService().stream().findFirst().get().getInputHandlerPress(gameData)
+                    ModuleConfig.getIInputService().stream().findFirst().get().getInputHandlerPress(gameData)
             );
 
             scene.setOnKeyReleased(
-                    getIInputService().stream().findFirst().get().getInputHandlerRelease(gameData)
+                    ModuleConfig.getIInputService().stream().findFirst().get().getInputHandlerRelease(gameData)
             );
         }
 
         // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : getPluginServices()) {
+        for (IGamePluginService iGamePlugin : ModuleConfig.getPluginServices()) {
             iGamePlugin.start(gameData, world);
         }
         for (Entity entity : world.getEntities()) {
@@ -80,19 +73,19 @@ public class Main extends Application {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
+                gameData.getKeys().update();
                 update();
                 draw();
-                gameData.getKeys().update();
                 drawPerformance(now);
             }
         }.start();
     }
 
     private void update() {
-        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
+        for (IEntityProcessingService entityProcessorService : ModuleConfig.getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
-        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
+        for (IPostEntityProcessingService postEntityProcessorService : ModuleConfig.getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }       
     }
@@ -135,21 +128,5 @@ public class Main extends Application {
 
         int usedMemory = (int) ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024);
         ramText.setText(String.format("RAM: %d MB", usedMemory));
-    }
-
-    private Collection<? extends IGamePluginService> getPluginServices() {
-        return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
-    }
-
-    private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
-        return ServiceLoader.load(IEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
-    }
-
-    private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
-        return ServiceLoader.load(IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
-    }
-
-    private Collection<? extends IInputSPI> getIInputService() {
-        return ServiceLoader.load(IInputSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }
