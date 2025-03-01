@@ -16,10 +16,12 @@
         <module>CommonInput</module>
         <module>CommonBullet</module>
         <module>CommonAsteroid</module>
+        <module>CommonCollision</module>
         <module>Input</module>
         <module>Bullet</module>
         <module>Asteroid</module>
         <module>Player</module>
+        <module>Collision</module>
     </modules>
 
     <properties>
