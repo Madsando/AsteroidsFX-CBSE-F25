@@ -1,7 +1,7 @@
 package dk.sdu.cbse.common.data;
 
-public enum EGameKeys {
-    UP,
+public enum EGameInputs {
+    FORWARD,
     LEFT,
     RIGHT,
     ACTION

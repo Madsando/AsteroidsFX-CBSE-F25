@@ -2,11 +2,11 @@ package dk.sdu.cbse.common.data;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class GameKeys {
-    private static ConcurrentHashMap<Enum<EGameKeys>, Boolean> keys;
-    private static ConcurrentHashMap<Enum<EGameKeys>, Boolean> pkeys;
+public class GameInputs {
+    private static ConcurrentHashMap<Enum<EGameInputs>, Boolean> keys;
+    private static ConcurrentHashMap<Enum<EGameInputs>, Boolean> pkeys;
 
-    public GameKeys() {
+    public GameInputs() {
         keys = new ConcurrentHashMap<>();
         pkeys = new ConcurrentHashMap<>();
     }
@@ -15,15 +15,15 @@ public class GameKeys {
         pkeys.putAll(keys);
     }
 
-    public void setKey(Enum<EGameKeys> key, boolean b) {
+    public void setInput(Enum<EGameInputs> key, boolean b) {
         keys.put(key, b);
     }
 
-    public boolean isDown(Enum<EGameKeys> key) {
+    public boolean isDown(Enum<EGameInputs> key) {
         return keys.getOrDefault(key, false);
     }
 
-    public boolean isPressed(Enum<EGameKeys> key) {
+    public boolean isPressed(Enum<EGameInputs> key) {
         return keys.get(key) & !pkeys.get(key);
     }
 }

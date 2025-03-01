@@ -73,7 +73,7 @@ public class Main extends Application {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                gameData.getKeys().update();
+                gameData.getInputs().update();
                 update();
                 draw();
                 drawPerformance(now);
