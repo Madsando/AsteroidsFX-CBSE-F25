@@ -44,6 +44,14 @@ public class Main extends Application {
 
         Scene scene = new Scene(gameWindow);
 
+        gameWindow.heightProperty().addListener((observable, oldValue, newValue) -> {
+            gameData.setDisplayHeight(newValue.intValue());
+        });
+
+        gameWindow.widthProperty().addListener((observable, oldValue, newValue) -> {
+            gameData.setDisplayWidth(newValue.intValue());
+        });
+
         if (ModuleConfig.getIInputService().stream().findFirst().isPresent()) {
             scene.setOnKeyPressed(
                     ModuleConfig.getIInputService().stream().findFirst().get().getInputHandlerPress(gameData)
