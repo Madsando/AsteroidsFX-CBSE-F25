@@ -20,6 +20,7 @@ public class Main extends Application {
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
+    private Text scoreText;
     private Text fpsText;
     private Text ramText;
     private final Runtime runtime = Runtime.getRuntime();
@@ -33,11 +34,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
-        Text text = new Text(10, 20, "Destroyed asteroids: 0");
+        scoreText = new Text(10, 20, "Destroyed asteroids: 0");
         fpsText = new Text(10, 35, "FPS:");
         ramText = new Text(10, 50, "RAM:");
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        gameWindow.getChildren().add(text);
+        gameWindow.getChildren().add(scoreText);
         gameWindow.getChildren().add(fpsText);
         gameWindow.getChildren().add(ramText);
 
@@ -87,7 +88,8 @@ public class Main extends Application {
         }
         for (IPostEntityProcessingService postEntityProcessorService : ModuleConfig.getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
-        }       
+        }
+        scoreText.setText(String.format("Destroyed asteroids: %d", gameData.getScore()));
     }
 
     private void draw() {        
@@ -123,7 +125,7 @@ public class Main extends Application {
             long elapsedNanos = now - oldFrameTime ;
             long elapsedNanosPerFrame = elapsedNanos / frameTimes.length ;
             double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame ;
-            fpsText.setText(String.format("Current frame rate: %.1f", frameRate));
+            fpsText.setText(String.format("FPS: %.1f", frameRate));
         }
 
         int usedMemory = (int) ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024);

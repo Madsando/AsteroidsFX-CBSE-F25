@@ -39,8 +39,19 @@ public class AsteroidPlugin implements IGamePluginService {
         asteroid.setRadius(scalingFactor);
 
         asteroid.setRotation(rng.nextInt(360));
-        asteroid.setX(rng.nextInt(gameData.getDisplayWidth()));
-        asteroid.setY(rng.nextInt(gameData.getDisplayHeight()));
+
+        int x = rng.nextInt(gameData.getDisplayWidth());
+        while (x > (gameData.getDisplayWidth() / 2) - 50 & x < (gameData.getDisplayWidth() / 2) + 50) {
+            x = rng.nextInt(gameData.getDisplayWidth());
+        }
+
+        int y = rng.nextInt(gameData.getDisplayHeight());
+        while (y > (gameData.getDisplayHeight() / 2) - 50 & y < (gameData.getDisplayHeight() / 2) + 50) {
+            y = rng.nextInt(gameData.getDisplayHeight());
+        }
+
+        asteroid.setX(x);
+        asteroid.setY(y);
 
         return asteroid;
     }
