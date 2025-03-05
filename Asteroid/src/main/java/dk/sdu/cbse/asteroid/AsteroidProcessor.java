@@ -31,7 +31,6 @@ public class AsteroidProcessor implements IEntityProcessingService {
             if (asteroidSplitter != null & asteroid.isDead()) {
                 asteroidSplitter.createSplitAsteroids(world, asteroid);
                 world.removeEntity(asteroid);
-                System.out.println(world.getEntities(Asteroid.class).size());
                 continue;
             }
 
