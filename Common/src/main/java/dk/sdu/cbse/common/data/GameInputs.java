@@ -3,7 +3,6 @@ package dk.sdu.cbse.common.data;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class GameInputs {
     private static Map<EGameInputs, Boolean> keys;
