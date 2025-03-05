@@ -13,6 +13,16 @@ public class Entity implements Serializable {
     private double rotation;
     private float radius;
 
+    public int[] getColor() {
+        return color;
+    }
+
+    public void setColor(int[] color) {
+        this.color = color;
+    }
+
+    private int[] color = {0, 0, 0};
+
     public String getID() {
         return ID.toString();
     }

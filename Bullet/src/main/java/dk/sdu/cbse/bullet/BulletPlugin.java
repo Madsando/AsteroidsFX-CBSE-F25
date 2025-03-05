@@ -24,6 +24,7 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
     public void createBullet(World world, Entity shooter) {
         Entity bullet = new Bullet();
 
+        bullet.setColor(new int[]{0, 254, 34});
         bullet.setPolygonCoordinates(2, -1, 2, 1, -1, 1, -1, -1);
         bullet.setRadius(2);
         bullet.setRotation(shooter.getRotation());

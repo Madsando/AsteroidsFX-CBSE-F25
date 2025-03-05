@@ -35,7 +35,12 @@ public class CollisionResolver implements ICollisionResolverSPI {
                         gamedata.addScore(1);
                         return;
                 }
+            }
 
+            if (t == ECollisionType.BULLET && t2 == ECollisionType.ENTITY) {
+                world.removeEntity(entity);
+                world.removeEntity(otherEntity);
+                return;
             }
 
         }

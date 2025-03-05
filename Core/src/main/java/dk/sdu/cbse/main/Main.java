@@ -9,9 +9,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -42,6 +46,10 @@ public class Main extends Application {
         gameWindow.getChildren().add(fpsText);
         gameWindow.getChildren().add(ramText);
 
+        Image image = new Image("deathstar_background.jpeg", true);
+        Background background = new Background(new BackgroundImage(image, null, null, null, null));
+        gameWindow.setBackground(background);
+
         Scene scene = new Scene(gameWindow);
 
         gameWindow.heightProperty().addListener((observable, oldValue, newValue) -> {
@@ -68,6 +76,8 @@ public class Main extends Application {
         }
         for (Entity entity : world.getEntities()) {
             Polygon polygon = new Polygon(entity.getPolygonCoordinates());
+            int[] rbgValues = entity.getColor();
+            polygon.setFill(Color.rgb(rbgValues[0] % 255, rbgValues[1] % 255, rbgValues[2] % 255));
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);
         }
@@ -113,6 +123,8 @@ public class Main extends Application {
             Polygon polygon = polygons.get(entity);
             if (polygon == null) {
                 polygon = new Polygon(entity.getPolygonCoordinates());
+                int[] rbgValues = entity.getColor();
+                polygon.setFill(Color.rgb(rbgValues[0] % 256, rbgValues[1] % 256, rbgValues[2] % 256));
                 polygons.put(entity, polygon);
                 gameWindow.getChildren().add(polygon);
             }
