@@ -50,6 +50,8 @@ public class EnemyPlugin implements IGamePluginService {
         enemy.setX(rng.nextInt(gameData.getDisplayWidth()));
         enemy.setY(rng.nextInt(gameData.getDisplayHeight()));
 
+        enemy.setHealth(2);
+
         enemy.setCooldown(75);
         enemy.setLastAttack(0);
 

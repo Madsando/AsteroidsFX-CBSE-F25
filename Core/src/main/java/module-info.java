@@ -4,7 +4,6 @@ import dk.sdu.cbse.common.services.*;
 module Core {
     requires CommonInput;
     requires javafx.graphics;
-    requires CommonAsteroid;
     requires Common;
 
     opens dk.sdu.cbse.main to javafx.graphics;

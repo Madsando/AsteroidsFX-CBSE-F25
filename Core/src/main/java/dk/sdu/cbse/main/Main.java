@@ -10,9 +10,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
@@ -51,7 +49,7 @@ public class Main extends Application {
         gameWindow.getChildren().add(ramText);
 
         Image image = new Image("deathstar_background.jpeg", true);
-        Background background = new Background(new BackgroundImage(image, null, null, null, null));
+        Background background = new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, null));
         gameWindow.setBackground(background);
 
         Scene scene = new Scene(gameWindow);

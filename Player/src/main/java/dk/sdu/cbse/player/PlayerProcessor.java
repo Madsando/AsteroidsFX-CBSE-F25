@@ -13,6 +13,11 @@ public class PlayerProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity player : world.getEntities(Player.class)) {
+            if (player.isDead()) {
+                world.removeEntity(player);
+                continue;
+            }
+
             // PROCESS PLAYER INPUT
             if (gameData.getInputs().isDown(EGameInputs.FORWARD)) {
                 double angle = Math.toRadians(player.getRotation());

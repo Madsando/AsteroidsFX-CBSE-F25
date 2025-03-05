@@ -40,6 +40,7 @@ public class PlayerPlugin implements IGamePluginService {
         player.setX((double) gameData.getDisplayWidth() / 2);
         player.setY((double) gameData.getDisplayHeight() / 2);
 
+        player.setHealth(3);
         player.setCooldown(75);
         player.setLastAttack(0);
 

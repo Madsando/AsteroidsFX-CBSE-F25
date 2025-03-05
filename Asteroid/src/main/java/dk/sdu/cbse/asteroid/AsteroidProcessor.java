@@ -28,6 +28,13 @@ public class AsteroidProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity asteroid : world.getEntities(Asteroid.class)) {
+            if (asteroidSplitter != null & asteroid.isDead()) {
+                asteroidSplitter.createSplitAsteroids(world, asteroid);
+                world.removeEntity(asteroid);
+                System.out.println(world.getEntities(Asteroid.class).size());
+                continue;
+            }
+
             // MOVE ASTEROID
             double angle = Math.toRadians(asteroid.getRotation());
             double changeX = Math.cos(angle);

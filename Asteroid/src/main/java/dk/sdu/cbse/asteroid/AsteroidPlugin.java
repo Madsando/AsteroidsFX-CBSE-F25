@@ -51,6 +51,7 @@ public class AsteroidPlugin implements IGamePluginService {
         }
 
         asteroid.setColor(new int[]{155, 155, 155});
+        asteroid.setHealth(1);
 
         asteroid.setX(x);
         asteroid.setY(y);

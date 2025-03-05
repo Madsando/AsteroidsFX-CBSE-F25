@@ -14,6 +14,11 @@ public class EnemyProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity enemy : world.getEntities(Enemy.class)) {
+            if (enemy.isDead()) {
+                world.removeEntity(enemy);
+                continue;
+            }
+
             double angle = Math.toRadians(enemy.getRotation());
             double changeX = Math.cos(angle);
             double changeY = Math.sin(angle);
