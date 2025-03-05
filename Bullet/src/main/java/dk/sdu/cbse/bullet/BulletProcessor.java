@@ -8,6 +8,11 @@ public class BulletProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity bullet : world.getEntities(Bullet.class)) {
+            if (bullet.isDead()) {
+                world.removeEntity(bullet);
+                continue;
+            }
+
             // MOVE BULLET
             double angle = Math.toRadians(bullet.getRotation());
             double changeX = Math.cos(angle);

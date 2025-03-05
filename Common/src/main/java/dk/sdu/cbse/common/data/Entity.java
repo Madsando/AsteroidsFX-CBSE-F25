@@ -12,6 +12,16 @@ public class Entity implements Serializable {
     private double y;
     private double rotation;
     private float radius;
+    private int[] color = {0, 0, 0};
+    private int health = 1;
+
+    public int[] getColor() {
+        return color;
+    }
+
+    public void setColor(int[] color) {
+        this.color = color;
+    }
 
     public String getID() {
         return ID.toString();
@@ -60,5 +70,21 @@ public class Entity implements Serializable {
         
     public float getRadius() {
         return this.radius;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void decrementHealth() {
+        this.health--;
+    }
+
+    public boolean isDead() {
+        return (health <= 0);
     }
 }

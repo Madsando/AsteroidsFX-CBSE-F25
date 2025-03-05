@@ -11,7 +11,7 @@ import java.util.Random;
 public class AsteroidPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 25; i++) {
             Entity asteroid = createAsteroid(gameData);
             world.addEntity(asteroid);
         }
@@ -49,6 +49,9 @@ public class AsteroidPlugin implements IGamePluginService {
         while (y > (gameData.getDisplayHeight() / 2) - 50 & y < (gameData.getDisplayHeight() / 2) + 50) {
             y = rng.nextInt(gameData.getDisplayHeight());
         }
+
+        asteroid.setColor(new int[]{155, 155, 155});
+        asteroid.setHealth(1);
 
         asteroid.setX(x);
         asteroid.setY(y);

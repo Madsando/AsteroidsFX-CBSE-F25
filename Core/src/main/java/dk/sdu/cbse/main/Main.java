@@ -9,9 +9,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -35,12 +37,20 @@ public class Main extends Application {
     @Override
     public void start(Stage window) throws Exception {
         scoreText = new Text(10, 20, "Destroyed asteroids: 0");
+        scoreText.setFill(Color.WHITE);
         fpsText = new Text(10, 35, "FPS:");
+        fpsText.setFill(Color.WHITE);
         ramText = new Text(10, 50, "RAM:");
+        ramText.setFill(Color.WHITE);
+
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gameWindow.getChildren().add(scoreText);
         gameWindow.getChildren().add(fpsText);
         gameWindow.getChildren().add(ramText);
+
+        Image image = new Image("deathstar_background.jpeg", true);
+        Background background = new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, null));
+        gameWindow.setBackground(background);
 
         Scene scene = new Scene(gameWindow);
 
@@ -66,8 +76,11 @@ public class Main extends Application {
         for (IGamePluginService iGamePlugin : ModuleConfig.getPluginServices()) {
             iGamePlugin.start(gameData, world);
         }
+
         for (Entity entity : world.getEntities()) {
             Polygon polygon = new Polygon(entity.getPolygonCoordinates());
+            int[] rbgValues = entity.getColor();
+            polygon.setFill(Color.rgb(rbgValues[0] % 256, rbgValues[1] % 256, rbgValues[2] % 256));
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);
         }
@@ -108,11 +121,13 @@ public class Main extends Application {
                 gameWindow.getChildren().remove(removedPolygon);
             }
         }
-                
-        for (Entity entity : world.getEntities()) {                      
+
+        for (Entity entity : world.getEntities()) {
             Polygon polygon = polygons.get(entity);
             if (polygon == null) {
                 polygon = new Polygon(entity.getPolygonCoordinates());
+                int[] rbgValues = entity.getColor();
+                polygon.setFill(Color.rgb(rbgValues[0] % 256, rbgValues[1] % 256, rbgValues[2] % 256));
                 polygons.put(entity, polygon);
                 gameWindow.getChildren().add(polygon);
             }

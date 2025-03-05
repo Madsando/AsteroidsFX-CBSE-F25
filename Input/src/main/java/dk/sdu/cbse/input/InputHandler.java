@@ -15,7 +15,6 @@ public class InputHandler implements IInputSPI {
             @Override
             public void handle(InputEvent inputEvent) {
                 if (inputEvent instanceof KeyEvent keyEvent) {
-                    System.out.println("KeyEvent: " + keyEvent.getCode());
                     switch (keyEvent.getCode()) {
                         case UP, KeyCode.W -> gameData.getInputs().setInput(EGameInputs.FORWARD, true);
                         case LEFT, KeyCode.A -> gameData.getInputs().setInput(EGameInputs.LEFT, true);
