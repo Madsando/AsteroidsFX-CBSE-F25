@@ -50,9 +50,9 @@ public class Main extends Application {
         gameWindow.getChildren().add(fpsText);
         gameWindow.getChildren().add(ramText);
 
-        //Image image = new Image("deathstar_background.jpeg", true);
-        //Background background = new Background(new BackgroundImage(image, null, null, null, null));
-        //gameWindow.setBackground(background);
+        Image image = new Image("deathstar_background.jpeg", true);
+        Background background = new Background(new BackgroundImage(image, null, null, null, null));
+        gameWindow.setBackground(background);
 
         Scene scene = new Scene(gameWindow);
 
@@ -123,7 +123,7 @@ public class Main extends Application {
                 gameWindow.getChildren().remove(removedPolygon);
             }
         }
-                
+
         for (Entity entity : world.getEntities()) {
             Polygon polygon = polygons.get(entity);
             if (polygon == null) {

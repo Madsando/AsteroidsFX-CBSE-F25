@@ -3,9 +3,15 @@ package dk.sdu.cbse.collision;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
+import dk.sdu.cbse.commonasteroid.SplitAsteroid;
 import dk.sdu.cbse.commoncollision.ECollisionType;
 import dk.sdu.cbse.commoncollision.ICollidableEntity;
 import dk.sdu.cbse.commoncollision.ICollisionResolverSPI;
+
+import java.util.Collection;
+import java.util.ServiceLoader;
+
+import static java.util.stream.Collectors.toList;
 
 public class CollisionResolver implements ICollisionResolverSPI {
     @Override
@@ -30,7 +36,7 @@ public class CollisionResolver implements ICollisionResolverSPI {
                 // TODO: Should remove life. But not for now
                 switch (t2) {
                     case BULLET, ENTITY:
-                        world.removeEntity(entity);
+                        getAsteroidSplitter().createSplitAsteroids(world, entity);
                         world.removeEntity(otherEntity);
                         gamedata.addScore(1);
                         return;
@@ -43,6 +49,17 @@ public class CollisionResolver implements ICollisionResolverSPI {
                 return;
             }
 
+        }
+    }
+
+    private SplitAsteroid getAsteroidSplitter() {
+        Collection<? extends SplitAsteroid> AsteroidSplitCollection = ServiceLoader.load(SplitAsteroid.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+
+        if (AsteroidSplitCollection.stream().findFirst().isPresent()) {
+            return AsteroidSplitCollection.stream().findFirst().get();
+        }
+        else {
+            return null;
         }
     }
 }
