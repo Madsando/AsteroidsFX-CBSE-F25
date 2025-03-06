@@ -8,11 +8,11 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>Enemy</artifactId>
+    <artifactId>CommonPlayer</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Enemy</name>
+    <name>CommonPlayer</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,11 +24,6 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>Common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CommonEnemy</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

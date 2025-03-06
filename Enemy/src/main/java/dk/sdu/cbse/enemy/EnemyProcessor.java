@@ -5,12 +5,10 @@ import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
 import dk.sdu.cbse.commonbulletcp.BulletCP;
+import dk.sdu.cbse.commonenemy.Enemy;
 
-import java.util.Collection;
 import java.util.Random;
-import java.util.ServiceLoader;
 
-import static java.util.stream.Collectors.toList;
 
 public class EnemyProcessor implements IEntityProcessingService {
     @Override

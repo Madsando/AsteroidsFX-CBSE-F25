@@ -1,12 +1,10 @@
 package dk.sdu.cbse.enemy;
 
 import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.commonenemy.Enemy;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entitycomponents.HealthCP;
-import dk.sdu.cbse.common.entitycomponents.MovementCP;
-import dk.sdu.cbse.common.entitycomponents.PositionCP;
-import dk.sdu.cbse.common.entitycomponents.ShapeCP;
+import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.commonbulletcp.BulletCP;
 import dk.sdu.cbse.commoncollision.CollisionCP;
