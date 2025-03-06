@@ -21,7 +21,7 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
     }
 
     @Override
-    public void createBullet(World world, Entity shooter) {
+    public Entity createBullet(Entity shooter) {
         Entity bullet = new Bullet();
 
         bullet.setColor(new int[]{0, 254, 34});
@@ -36,7 +36,7 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
         bullet.setX(shooter.getX() + changeX * (shooter.getRadius() + bullet.getRadius()));
         bullet.setY(shooter.getY() + changeY * (shooter.getRadius() + bullet.getRadius()));
 
-        world.addEntity(bullet);
+        return bullet;
     }
 
 }

@@ -6,6 +6,7 @@ import dk.sdu.cbse.common.services.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import dk.sdu.cbse.common.data.World;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;

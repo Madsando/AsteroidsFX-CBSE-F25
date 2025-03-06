@@ -1,9 +1,9 @@
-package dk.sdu.cbse.commonentitypart;
+package dk.sdu.cbse.commonbullet;
 
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.commonbullet.IBulletSPI;
+import dk.sdu.cbse.common.entitycomponents.EntityComponent;
 
 import java.util.Collection;
 import java.util.Random;
@@ -11,14 +11,14 @@ import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
-public class AttackCP implements EntityComponent {
+public class BulletCP implements EntityComponent {
     private int attackChance;
     private int attackCooldown;
     private long lastAttack;
     private boolean shouldAttack;
     private Random rand;
 
-    public AttackCP(int attackChance, int attackCooldown, boolean shouldAttack) {
+    public BulletCP(int attackChance, int attackCooldown, boolean shouldAttack) {
         this.attackChance = attackChance;
         this.attackCooldown = attackCooldown;
         this.shouldAttack = shouldAttack;
@@ -31,9 +31,9 @@ public class AttackCP implements EntityComponent {
         if (shouldAttack & isCooldownOver() & rand.nextInt(attackChance) == 1) {
             this.lastAttack = System.currentTimeMillis();
 
-            if (getIBulletSPI().stream().findFirst().isPresent()) {
-                getIBulletSPI().stream().findFirst().get().createBullet(world, entity);
-            }
+            getIBulletSPI().stream().findFirst().ifPresent(
+                    spi -> world.addEntity(spi.createBullet(entity))
+            );
         }
     }
 

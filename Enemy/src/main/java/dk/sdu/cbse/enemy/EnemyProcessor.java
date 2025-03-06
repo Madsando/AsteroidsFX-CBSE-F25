@@ -36,9 +36,9 @@ public class EnemyProcessor implements IEntityProcessingService {
                 if (System.currentTimeMillis() - p.getLastAttack() > p.getCooldown()) {
                     p.setLastAttack(System.currentTimeMillis());
 
-                    if (getIBulletSPI().stream().findFirst().isPresent()) {
-                        getIBulletSPI().stream().findFirst().get().createBullet(world, enemy);
-                    }
+                    getIBulletSPI().stream().findFirst().ifPresent(
+                            spi -> world.addEntity(spi.createBullet(p))
+                    );
                 }
             }
 
