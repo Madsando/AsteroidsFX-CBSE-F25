@@ -52,7 +52,13 @@ public class AsteroidSplitter implements CustomEntityBehaviour {
                     ECollisionType.ASTEROID
             ));
 
-            asteroid.addComponent(new MovementCP());
+            asteroid.addComponent(new MovementCP(
+                    1,
+                    0,
+                    false,
+                    false,
+                    true
+            ));
 
             world.addEntity(asteroid);
         }

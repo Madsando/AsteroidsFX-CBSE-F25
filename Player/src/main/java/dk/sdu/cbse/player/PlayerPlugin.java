@@ -60,7 +60,13 @@ public class PlayerPlugin implements IGamePluginService {
                 false
         ));
 
-        player.addComponent(new MovementCP());
+        player.addComponent(new MovementCP(
+                1,
+                3,
+                false,
+                false,
+                false
+        ));
 
         return player;
     }

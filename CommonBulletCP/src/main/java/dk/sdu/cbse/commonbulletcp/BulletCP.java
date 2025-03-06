@@ -29,7 +29,7 @@ public class BulletCP implements EntityComponent {
 
     @Override
     public void process(GameData gameData, World world, Entity entity) {
-        if (shouldAttack & isCooldownOver() & rand.nextInt(attackChance) == 1) {
+        if (shouldAttack & isCooldownOver() & rand.nextInt(attackChance) == 0) {
             this.lastAttack = System.currentTimeMillis();
 
             getIBulletSPI().stream().findFirst().ifPresent(

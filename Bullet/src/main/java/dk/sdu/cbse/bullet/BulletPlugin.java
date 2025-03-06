@@ -60,7 +60,14 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
 
         ));
 
-        bullet.addComponent(new MovementCP());
+        bullet.addComponent(new MovementCP(
+                5,
+                0,
+                false,
+                false,
+                true
+
+        ));
 
         return bullet;
     }

@@ -24,47 +24,6 @@ public class PlayerProcessor implements IEntityProcessingService {
                 bulletCP.setShouldAttack(gameData.getInputs().isDown(EGameInputs.ACTION));
                 bulletCP.process(gameData, world, player);
             }
-
-            /*
-            // PROCESS PLAYER INPUT
-            if (gameData.getInputs().isDown(EGameInputs.FORWARD)) {
-                double angle = Math.toRadians(player.getRotation());
-                double changeX = Math.cos(angle);
-                double changeY = Math.sin(angle);
-
-                player.setX(player.getX() + changeX);
-                player.setY(player.getY() + changeY);
-            }
-            if (gameData.getInputs().isDown(EGameInputs.LEFT)) {
-                player.setRotation(player.getRotation() - 3);
-            }
-            if (gameData.getInputs().isDown(EGameInputs.RIGHT)) {
-                player.setRotation(player.getRotation() + 3);
-            }
-            if (gameData.getInputs().isDown(EGameInputs.ACTION)) {
-                Player p = (Player) player;
-
-                if (System.currentTimeMillis() - p.getLastAttack() > p.getCooldown()) {
-                    p.setLastAttack(System.currentTimeMillis());
-
-                    getIBulletSPI().stream().findFirst().ifPresent(
-                            spi -> world.addEntity(spi.createBullet(player))
-                    );
-                }
-            }
-
-            // CHECK OUT OF BOUNDS
-            if (player.getX() < 0) {
-                player.setX(gameData.getDisplayWidth());
-            } else if (player.getX() > gameData.getDisplayWidth()) {
-                player.setX(0);
-            }
-
-            if (player.getY() < 0) {
-                player.setY(gameData.getDisplayHeight());
-            } else if (player.getY() > gameData.getDisplayHeight()) {
-                player.setY(0);
-            }*/
         }
     }
 }

@@ -67,7 +67,13 @@ public class EnemyPlugin implements IGamePluginService {
                 true
         ));
 
-        enemy.addComponent(new MovementCP());
+        enemy.addComponent(new MovementCP(
+                0.75,
+                3,
+                false,
+                false,
+                true
+        ));
 
         return enemy;
     }

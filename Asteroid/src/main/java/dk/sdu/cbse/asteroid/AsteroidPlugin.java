@@ -72,7 +72,13 @@ public class AsteroidPlugin implements IGamePluginService {
                 ECollisionType.ASTEROID
         ));
 
-        asteroid.addComponent(new MovementCP());
+        asteroid.addComponent(new MovementCP(
+                1,
+                0,
+                false,
+                false,
+                true
+        ));
 
         return asteroid;
     }
