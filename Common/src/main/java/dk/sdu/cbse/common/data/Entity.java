@@ -1,90 +1,42 @@
 package dk.sdu.cbse.common.data;
 
+import dk.sdu.cbse.common.entitycomponents.EntityComponent;
+
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Entity implements Serializable {
-
     private final UUID ID = UUID.randomUUID();
-    
-    private double[] polygonCoordinates;
-    private double x;
-    private double y;
-    private double rotation;
-    private float radius;
-    private int[] color = {0, 0, 0};
-    private int health = 1;
+    private Map<Class<? extends EntityComponent>, EntityComponent> entityComponentMap;
 
-    public int[] getColor() {
-        return color;
-    }
-
-    public void setColor(int[] color) {
-        this.color = color;
+    public Entity() {
+        entityComponentMap = new ConcurrentHashMap<>();
     }
 
     public String getID() {
         return ID.toString();
     }
 
-
-    public void setPolygonCoordinates(double... coordinates ) {
-        this.polygonCoordinates = coordinates;
+    public <E extends EntityComponent> E getComponent(Class componentClass) {
+        return (E) entityComponentMap.get(componentClass);
     }
 
-    public double[] getPolygonCoordinates() {
-        return polygonCoordinates;
-    }
-       
-
-    public void setX(double x) {
-        this.x =x;
+    public void addComponent(EntityComponent component) {
+        entityComponentMap.put(component.getClass(), component);
     }
 
-    public double getX() {
-        return x;
+    public void removeComponent(Class<? extends EntityComponent> componentClass) {
+        entityComponentMap.remove(componentClass);
     }
 
-    
-    public void setY(double y) {
-        this.y = y;
+    public void removeComponent(EntityComponent component) {
+        entityComponentMap.remove(component.getClass());
     }
 
-    public double getY() {
-        return y;
-    }
-
-
-    public void setRotation(double rotation) {
-        this.rotation = rotation;
-    }
-
-    public double getRotation() {
-        return rotation;
-    }
-
-
-    public void setRadius(float radius) {
-        this.radius = radius;
-    }
-        
-    public float getRadius() {
-        return this.radius;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public void decrementHealth() {
-        this.health--;
-    }
-
-    public boolean isDead() {
-        return (health <= 0);
+    public Collection<EntityComponent> getComponents() {
+        return entityComponentMap.values();
     }
 }

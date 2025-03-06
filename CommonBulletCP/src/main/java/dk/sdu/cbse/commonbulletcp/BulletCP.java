@@ -1,9 +1,10 @@
-package dk.sdu.cbse.commonbullet;
+package dk.sdu.cbse.commonbulletcp;
 
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.EntityComponent;
+import dk.sdu.cbse.commonbullet.IBulletSPI;
 
 import java.util.Collection;
 import java.util.Random;

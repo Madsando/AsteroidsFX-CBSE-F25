@@ -3,6 +3,10 @@ package dk.sdu.cbse.bullet;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
+import dk.sdu.cbse.common.entitycomponents.HealthCP;
+import dk.sdu.cbse.common.entitycomponents.MovementCP;
+import dk.sdu.cbse.common.entitycomponents.PositionCP;
+import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.commonbullet.Bullet;
 import dk.sdu.cbse.commonbullet.IBulletSPI;
@@ -24,17 +28,39 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
     public Entity createBullet(Entity shooter) {
         Entity bullet = new Bullet();
 
-        bullet.setColor(new int[]{0, 254, 34});
-        bullet.setPolygonCoordinates(2, -1, 2, 1, -1, 1, -1, -1);
-        bullet.setRadius(2);
-        bullet.setRotation(shooter.getRotation());
+        PositionCP shooterPositionCP = shooter.getComponent(PositionCP.class);
+        double shooterX = shooterPositionCP.getX();
+        double shooterY = shooterPositionCP.getY();
+        double shooterRotation = shooterPositionCP.getRotation();
 
-        bullet.setHealth(1);
+        ShapeCP shooterShapeCP = shooter.getComponent(ShapeCP.class);
+        double shooterRadius = shooterShapeCP.getRadius();
 
-        double changeX = Math.cos(Math.toRadians(shooter.getRotation()));
-        double changeY = Math.sin(Math.toRadians(shooter.getRotation()));
-        bullet.setX(shooter.getX() + changeX * (shooter.getRadius() + bullet.getRadius()));
-        bullet.setY(shooter.getY() + changeY * (shooter.getRadius() + bullet.getRadius()));
+        int bulletRadius = 2;
+        double changeX = Math.cos(Math.toRadians(shooterRotation));
+        double changeY = Math.sin(Math.toRadians(shooterRotation));
+        double bulletX = shooterX + changeX * (shooterRadius + bulletRadius);
+        double bulletY = shooterY + changeY * (shooterRadius + bulletRadius);
+
+        bullet.addComponent(new ShapeCP(
+                new double[]{2, -1, 2, 1, -1, 1, -1, -1},
+                bulletRadius,
+                new int[]{0, 254, 34}
+        ));
+
+        bullet.addComponent(new HealthCP(
+                1,
+                null
+        ));
+
+        bullet.addComponent(new PositionCP(
+                bulletX,
+                bulletY,
+                shooterRotation
+
+        ));
+
+        bullet.addComponent(new MovementCP());
 
         return bullet;
     }

@@ -1,6 +1,8 @@
 package dk.sdu.cbse.bullet;
 
 import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.entitycomponents.HealthCP;
+import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
 import dk.sdu.cbse.commonbullet.Bullet;
 
@@ -8,11 +10,11 @@ public class BulletProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity bullet : world.getEntities(Bullet.class)) {
-            if (bullet.isDead()) {
-                world.removeEntity(bullet);
-                continue;
-            }
 
+            bullet.getComponent(HealthCP.class).process(gameData, world, bullet);
+            bullet.getComponent(MovementCP.class).process(gameData, world, bullet);
+
+            /*
             // MOVE BULLET
             double angle = Math.toRadians(bullet.getRotation());
             double changeX = Math.cos(angle);
@@ -25,7 +27,7 @@ public class BulletProcessor implements IEntityProcessingService {
             if (bullet.getX() < 0 || bullet.getX() > gameData.getDisplayWidth() ||
                 bullet.getY() < 0 || bullet.getY() > gameData.getDisplayHeight()) {
                 world.removeEntity(bullet);
-            }
+            }*/
         }
     }
 }

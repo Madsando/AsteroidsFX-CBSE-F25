@@ -3,8 +3,14 @@ package dk.sdu.cbse.asteroid;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
+import dk.sdu.cbse.common.entitycomponents.HealthCP;
+import dk.sdu.cbse.common.entitycomponents.MovementCP;
+import dk.sdu.cbse.common.entitycomponents.PositionCP;
+import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.commonasteroid.Asteroid;
+import dk.sdu.cbse.commoncollision.CollisionCP;
+import dk.sdu.cbse.commoncollision.ECollisionType;
 
 import java.util.Random;
 
@@ -35,10 +41,11 @@ public class AsteroidPlugin implements IGamePluginService {
             polygonCoordinates[i] *= scalingFactor;
         }
 
-        asteroid.setPolygonCoordinates(polygonCoordinates);
-        asteroid.setRadius(scalingFactor);
-
-        asteroid.setRotation(rng.nextInt(360));
+        asteroid.addComponent(new ShapeCP(
+                polygonCoordinates,
+                scalingFactor,
+                new int[]{155, 155, 155}
+        ));
 
         int x = rng.nextInt(gameData.getDisplayWidth());
         while (x > (gameData.getDisplayWidth() / 2) - 50 & x < (gameData.getDisplayWidth() / 2) + 50) {
@@ -50,11 +57,22 @@ public class AsteroidPlugin implements IGamePluginService {
             y = rng.nextInt(gameData.getDisplayHeight());
         }
 
-        asteroid.setColor(new int[]{155, 155, 155});
-        asteroid.setHealth(1);
+        asteroid.addComponent(new PositionCP(
+                x,
+                y,
+                rng.nextInt(360)
+        ));
 
-        asteroid.setX(x);
-        asteroid.setY(y);
+        asteroid.addComponent(new HealthCP(
+                1,
+                new AsteroidSplitter()
+        ));
+
+        asteroid.addComponent(new CollisionCP(
+                ECollisionType.ASTEROID
+        ));
+
+        asteroid.addComponent(new MovementCP());
 
         return asteroid;
     }

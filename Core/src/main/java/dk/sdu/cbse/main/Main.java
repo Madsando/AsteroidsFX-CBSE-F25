@@ -1,6 +1,8 @@
 package dk.sdu.cbse.main;
 
 import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.entitycomponents.PositionCP;
+import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.*;
 
 import java.util.Map;
@@ -79,8 +81,9 @@ public class Main extends Application {
         }
 
         for (Entity entity : world.getEntities()) {
-            Polygon polygon = new Polygon(entity.getPolygonCoordinates());
-            int[] rbgValues = entity.getColor();
+            ShapeCP shapeCP = entity.getComponent(ShapeCP.class);
+            Polygon polygon = new Polygon(shapeCP.getPolygonCoordinates());
+            int[] rbgValues = shapeCP.getColor();
             polygon.setFill(Color.rgb(rbgValues[0] % 256, rbgValues[1] % 256, rbgValues[2] % 256));
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);
@@ -126,15 +129,18 @@ public class Main extends Application {
         for (Entity entity : world.getEntities()) {
             Polygon polygon = polygons.get(entity);
             if (polygon == null) {
-                polygon = new Polygon(entity.getPolygonCoordinates());
-                int[] rbgValues = entity.getColor();
+                ShapeCP shapeCP = entity.getComponent(ShapeCP.class);
+                polygon = new Polygon(shapeCP.getPolygonCoordinates());
+                int[] rbgValues = shapeCP.getColor();
                 polygon.setFill(Color.rgb(rbgValues[0] % 256, rbgValues[1] % 256, rbgValues[2] % 256));
                 polygons.put(entity, polygon);
                 gameWindow.getChildren().add(polygon);
             }
-            polygon.setTranslateX(entity.getX());
-            polygon.setTranslateY(entity.getY());
-            polygon.setRotate(entity.getRotation());
+
+            PositionCP positionCP = entity.getComponent(PositionCP.class);
+            polygon.setTranslateX(positionCP.getX());
+            polygon.setTranslateY(positionCP.getY());
+            polygon.setRotate(positionCP.getRotation());
         }
     }
 

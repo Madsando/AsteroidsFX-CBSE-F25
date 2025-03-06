@@ -1,23 +1,31 @@
 package dk.sdu.cbse.player;
 
 import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.entitycomponents.HealthCP;
+import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
-import dk.sdu.cbse.commonbullet.IBulletSPI;
-
-import java.util.Collection;
-import java.util.ServiceLoader;
-
-import static java.util.stream.Collectors.toList;
+import dk.sdu.cbse.commonbulletcp.BulletCP;
 
 public class PlayerProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity player : world.getEntities(Player.class)) {
-            if (player.isDead()) {
-                world.removeEntity(player);
-                continue;
+
+            player.getComponent(HealthCP.class).process(gameData, world, player);
+
+            MovementCP movementCP = player.getComponent(MovementCP.class);
+            movementCP.setForward(gameData.getInputs().isDown(EGameInputs.FORWARD));
+            movementCP.setLeft(gameData.getInputs().isDown(EGameInputs.LEFT));
+            movementCP.setRight(gameData.getInputs().isDown(EGameInputs.RIGHT));
+            movementCP.process(gameData, world, player);
+
+            if (player.getComponent(BulletCP.class) != null) {
+                BulletCP bulletCP = player.getComponent(BulletCP.class);
+                bulletCP.setShouldAttack(gameData.getInputs().isDown(EGameInputs.ACTION));
+                bulletCP.process(gameData, world, player);
             }
 
+            /*
             // PROCESS PLAYER INPUT
             if (gameData.getInputs().isDown(EGameInputs.FORWARD)) {
                 double angle = Math.toRadians(player.getRotation());
@@ -56,11 +64,7 @@ public class PlayerProcessor implements IEntityProcessingService {
                 player.setY(gameData.getDisplayHeight());
             } else if (player.getY() > gameData.getDisplayHeight()) {
                 player.setY(0);
-            }
+            }*/
         }
-    }
-
-    private Collection<? extends IBulletSPI> getIBulletSPI() {
-        return ServiceLoader.load(IBulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

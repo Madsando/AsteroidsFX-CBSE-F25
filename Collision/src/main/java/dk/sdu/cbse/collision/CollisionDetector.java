@@ -3,7 +3,11 @@ package dk.sdu.cbse.collision;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
+import dk.sdu.cbse.common.entitycomponents.PositionCP;
+import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IPostEntityProcessingService;
+
+import java.awt.*;
 
 public class CollisionDetector implements IPostEntityProcessingService {
     private final CollisionResolver resolver = new CollisionResolver();
@@ -18,11 +22,16 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 }
 
                 // Using Pythagoras' distance formula
-                double xDistance = e.getX() - e2.getX();
-                double yDistance = e.getY() - e2.getY();
+                PositionCP ePositionCP = e.getComponent(PositionCP.class);
+                PositionCP e2PositionCP = e2.getComponent(PositionCP.class);
+
+                double xDistance = ePositionCP.getX() - e2PositionCP.getX();
+                double yDistance = ePositionCP.getY() - e2PositionCP.getY();
                 double distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 
-                if (distance < (e.getRadius() + e2.getRadius())) {
+                ShapeCP eShape = e.getComponent(ShapeCP.class);
+                ShapeCP e2Shape = e2.getComponent(ShapeCP.class);
+                if (distance < (eShape.getRadius() + e2Shape.getRadius())) {
                     resolver.handleCollision(gameData, world, e, e2);
                 }
             }

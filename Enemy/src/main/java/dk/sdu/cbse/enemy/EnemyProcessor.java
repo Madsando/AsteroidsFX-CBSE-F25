@@ -1,11 +1,12 @@
 package dk.sdu.cbse.enemy;
 
 import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.entitycomponents.HealthCP;
+import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
-import dk.sdu.cbse.commonbullet.IBulletSPI;
+import dk.sdu.cbse.commonbulletcp.BulletCP;
 
 import java.util.Collection;
-import java.util.Random;
 import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
@@ -14,12 +15,16 @@ public class EnemyProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity enemy : world.getEntities(Enemy.class)) {
-            if (enemy.isDead()) {
-                world.removeEntity(enemy);
-                continue;
+
+            enemy.getComponent(HealthCP.class).process(gameData, world, enemy);
+            enemy.getComponent(MovementCP.class).process(gameData, world, enemy);
+
+            if (enemy.getComponent(BulletCP.class) != null) {
+                BulletCP bulletCP = enemy.getComponent(BulletCP.class);
+                bulletCP.process(gameData, world, enemy);
             }
 
-            double angle = Math.toRadians(enemy.getRotation());
+            /*double angle = Math.toRadians(enemy.getRotation());
             double changeX = Math.cos(angle);
             double changeY = Math.sin(angle);
 
@@ -53,11 +58,7 @@ public class EnemyProcessor implements IEntityProcessingService {
                 enemy.setY(gameData.getDisplayHeight());
             } else if (enemy.getY() > gameData.getDisplayHeight()) {
                 enemy.setY(0);
-            }
+            }*/
         }
-    }
-
-    private Collection<? extends IBulletSPI> getIBulletSPI() {
-        return ServiceLoader.load(IBulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

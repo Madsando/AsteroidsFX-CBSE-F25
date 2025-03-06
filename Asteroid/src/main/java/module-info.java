@@ -1,16 +1,13 @@
 import dk.sdu.cbse.common.services.IEntityProcessingService;
 import dk.sdu.cbse.common.services.IGamePluginService;
-import dk.sdu.cbse.commonasteroid.ISplitAsteroid;
 
 module Asteroid {
     requires Common;
     requires CommonAsteroid;
+    requires CommonCollision;
 
     provides IGamePluginService with dk.sdu.cbse.asteroid.AsteroidPlugin;
     provides IEntityProcessingService with dk.sdu.cbse.asteroid.AsteroidProcessor;
-    provides ISplitAsteroid with dk.sdu.cbse.asteroid.AsteroidSplitter;
-
-    uses ISplitAsteroid;
 }
 
 
