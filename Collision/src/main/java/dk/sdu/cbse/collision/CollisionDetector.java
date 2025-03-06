@@ -31,6 +31,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
 
                 ShapeCP eShape = e.getComponent(ShapeCP.class);
                 ShapeCP e2Shape = e2.getComponent(ShapeCP.class);
+
                 if (distance < (eShape.getRadius() + e2Shape.getRadius())) {
                     resolver.handleCollision(gameData, world, e, e2);
                 }

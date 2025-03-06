@@ -9,6 +9,8 @@ import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.commonbulletcp.BulletCP;
+import dk.sdu.cbse.commoncollision.CollisionCP;
+import dk.sdu.cbse.commoncollision.ECollisionType;
 
 import java.util.Random;
 
@@ -72,7 +74,12 @@ public class EnemyPlugin implements IGamePluginService {
                 3,
                 false,
                 false,
-                true
+                true,
+                false
+        ));
+
+        enemy.addComponent(new CollisionCP(
+                ECollisionType.ENTITY
         ));
 
         return enemy;

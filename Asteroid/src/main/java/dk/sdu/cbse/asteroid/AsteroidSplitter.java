@@ -57,7 +57,8 @@ public class AsteroidSplitter implements CustomEntityBehaviour {
                     0,
                     false,
                     false,
-                    true
+                    true,
+                    false
             ));
 
             world.addEntity(asteroid);

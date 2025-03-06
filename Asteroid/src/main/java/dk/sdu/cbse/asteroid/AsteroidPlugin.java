@@ -77,7 +77,8 @@ public class AsteroidPlugin implements IGamePluginService {
                 0,
                 false,
                 false,
-                true
+                true,
+                false
         ));
 
         return asteroid;

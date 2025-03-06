@@ -38,4 +38,12 @@ public class HealthCP implements EntityComponent {
     public void setHealth(int health) {
         this.health = health;
     }
+
+    public void subtractHealth(int health) {
+        this.health -= health;
+    }
+
+    public void addHealth(int health) {
+        this.health += health;
+    }
 }

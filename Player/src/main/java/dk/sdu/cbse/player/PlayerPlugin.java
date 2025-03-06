@@ -9,6 +9,8 @@ import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.commonbulletcp.BulletCP;
+import dk.sdu.cbse.commoncollision.CollisionCP;
+import dk.sdu.cbse.commoncollision.ECollisionType;
 
 public class PlayerPlugin implements IGamePluginService {
     @Override
@@ -65,7 +67,12 @@ public class PlayerPlugin implements IGamePluginService {
                 3,
                 false,
                 false,
+                false,
                 false
+        ));
+
+        player.addComponent(new CollisionCP(
+                ECollisionType.ENTITY
         ));
 
         return player;

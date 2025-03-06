@@ -9,13 +9,15 @@ public class MovementCP implements EntityComponent {
     private double velocity;
     private double rotationSpeed;
     private boolean left, right, forward;
+    private boolean shouldCullOOB;
 
-    public MovementCP(double velocity, double rotationSpeed, boolean left, boolean right, boolean forward) {
+    public MovementCP(double velocity, double rotationSpeed, boolean left, boolean right, boolean forward, boolean shouldCullOOB) {
         this.velocity = velocity;
         this.rotationSpeed = rotationSpeed;
         this.left = left;
         this.right = right;
         this.forward = forward;
+        this.shouldCullOOB = shouldCullOOB;
     }
 
     @Override
@@ -39,14 +41,26 @@ public class MovementCP implements EntityComponent {
         }
 
         if (positionCP.getX() < 0) {
+            if (shouldCullOOB) {
+                world.removeEntity(entity);
+            }
             positionCP.setX(gameData.getDisplayWidth());
         } else if (positionCP.getX() > gameData.getDisplayWidth()) {
+            if (shouldCullOOB) {
+                world.removeEntity(entity);
+            }
             positionCP.setX(0);
         }
 
         if (positionCP.getY() < 0) {
+            if (shouldCullOOB) {
+                world.removeEntity(entity);
+            }
             positionCP.setY(gameData.getDisplayHeight());
         } else if (positionCP.getY() > gameData.getDisplayHeight()) {
+            if (shouldCullOOB) {
+                world.removeEntity(entity);
+            }
             positionCP.setY(0);
         }
 
