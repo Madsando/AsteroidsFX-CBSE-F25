@@ -3,9 +3,9 @@ package dk.sdu.cbse.asteroid;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.commonasteroid.Asteroid;
-import dk.sdu.cbse.commonasteroid.SplitAsteroid;
+import dk.sdu.cbse.commonasteroid.ISplitAsteroid;
 
-public class AsteroidSplitter implements SplitAsteroid {
+public class AsteroidSplitter implements ISplitAsteroid {
     @Override
     public void createSplitAsteroids(World world, Entity e) {
         float size = e.getRadius() / 2;

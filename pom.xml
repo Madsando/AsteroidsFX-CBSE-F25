@@ -17,6 +17,7 @@
         <module>CommonBullet</module>
         <module>CommonAsteroid</module>
         <module>CommonCollision</module>
+        <module>CommonEntityPart</module>
         <module>Input</module>
         <module>Bullet</module>
         <module>Asteroid</module>

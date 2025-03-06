@@ -3,7 +3,7 @@ package dk.sdu.cbse.asteroid;
 import dk.sdu.cbse.common.data.*;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
 import dk.sdu.cbse.commonasteroid.Asteroid;
-import dk.sdu.cbse.commonasteroid.SplitAsteroid;
+import dk.sdu.cbse.commonasteroid.ISplitAsteroid;
 import java.util.Collection;
 
 import java.util.ServiceLoader;
@@ -12,10 +12,10 @@ import static java.util.stream.Collectors.toList;
 
 
 public class AsteroidProcessor implements IEntityProcessingService {
-    private SplitAsteroid asteroidSplitter = getAsteroidSplitter();
+    private ISplitAsteroid asteroidSplitter = getAsteroidSplitter();
 
-    private SplitAsteroid getAsteroidSplitter() {
-        Collection<? extends SplitAsteroid> AsteroidSplitCollection = ServiceLoader.load(SplitAsteroid.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    private ISplitAsteroid getAsteroidSplitter() {
+        Collection<? extends ISplitAsteroid> AsteroidSplitCollection = ServiceLoader.load(ISplitAsteroid.class).stream().map(ServiceLoader.Provider::get).collect(toList());
 
         if (AsteroidSplitCollection.stream().findFirst().isPresent()) {
             return AsteroidSplitCollection.stream().findFirst().get();

@@ -1,7 +1,5 @@
 package dk.sdu.cbse.commoncollision;
 
-import java.util.Objects;
-
 public abstract class CollisionPair {
     private final ECollisionType entity;
     private final ECollisionType otherEntity;
