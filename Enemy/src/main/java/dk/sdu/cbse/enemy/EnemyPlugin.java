@@ -3,7 +3,14 @@ package dk.sdu.cbse.enemy;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
+import dk.sdu.cbse.common.entitycomponents.HealthCP;
+import dk.sdu.cbse.common.entitycomponents.MovementCP;
+import dk.sdu.cbse.common.entitycomponents.PositionCP;
+import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IGamePluginService;
+import dk.sdu.cbse.commonbulletcp.BulletCP;
+import dk.sdu.cbse.commoncollision.CollisionCP;
+import dk.sdu.cbse.commoncollision.ECollisionType;
 
 import java.util.Random;
 
@@ -25,35 +32,55 @@ public class EnemyPlugin implements IGamePluginService {
 
     private Entity createEnemy(GameData gameData) {
         Enemy enemy = new Enemy();
+        Random rng = new Random();
 
         double scalingFactor = 4.5;
+        //double[] polygonCoordinates = {9, 0, -0.25,-2.7, 2, -6, -4.6, -4.4, -9,- 5.5, -9, 5.5, -4.6, 4.4, 2, 6, -0.25, 2.7};
         double[] polygonCoordinates = {1.28, 0, 1.25, -0.45, 1,-0.85,  0.55, -1.25, 0.15, -2.95, 2.5, -3, 2.6, -3.1, 2.5, -3.2, 0.15, -3.25,
                 0.15, -3.25,-2.5, -3.2, -2.6, -3.1, -2.5, -3, -0.15, -2.95, -0.55, -1.25, -1, -0.85, -1.25, -0.45,
                 -1.28,0, -1.25,  0.45, -1, 0.85, -0.55, 1.25, -0.15, 2.95, -2.5, 3, -2.6, 3.1, -2.5, 3.2, -0.15, 3.25,
                 0.15, 3.25, 2.5, 3.2, 2.6, 3.1, 2.5, 3, 0.15, 2.95, 0.55, 1.25, 1, 0.85, 1.25, 0.45};
-        double radius = 4;
+        double radius = 4 * scalingFactor;
 
         for (int i = 0; i < polygonCoordinates.length; i++) {
             polygonCoordinates[i] *= scalingFactor;
         }
 
-        //double[] polygonCoordinates = {9, 0, -0.25,-2.7, 2, -6, -4.6, -4.4, -9,- 5.5, -9, 5.5, -4.6, 4.4, 2, 6, -0.25, 2.7};
-        enemy.setPolygonCoordinates(polygonCoordinates);
-        enemy.setColor(new int[]{254, 0, 0});
+        enemy.addComponent(new ShapeCP(
+                polygonCoordinates,
+                radius,
+                new int[]{254, 0, 0}
+        ));
 
-        enemy.setRadius((float) (radius * scalingFactor));
-        enemy.setRotation(90);
+        enemy.addComponent(new PositionCP(
+                rng.nextInt(gameData.getDisplayWidth()),
+                rng.nextInt(gameData.getDisplayHeight()),
+                90
+        ));
 
-        Random rng = new Random();
-        //enemy.setX((double) gameData.getDisplayWidth() / 2 + rng.nextInt(-30, 30));
-        //enemy.setY((double) gameData.getDisplayHeight() / 2 + rng.nextInt(-30, 30));
-        enemy.setX(rng.nextInt(gameData.getDisplayWidth()));
-        enemy.setY(rng.nextInt(gameData.getDisplayHeight()));
+        enemy.addComponent(new HealthCP(
+                2,
+                null
+        ));
 
-        enemy.setHealth(2);
+        enemy.addComponent(new BulletCP(
+                120,
+                75,
+                true
+        ));
 
-        enemy.setCooldown(75);
-        enemy.setLastAttack(0);
+        enemy.addComponent(new MovementCP(
+                0.75,
+                3,
+                false,
+                false,
+                true,
+                false
+        ));
+
+        enemy.addComponent(new CollisionCP(
+                ECollisionType.ENTITY
+        ));
 
         return enemy;
     }

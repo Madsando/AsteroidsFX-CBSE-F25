@@ -1,9 +1,10 @@
-package dk.sdu.cbse.commonbullet;
+package dk.sdu.cbse.commonbulletcp;
 
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.EntityComponent;
+import dk.sdu.cbse.commonbullet.IBulletSPI;
 
 import java.util.Collection;
 import java.util.Random;
@@ -28,7 +29,7 @@ public class BulletCP implements EntityComponent {
 
     @Override
     public void process(GameData gameData, World world, Entity entity) {
-        if (shouldAttack & isCooldownOver() & rand.nextInt(attackChance) == 1) {
+        if (shouldAttack & isCooldownOver() & rand.nextInt(attackChance) == 0) {
             this.lastAttack = System.currentTimeMillis();
 
             getIBulletSPI().stream().findFirst().ifPresent(

@@ -17,7 +17,7 @@ public class CollisionCP implements EntityComponent {
     }
 
     public ECollisionType getCollisionType() {
-        return ECollisionType.BULLET;
+        return this.collisionType;
     }
 
     public void setCollisionType(ECollisionType collisionType) {

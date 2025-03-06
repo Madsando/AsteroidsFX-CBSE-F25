@@ -9,6 +9,11 @@ public class PositionCP implements EntityComponent {
     private double y;
     private double rotation;
 
+    public PositionCP(double x, double y, double rotation) {
+        this.x = x;
+        this.y = y;
+        this.rotation = rotation;
+    }
 
     public double getX() {
         return x;
