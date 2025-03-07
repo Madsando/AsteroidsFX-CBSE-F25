@@ -9,7 +9,6 @@ import dk.sdu.cbse.commonenemy.Enemy;
 
 import java.util.Random;
 
-
 public class EnemyProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {

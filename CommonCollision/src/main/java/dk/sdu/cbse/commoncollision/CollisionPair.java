@@ -1,25 +1,33 @@
 package dk.sdu.cbse.commoncollision;
 
-public abstract class CollisionPair {
-    private final ECollisionType entity;
-    private final ECollisionType otherEntity;
+public class CollisionPair<T> {
+    private final T k;
+    private final T v;
 
-    public CollisionPair(ECollisionType entity, ECollisionType otherEntity) {
-        this.entity = entity;
-        this.otherEntity = otherEntity;
+    public CollisionPair(T k, T v) {
+        this.k = k;
+        this.v = v;
     }
 
-    public ECollisionType[] getEntities() {
-        return new ECollisionType[]{entity, otherEntity};
+    public T getK() {
+        return k;
     }
-    
+
+    public T getV() {
+        return v;
+    }
+
+    public Object[] getValues() {
+        return new Object[]{k, v};
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CollisionPair that = (CollisionPair) o;
-
-        return (entity == that.entity & otherEntity == that.otherEntity ||
-                entity == that.otherEntity & otherEntity == that.entity);
+        if (o instanceof CollisionPair that) {
+            return ((k == that.k & v == that.v) ||
+                    (k == that.v & v == that.k));
+        } else {
+            return false;
+        }
     }
 }
