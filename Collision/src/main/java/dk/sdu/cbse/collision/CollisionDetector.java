@@ -8,8 +8,6 @@ import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.cbse.commoncollision.CollisionPair;
 
-import java.awt.*;
-
 public class CollisionDetector implements IPostEntityProcessingService {
     private final CollisionResolver resolver = new CollisionResolver();
 
