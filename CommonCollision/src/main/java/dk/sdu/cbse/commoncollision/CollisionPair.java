@@ -30,4 +30,9 @@ public class CollisionPair<T> {
             return false;
         }
     }
+
+    @Override
+    public int hashCode() {
+        return k.hashCode() + v.hashCode();
+    }
 }

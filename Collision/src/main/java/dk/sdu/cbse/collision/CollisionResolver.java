@@ -10,19 +10,16 @@ import dk.sdu.cbse.commoncollision.CollisionPair;
 import dk.sdu.cbse.commoncollision.ECollisionType;
 import dk.sdu.cbse.commoncollision.ICollisionResolverSPI;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ServiceLoader;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 
 public class CollisionResolver implements ICollisionResolverSPI {
-    private Map<CollisionPair<ECollisionType>, ICollisionStrategy> collisionMap;
+    private final Map<CollisionPair<ECollisionType>, ICollisionStrategy> collisionMap;
 
     public CollisionResolver() {
-        ConcurrentHashMap<CollisionPair<ECollisionType>, ICollisionStrategy> collisionMap = new ConcurrentHashMap<>();
+        collisionMap = new ConcurrentHashMap<>();
         if (!getCollisionStrategies().isEmpty()) {
             for (ICollisionStrategy strategy : getCollisionStrategies()) {
                 for (CollisionPair<ECollisionType> collisionPair : strategy.getCollisionSignatures()) {
@@ -33,46 +30,21 @@ public class CollisionResolver implements ICollisionResolverSPI {
     }
 
     @Override
-    public void resolveCollision(GameData gamedata, World world, Entity entity, Entity otherEntity) {
-        CollisionCP entityCollisionCP = entity.getComponent(CollisionCP.class);
-        CollisionCP otherCollisionCP = otherEntity.getComponent(CollisionCP.class);
+    public void resolveCollision(GameData gamedata, World world, CollisionPair<Entity> entityPair) {
+        Entity e = entityPair.getK();
+        Entity e2 = entityPair.getV();
 
-        HealthCP entityHealthCP = entity.getComponent(HealthCP.class);
-        HealthCP otherHealthCP = otherEntity.getComponent(HealthCP.class);
+        CollisionCP entityCollisionCP = e.getComponent(CollisionCP.class);
+        CollisionCP otherCollisionCP = e2.getComponent(CollisionCP.class);
 
-        if (entityCollisionCP == null || otherCollisionCP == null || entityHealthCP == null || otherHealthCP == null) {
+        if (entityCollisionCP == null | otherCollisionCP == null) {
             return;
         }
 
-        ECollisionType entityCT = entityCollisionCP.getCollisionType();
-        ECollisionType otherCT = otherCollisionCP.getCollisionType();
+        CollisionPair<ECollisionType> collisionPair = new CollisionPair<>(entityCollisionCP.getCollisionType(), otherCollisionCP.getCollisionType());
 
-        if (entityCT == otherCT) {
-            switch (entityCT) {
-                // Could add unique collisions later
-                case ASTEROID, BULLET:
-                    return;
-                case ENTITY:
-                    entityHealthCP.setHealth(0);
-                    otherHealthCP.setHealth(0);
-                    return;
-            }
-        }
-
-        if (entityCT == ECollisionType.ASTEROID) {
-            switch (otherCT) {
-                case BULLET, ENTITY:
-                    entityHealthCP.subtractHealth(1);
-                    otherHealthCP.setHealth(0);
-                    gamedata.addScore(1);
-                    return;
-            }
-        }
-
-        if (entityCT == ECollisionType.BULLET && otherCT == ECollisionType.ENTITY) {
-            entityHealthCP.setHealth(0);
-            otherHealthCP.subtractHealth(1);
-            return;
+        if (collisionMap.containsKey(collisionPair)) {
+            collisionMap.get(collisionPair).handleCollision(gamedata, world, entityPair);
         }
     }
 
