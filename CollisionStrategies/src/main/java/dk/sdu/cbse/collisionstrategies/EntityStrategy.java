@@ -5,20 +5,20 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.commoncollision.CollisionCP;
-import dk.sdu.cbse.commoncollision.CollisionPair;
+import dk.sdu.cbse.commoncollision.Pair;
 import dk.sdu.cbse.commoncollision.ECollisionType;
 import dk.sdu.cbse.commoncollision.ICollisionStrategy;
 
 public class EntityStrategy implements ICollisionStrategy {
     @Override
-    public CollisionPair<ECollisionType>[] getCollisionSignatures() {
-        return new CollisionPair[]{
-                new CollisionPair<>(ECollisionType.ENTITY, ECollisionType.BULLET),
+    public Pair<ECollisionType>[] getCollisionSignatures() {
+        return new Pair[]{
+                new Pair<>(ECollisionType.ENTITY, ECollisionType.BULLET),
         };
     }
 
     @Override
-    public void handleCollision(GameData gamedata, World world, CollisionPair<Entity> entityPair) {
+    public void handleCollision(GameData gamedata, World world, Pair<Entity> entityPair) {
         CollisionCP entityCCP = entityPair.getK().getComponent(CollisionCP.class);
         if (entityCCP.getCollisionType().equals(ECollisionType.ENTITY)) {
             HealthCP e = entityPair.getK().getComponent(HealthCP.class);

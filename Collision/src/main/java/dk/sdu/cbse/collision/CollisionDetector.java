@@ -6,13 +6,13 @@ import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IPostEntityProcessingService;
-import dk.sdu.cbse.commoncollision.CollisionPair;
+import dk.sdu.cbse.commoncollision.Pair;
 
 import java.util.ArrayList;
 
 public class CollisionDetector implements IPostEntityProcessingService {
     private final CollisionResolver resolver = new CollisionResolver();
-    private final ArrayList<CollisionPair<Entity>> collidingEntityPairs = new ArrayList<>();
+    private final ArrayList<Pair<Entity>> collidingEntityPairs = new ArrayList<>();
 
     @Override
     public void process(GameData gameData, World world) {
@@ -37,7 +37,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 ShapeCP e2Shape = e2.getComponent(ShapeCP.class);
 
                 if (distance <= (eShape.getRadius() + e2Shape.getRadius())) {
-                    CollisionPair<Entity> collidingEntityPair = new CollisionPair<>(e, e2);
+                    Pair<Entity> collidingEntityPair = new Pair<>(e, e2);
 
                     if (collidingEntityPairs.contains(collidingEntityPair)) {
                         continue;

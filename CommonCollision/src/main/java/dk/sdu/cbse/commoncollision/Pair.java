@@ -1,10 +1,10 @@
 package dk.sdu.cbse.commoncollision;
 
-public class CollisionPair<T> {
+public class Pair<T> {
     private final T k;
     private final T v;
 
-    public CollisionPair(T k, T v) {
+    public Pair(T k, T v) {
         this.k = k;
         this.v = v;
     }
@@ -23,7 +23,7 @@ public class CollisionPair<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof CollisionPair that) {
+        if (o instanceof Pair that) {
             return ((k == that.k & v == that.v) ||
                     (k == that.v & v == that.k));
         } else {
