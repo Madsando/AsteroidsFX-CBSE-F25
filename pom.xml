@@ -27,6 +27,7 @@
         <module>Collision</module>
         <module>CollisionStrategies</module>
         <module>Enemy</module>
+        <module>Star</module>
     </modules>
 
     <properties>
