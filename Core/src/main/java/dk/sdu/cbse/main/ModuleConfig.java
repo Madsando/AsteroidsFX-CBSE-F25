@@ -3,7 +3,7 @@ package dk.sdu.cbse.main;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.services.IPostEntityProcessingService;
-import dk.sdu.cbse.input.spi.IInputSPI;
+import dk.sdu.cbse.common.input.spi.IInputSPI;
 
 import java.util.Collection;
 import java.util.ServiceLoader;

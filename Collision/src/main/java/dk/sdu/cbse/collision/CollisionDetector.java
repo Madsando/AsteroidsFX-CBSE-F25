@@ -6,7 +6,7 @@ import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IPostEntityProcessingService;
-import dk.sdu.cbse.commoncollision.Pair;
+import dk.sdu.cbse.common.collision.Pair;
 
 import java.util.ArrayList;
 

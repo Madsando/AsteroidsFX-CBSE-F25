@@ -1,10 +1,10 @@
-import dk.sdu.cbse.commonbullet.IBulletSPI;
+import dk.sdu.cbse.common.bullet.IBulletSPI;
 
 module CommonBulletCP {
     requires Common;
     requires CommonBullet;
 
-    exports dk.sdu.cbse.commonbulletcp;
+    exports dk.sdu.cbse.common.bulletcp;
 
     uses IBulletSPI;
 }

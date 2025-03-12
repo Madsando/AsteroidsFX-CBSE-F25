@@ -4,9 +4,9 @@ import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
-import dk.sdu.cbse.commoncollision.Pair;
-import dk.sdu.cbse.commoncollision.ECollisionType;
-import dk.sdu.cbse.commoncollision.ICollisionStrategy;
+import dk.sdu.cbse.common.collision.Pair;
+import dk.sdu.cbse.common.collision.ECollisionType;
+import dk.sdu.cbse.common.collision.ICollisionStrategy;
 
 public class AsteroidStrategy implements ICollisionStrategy {
     @Override

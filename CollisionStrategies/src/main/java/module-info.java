@@ -1,4 +1,4 @@
-import dk.sdu.cbse.commoncollision.ICollisionStrategy;
+import dk.sdu.cbse.common.collision.ICollisionStrategy;
 
 module CollisionStrategies {
     requires Common;

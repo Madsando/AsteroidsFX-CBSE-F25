@@ -1,6 +1,6 @@
 package dk.sdu.cbse.input;
 
-import dk.sdu.cbse.input.spi.IInputSPI;
+import dk.sdu.cbse.common.input.spi.IInputSPI;
 import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;

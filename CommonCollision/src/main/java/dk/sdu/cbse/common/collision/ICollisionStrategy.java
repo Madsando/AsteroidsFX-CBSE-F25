@@ -1,4 +1,4 @@
-package dk.sdu.cbse.commoncollision;
+package dk.sdu.cbse.common.collision;
 
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;

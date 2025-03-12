@@ -4,7 +4,7 @@ import dk.sdu.cbse.common.data.*;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
-import dk.sdu.cbse.commonasteroid.Asteroid;
+import dk.sdu.cbse.common.asteroid.Asteroid;
 
 public class AsteroidProcessor implements IEntityProcessingService {
     @Override

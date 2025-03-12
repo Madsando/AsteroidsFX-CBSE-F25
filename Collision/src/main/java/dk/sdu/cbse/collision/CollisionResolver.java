@@ -1,13 +1,13 @@
 package dk.sdu.cbse.collision;
 
-import dk.sdu.cbse.commoncollision.ICollisionStrategy;
+import dk.sdu.cbse.common.collision.ICollisionStrategy;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.commoncollision.CollisionCP;
-import dk.sdu.cbse.commoncollision.Pair;
-import dk.sdu.cbse.commoncollision.ECollisionType;
-import dk.sdu.cbse.commoncollision.ICollisionResolverSPI;
+import dk.sdu.cbse.common.collision.CollisionCP;
+import dk.sdu.cbse.common.collision.Pair;
+import dk.sdu.cbse.common.collision.ECollisionType;
+import dk.sdu.cbse.common.collision.ICollisionResolverSPI;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

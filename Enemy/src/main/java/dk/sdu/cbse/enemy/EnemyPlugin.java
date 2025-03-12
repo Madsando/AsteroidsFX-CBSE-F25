@@ -1,14 +1,14 @@
 package dk.sdu.cbse.enemy;
 
 import dk.sdu.cbse.common.data.Entity;
-import dk.sdu.cbse.commonenemy.Enemy;
+import dk.sdu.cbse.common.enemy.Enemy;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.IGamePluginService;
-import dk.sdu.cbse.commonbulletcp.BulletCP;
-import dk.sdu.cbse.commoncollision.CollisionCP;
-import dk.sdu.cbse.commoncollision.ECollisionType;
+import dk.sdu.cbse.common.bulletcp.BulletCP;
+import dk.sdu.cbse.common.collision.CollisionCP;
+import dk.sdu.cbse.common.collision.ECollisionType;
 
 import java.util.Random;
 

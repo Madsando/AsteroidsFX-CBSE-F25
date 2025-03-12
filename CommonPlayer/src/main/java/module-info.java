@@ -1,7 +1,7 @@
 module CommonPlayer {
     requires Common;
 
-    exports dk.sdu.cbse.commonplayer;
+    exports dk.sdu.cbse.common.player;
 }
 
 

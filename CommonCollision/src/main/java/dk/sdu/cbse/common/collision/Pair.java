@@ -1,4 +1,4 @@
-package dk.sdu.cbse.commoncollision;
+package dk.sdu.cbse.common.collision;
 
 public class Pair<T> {
     private final T k;

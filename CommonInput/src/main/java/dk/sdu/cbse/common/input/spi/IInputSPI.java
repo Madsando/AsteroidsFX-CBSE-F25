@@ -1,4 +1,4 @@
-package dk.sdu.cbse.input.spi;
+package dk.sdu.cbse.common.input.spi;
 
 import dk.sdu.cbse.common.data.GameData;
 import javafx.event.EventHandler;

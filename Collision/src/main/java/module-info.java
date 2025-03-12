@@ -1,4 +1,4 @@
-import dk.sdu.cbse.commoncollision.ICollisionStrategy;
+import dk.sdu.cbse.common.collision.ICollisionStrategy;
 import dk.sdu.cbse.common.services.IPostEntityProcessingService;
 
 module Collision {

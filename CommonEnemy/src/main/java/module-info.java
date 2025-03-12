@@ -1,7 +1,7 @@
 module CommonEnemy {
     requires Common;
 
-    exports dk.sdu.cbse.commonenemy;
+    exports dk.sdu.cbse.common.enemy;
 }
 
 

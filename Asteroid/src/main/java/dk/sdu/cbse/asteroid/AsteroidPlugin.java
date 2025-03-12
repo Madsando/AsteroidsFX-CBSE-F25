@@ -8,9 +8,9 @@ import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IGamePluginService;
-import dk.sdu.cbse.commonasteroid.Asteroid;
-import dk.sdu.cbse.commoncollision.CollisionCP;
-import dk.sdu.cbse.commoncollision.ECollisionType;
+import dk.sdu.cbse.common.asteroid.Asteroid;
+import dk.sdu.cbse.common.collision.CollisionCP;
+import dk.sdu.cbse.common.collision.ECollisionType;
 
 import java.util.Random;
 
