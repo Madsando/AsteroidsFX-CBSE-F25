@@ -16,10 +16,10 @@ public class InputHandler implements IInputSPI {
             public void handle(InputEvent inputEvent) {
                 if (inputEvent instanceof KeyEvent keyEvent) {
                     switch (keyEvent.getCode()) {
-                        case UP, KeyCode.W -> gameData.getInputs().setInput(EGameInputs.FORWARD, true);
-                        case LEFT, KeyCode.A -> gameData.getInputs().setInput(EGameInputs.LEFT, true);
-                        case RIGHT, KeyCode.D -> gameData.getInputs().setInput(EGameInputs.RIGHT, true);
-                        case SPACE -> gameData.getInputs().setInput(EGameInputs.ACTION, true);
+                        case KeyCode.UP, KeyCode.W -> gameData.getInputs().setInput(EGameInputs.FORWARD, true);
+                        case KeyCode.LEFT, KeyCode.A -> gameData.getInputs().setInput(EGameInputs.LEFT, true);
+                        case KeyCode.RIGHT, KeyCode.D -> gameData.getInputs().setInput(EGameInputs.RIGHT, true);
+                        case KeyCode.SPACE -> gameData.getInputs().setInput(EGameInputs.ACTION, true);
                     }
                 }
             }
@@ -33,10 +33,10 @@ public class InputHandler implements IInputSPI {
             public void handle(InputEvent inputEvent) {
                 if (inputEvent instanceof KeyEvent keyEvent) {
                     switch (keyEvent.getCode()) {
-                        case UP, KeyCode.W -> gameData.getInputs().setInput(EGameInputs.FORWARD, false);
-                        case LEFT, KeyCode.A -> gameData.getInputs().setInput(EGameInputs.LEFT, false);
-                        case RIGHT, KeyCode.D -> gameData.getInputs().setInput(EGameInputs.RIGHT, false);
-                        case SPACE -> gameData.getInputs().setInput(EGameInputs.ACTION, false);
+                        case KeyCode.UP, KeyCode.W -> gameData.getInputs().setInput(EGameInputs.FORWARD, false);
+                        case KeyCode.LEFT, KeyCode.A -> gameData.getInputs().setInput(EGameInputs.LEFT, false);
+                        case KeyCode.RIGHT, KeyCode.D -> gameData.getInputs().setInput(EGameInputs.RIGHT, false);
+                        case KeyCode.SPACE -> gameData.getInputs().setInput(EGameInputs.ACTION, false);
                     }
                 }
             }
