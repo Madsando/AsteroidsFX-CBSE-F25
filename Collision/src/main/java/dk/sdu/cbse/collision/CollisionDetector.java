@@ -1,25 +1,37 @@
 package dk.sdu.cbse.collision;
 
+import dk.sdu.cbse.common.collision.CollisionCP;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IPostEntityProcessingService;
-import dk.sdu.cbse.common.collision.Pair;
+import dk.sdu.cbse.common.utility.UnorderedPair;
 
 import java.util.ArrayList;
 
 public class CollisionDetector implements IPostEntityProcessingService {
     private final CollisionResolver resolver = new CollisionResolver();
-    private final ArrayList<Pair<Entity>> collidingEntityPairs = new ArrayList<>();
+    private final ArrayList<UnorderedPair<Entity>> collidingEntityPairs = new ArrayList<>();
 
     @Override
     public void process(GameData gameData, World world) {
         collidingEntityPairs.clear();
 
         for (Entity e : world.getEntities()) {
+
+            if (e.getComponent(CollisionCP.class) == null) {
+                continue;
+            }
+
+
             for (Entity e2 : world.getEntities()) {
+                if (e2.getComponent(CollisionCP.class) == null) {
+                    continue;
+                }
+
+
                 // Make sure entities are different. Cannot collide with oneself
                 if (e.getID().equals(e2.getID())) {
                     continue;
@@ -37,7 +49,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 ShapeCP e2Shape = e2.getComponent(ShapeCP.class);
 
                 if (distance <= (eShape.getRadius() + e2Shape.getRadius())) {
-                    Pair<Entity> collidingEntityPair = new Pair<>(e, e2);
+                    UnorderedPair<Entity> collidingEntityPair = new UnorderedPair<>(e, e2);
 
                     if (collidingEntityPairs.contains(collidingEntityPair)) {
                         continue;

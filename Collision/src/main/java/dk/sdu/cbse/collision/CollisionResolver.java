@@ -5,7 +5,7 @@ import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.collision.CollisionCP;
-import dk.sdu.cbse.common.collision.Pair;
+import dk.sdu.cbse.common.utility.UnorderedPair;
 import dk.sdu.cbse.common.collision.ECollisionType;
 import dk.sdu.cbse.common.collision.ICollisionResolverSPI;
 
@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 
 
 public class CollisionResolver implements ICollisionResolverSPI {
-    private final Map<Pair<ECollisionType>, ICollisionStrategy> collisionMap;
+    private final Map<UnorderedPair<ECollisionType>, ICollisionStrategy> collisionMap;
 
     public CollisionResolver() {
         collisionMap = new ConcurrentHashMap<>();
         if (!getCollisionStrategies().isEmpty()) {
             for (ICollisionStrategy strategy : getCollisionStrategies()) {
-                for (Pair<ECollisionType> pair : strategy.getCollisionSignatures()) {
+                for (UnorderedPair<ECollisionType> pair : strategy.getCollisionSignatures()) {
                     collisionMap.put(pair, strategy);
                 }
             }
@@ -29,7 +29,7 @@ public class CollisionResolver implements ICollisionResolverSPI {
     }
 
     @Override
-    public void resolveCollision(GameData gamedata, World world, Pair<Entity> entityPair) {
+    public void resolveCollision(GameData gamedata, World world, UnorderedPair<Entity> entityPair) {
         CollisionCP entityCollisionCP = entityPair.getK().getComponent(CollisionCP.class);
         CollisionCP otherCollisionCP = entityPair.getV().getComponent(CollisionCP.class);
 
@@ -37,7 +37,7 @@ public class CollisionResolver implements ICollisionResolverSPI {
             return;
         }
 
-        Pair<ECollisionType> collisionSignature = new Pair<>(entityCollisionCP.getCollisionType(), otherCollisionCP.getCollisionType());
+        UnorderedPair<ECollisionType> collisionSignature = new UnorderedPair<>(entityCollisionCP.getCollisionType(), otherCollisionCP.getCollisionType());
 
         if (collisionMap.containsKey(collisionSignature)) {
             collisionMap.get(collisionSignature).handleCollision(gamedata, world, entityPair);

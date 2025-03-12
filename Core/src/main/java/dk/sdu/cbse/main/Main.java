@@ -5,6 +5,8 @@ import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.*;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,6 +16,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
@@ -51,10 +54,11 @@ public class Main extends Application {
         gameWindow.getChildren().add(fpsText);
         gameWindow.getChildren().add(ramText);
 
-        Image image = new Image("deathstar_background.jpeg", true);
-        Background background = new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, null));
+        Image image = new Image("deathstar_nostars.png", true);
+        Background background = new Background(
+                Collections.singletonList(new BackgroundFill(Color.BLACK, null, null)),
+                Collections.singletonList(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, null)));
         gameWindow.setBackground(background);
-
         Scene scene = new Scene(gameWindow);
 
         gameWindow.heightProperty().addListener((observable, oldValue, newValue) -> {
@@ -137,6 +141,12 @@ public class Main extends Application {
                 gameWindow.getChildren().add(polygon);
             }
 
+            // Change color
+            ShapeCP shapeCP = entity.getComponent(ShapeCP.class);
+            int[] rbgValues = shapeCP.getColor();
+            polygon.setFill(Color.rgb(rbgValues[0] % 256, rbgValues[1] % 256, rbgValues[2] % 256));
+
+            // Change position of rendered polygon
             PositionCP positionCP = entity.getComponent(PositionCP.class);
             polygon.setTranslateX(positionCP.getX());
             polygon.setTranslateY(positionCP.getY());

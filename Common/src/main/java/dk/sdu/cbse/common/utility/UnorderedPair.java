@@ -1,10 +1,10 @@
-package dk.sdu.cbse.common.collision;
+package dk.sdu.cbse.common.utility;
 
-public class Pair<T> {
+public class UnorderedPair<T> {
     private final T k;
     private final T v;
 
-    public Pair(T k, T v) {
+    public UnorderedPair(T k, T v) {
         this.k = k;
         this.v = v;
     }
@@ -23,7 +23,7 @@ public class Pair<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Pair that) {
+        if (o instanceof UnorderedPair that) {
             return ((k == that.k & v == that.v) ||
                     (k == that.v & v == that.k));
         } else {

@@ -44,7 +44,7 @@ public class AsteroidPlugin implements IGamePluginService {
         asteroid.addComponent(new ShapeCP(
                 polygonCoordinates,
                 scalingFactor,
-                new int[]{155, 155, 155}
+                new int[]{120, 120, 120}
         ));
 
         int x = rng.nextInt(gameData.getDisplayWidth());
