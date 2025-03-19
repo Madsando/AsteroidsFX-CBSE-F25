@@ -14,7 +14,7 @@ import java.util.Random;
 public class StarPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 150; i++) {
             Entity star = createStar(gameData);
             world.addEntity(star);
         }
@@ -45,8 +45,11 @@ public class StarPlugin implements IGamePluginService {
                 new int[]{color, color, color}
         ));
 
-        int x = rng.nextInt(gameData.getDisplayWidth());
-        int y = rng.nextInt(gameData.getDisplayHeight());
+        double angle = rng.nextDouble(0, 2 * Math.PI);
+        double radius = rng.nextDouble(365, 500);
+
+        int x = (int) (Math.cos(angle) * radius) + gameData.getDisplayWidth() / 2;
+        int y = (int) (Math.sin(angle) * radius) + gameData.getDisplayHeight() / 2;
 
         star.addComponent(new PositionCP(
                 x,
