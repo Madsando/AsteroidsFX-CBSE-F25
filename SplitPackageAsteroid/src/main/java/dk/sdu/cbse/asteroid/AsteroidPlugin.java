@@ -31,12 +31,12 @@ public class AsteroidPlugin implements IGamePluginService {
     }
 
     private Entity createAsteroid(GameData gameData) {
-        System.out.println("Split Asteroid");
+        System.out.println("Split asteroid");
         Entity asteroid = new Asteroid();
         Random rng = new Random();
 
         // The polygon-coordinates describe a shape that rather closely follows a circle with radius 1.
-        double[] polygonCoordinates = {1, 1, 1, -1, -1, -1, -1, 1};
+        double[] polygonCoordinates = {1, 1, -1, 1, -1, -1, 1, -1};
         int scalingFactor = rng.nextInt(10) + 5;
         for (int i = 0; i < polygonCoordinates.length; i++) {
             polygonCoordinates[i] *= scalingFactor;
@@ -45,7 +45,7 @@ public class AsteroidPlugin implements IGamePluginService {
         asteroid.addComponent(new ShapeCP(
                 polygonCoordinates,
                 scalingFactor,
-                new int[]{254, 254, 254}
+                new int[]{255, 255, 255}
         ));
 
         int x = rng.nextInt(gameData.getDisplayWidth());
@@ -62,6 +62,11 @@ public class AsteroidPlugin implements IGamePluginService {
                 x,
                 y,
                 rng.nextInt(360)
+        ));
+
+        asteroid.addComponent(new HealthCP(
+                1,
+                new AsteroidSplitter()
         ));
 
         asteroid.addComponent(new CollisionCP(

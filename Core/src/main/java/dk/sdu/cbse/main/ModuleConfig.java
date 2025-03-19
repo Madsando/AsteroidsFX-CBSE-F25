@@ -28,6 +28,12 @@ public class ModuleConfig {
     }
 
     public static Collection<? extends IGamePluginService> getPluginServices() {
-        return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+        var mf = ModuleFinder.of(Paths.get("plugins"));
+        var parent = ModuleLayer.boot();
+
+        var cf = parent.configuration().resolve(mf, ModuleFinder.of(), Set.of("SplitPackageAsteroid"));
+        var layer = parent.defineModulesWithOneLoader(cf, ClassLoader.getSystemClassLoader());
+
+        return ServiceLoader.load(layer, IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

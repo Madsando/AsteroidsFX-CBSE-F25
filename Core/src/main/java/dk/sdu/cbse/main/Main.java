@@ -81,6 +81,7 @@ public class Main extends Application {
 
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : ModuleConfig.getPluginServices()) {
+            System.out.println(iGamePlugin.getClass().getName());
             iGamePlugin.start(gameData, world);
         }
 
