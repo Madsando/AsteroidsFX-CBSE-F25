@@ -23,6 +23,7 @@
         <module>Input</module>
         <module>Bullet</module>
         <module>Asteroid</module>
+        <module>SplitPackageAsteroid</module>
         <module>Player</module>
         <module>Collision</module>
         <module>CollisionStrategies</module>
