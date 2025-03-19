@@ -2,6 +2,7 @@ package dk.sdu.cbse.collision;
 
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
+import dk.sdu.cbse.common.entitycomponents.PositionCP;
 
 import java.util.ArrayList;
 
@@ -47,12 +48,36 @@ public class Grid {
         }
     }
 
-    public void insertEntity(Entity entity, double x, double y) {
-        grid.get((int) x).get((int) y).add(entity);
+    public void insertEntity(Entity entity) {
+        PositionCP pos = entity.getComponent(PositionCP.class);
+
+        grid.get(calculateRow(pos.getX())).get(calculateColumn(pos.getY())).add(entity);
+    }
+
+    private int calculateColumn(double x) {
+        return (int) Math.floor(x / gridWidth);
+    }
+
+    private int calculateRow(double y) {
+        return (int) Math.floor(y / gridHeight);
     }
 
     public ArrayList<Entity> getEntitiesInCell(int row, int column) {
         return grid.get(row).get(column);
+    }
+
+    public ArrayList<Entity> getEntitiesInVicinity(int row, int column) {
+        ArrayList<Entity> entities = new ArrayList<>();
+
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (i >= 0 && j >= 0 && i < row && j < column) {
+                    entities.addAll(grid.get(row).get(column));
+                }
+            }
+        }
+
+        return entities;
     }
 
     public ArrayList<ArrayList<ArrayList<Entity>>> getGrid() {

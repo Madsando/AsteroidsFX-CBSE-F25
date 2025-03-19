@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class CollisionDetector implements IPostEntityProcessingService {
     private final CollisionResolver resolver = new CollisionResolver();
     private final ArrayList<UnorderedPair<Entity>> collidingEntityPairs = new ArrayList<>();
+    private final Grid grid = new Grid(new GameData(), 45);
 
     @Override
     public void process(GameData gameData, World world) {

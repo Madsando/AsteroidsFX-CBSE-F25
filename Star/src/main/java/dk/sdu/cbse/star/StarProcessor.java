@@ -6,7 +6,6 @@ import dk.sdu.cbse.common.services.IEntityProcessingService;
 
 import java.util.Random;
 
-
 public class StarProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
