@@ -1,5 +1,7 @@
 package dk.sdu.cbse.main;
 
+import dk.sdu.cbse.common.graphics.IBackgroundComponent;
+import dk.sdu.cbse.common.graphics.IGraphicsComponent;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.services.IPostEntityProcessingService;
@@ -25,5 +27,13 @@ public class ModuleConfig {
 
     public static Collection<? extends IInputSPI> getIInputService() {
         return ServiceLoader.load(IInputSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    public static Collection<? extends IGraphicsComponent> getIGraphicComponents() {
+        return ServiceLoader.load(IGraphicsComponent.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    public static Collection<? extends IBackgroundComponent> getIBackgroundComponents() {
+        return ServiceLoader.load(IBackgroundComponent.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

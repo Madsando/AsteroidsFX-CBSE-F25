@@ -1,40 +1,23 @@
 package dk.sdu.cbse.main;
 
 import dk.sdu.cbse.common.data.*;
-import dk.sdu.cbse.common.entitycomponents.PositionCP;
-import dk.sdu.cbse.common.entitycomponents.ShapeCP;
+import dk.sdu.cbse.common.graphics.IGraphicsComponent;
 import dk.sdu.cbse.common.services.*;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
 
 import dk.sdu.cbse.common.data.World;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Polygon;
-import javafx.scene.text.Text;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
     private final GameData gameData = new GameData();
     private final World world = new World();
-    private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
-    private Text scoreText;
-    private Text fpsText;
-    private Text ramText;
-    private final Runtime runtime = Runtime.getRuntime();
-    private final long[] frameTimes = new long[100];
-    private int frameTimeIndex = 0 ;
-    private boolean arrayFilled = false ;
+    private final ArrayList<IGraphicsComponent> graphicsComponents = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(Main.class);
@@ -42,23 +25,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
-        scoreText = new Text(10, 20, "Destroyed asteroids: 0");
-        scoreText.setFill(Color.WHITE);
-        fpsText = new Text(10, 35, "FPS:");
-        fpsText.setFill(Color.WHITE);
-        ramText = new Text(10, 50, "RAM:");
-        ramText.setFill(Color.WHITE);
-
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        gameWindow.getChildren().add(scoreText);
-        gameWindow.getChildren().add(fpsText);
-        gameWindow.getChildren().add(ramText);
-
-        Image image = new Image("deathstar_nostars.png", true);
-        Background background = new Background(
-                Collections.singletonList(new BackgroundFill(Color.BLACK, null, null)),
-                Collections.singletonList(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, null)));
-        gameWindow.setBackground(background);
         Scene scene = new Scene(gameWindow);
 
         gameWindow.heightProperty().addListener((observable, oldValue, newValue) -> {
@@ -69,33 +36,30 @@ public class Main extends Application {
             gameData.setDisplayWidth(newValue.intValue());
         });
 
-        if (ModuleConfig.getIInputService().stream().findFirst().isPresent()) {
-            scene.setOnKeyPressed(
-                    ModuleConfig.getIInputService().stream().findFirst().get().getInputHandlerPress(gameData)
-            );
+        ModuleConfig.getIBackgroundComponents().stream().findFirst().ifPresent(backgroundComponent -> {
+            gameWindow.setBackground(backgroundComponent.getBackground());
+        });
 
-            scene.setOnKeyReleased(
-                    ModuleConfig.getIInputService().stream().findFirst().get().getInputHandlerRelease(gameData)
-            );
-        }
+        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
+            scene.setOnKeyPressed(service.getInputHandlerPress(gameData));
+        });
+        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
+            scene.setOnKeyReleased(service.getInputHandlerRelease(gameData));
+        });
 
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : ModuleConfig.getPluginServices()) {
             iGamePlugin.start(gameData, world);
         }
 
-        for (Entity entity : world.getEntities()) {
-            ShapeCP shapeCP = entity.getComponent(ShapeCP.class);
-            Polygon polygon = new Polygon(shapeCP.getPolygonCoordinates());
-            int[] rbgValues = shapeCP.getColor();
-            polygon.setFill(Color.rgb(rbgValues[0] % 256, rbgValues[1] % 256, rbgValues[2] % 256));
-            polygons.put(entity, polygon);
-            gameWindow.getChildren().add(polygon);
+        graphicsComponents.addAll(ModuleConfig.getIGraphicComponents());
+        for (IGraphicsComponent graphicsComponent : graphicsComponents) {
+            gameWindow.getChildren().add(graphicsComponent.createComponent(gameData, world));
         }
 
         render();
         window.setScene(scene);
-        window.setTitle("ASTEROIDS");
+        window.setTitle("Asteroids");
         window.show();
     }
 
@@ -106,7 +70,6 @@ public class Main extends Application {
                 gameData.getInputs().update();
                 update();
                 draw();
-                drawPerformance(now);
             }
         }.start();
     }
@@ -118,57 +81,11 @@ public class Main extends Application {
         for (IPostEntityProcessingService postEntityProcessorService : ModuleConfig.getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }
-        scoreText.setText(String.format("Destroyed asteroids: %d", gameData.getScore()));
     }
 
-    private void draw() {        
-        for (Entity polygonEntity : polygons.keySet()) {
-            if(!world.getEntities().contains(polygonEntity)){   
-                Polygon removedPolygon = polygons.get(polygonEntity);               
-                polygons.remove(polygonEntity);                      
-                gameWindow.getChildren().remove(removedPolygon);
-            }
+    private void draw() {
+        for (IGraphicsComponent graphicsComponent : graphicsComponents) {
+            graphicsComponent.updateComponent(gameData, world);
         }
-
-        for (Entity entity : world.getEntities()) {
-            Polygon polygon = polygons.get(entity);
-            if (polygon == null) {
-                ShapeCP shapeCP = entity.getComponent(ShapeCP.class);
-                polygon = new Polygon(shapeCP.getPolygonCoordinates());
-                int[] rbgValues = shapeCP.getColor();
-                polygon.setFill(Color.rgb(rbgValues[0] % 256, rbgValues[1] % 256, rbgValues[2] % 256));
-                polygons.put(entity, polygon);
-                gameWindow.getChildren().add(polygon);
-            }
-
-            // Change color
-            ShapeCP shapeCP = entity.getComponent(ShapeCP.class);
-            int[] rbgValues = shapeCP.getColor();
-            polygon.setFill(Color.rgb(rbgValues[0] % 256, rbgValues[1] % 256, rbgValues[2] % 256));
-
-            // Change position of rendered polygon
-            PositionCP positionCP = entity.getComponent(PositionCP.class);
-            polygon.setTranslateX(positionCP.getX());
-            polygon.setTranslateY(positionCP.getY());
-            polygon.setRotate(positionCP.getRotation());
-        }
-    }
-
-    private void drawPerformance(long now) {
-        long oldFrameTime = frameTimes[frameTimeIndex] ;
-        frameTimes[frameTimeIndex] = now ;
-        frameTimeIndex = (frameTimeIndex + 1) % frameTimes.length ;
-        if (frameTimeIndex == 0) {
-            arrayFilled = true ;
-        }
-        if (arrayFilled) {
-            long elapsedNanos = now - oldFrameTime ;
-            long elapsedNanosPerFrame = elapsedNanos / frameTimes.length ;
-            double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame ;
-            fpsText.setText(String.format("FPS: %.1f", frameRate));
-        }
-
-        int usedMemory = (int) ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024);
-        ramText.setText(String.format("RAM: %d MB", usedMemory));
     }
 }

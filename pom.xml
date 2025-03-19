@@ -20,6 +20,7 @@
         <module>CommonPlayer</module>
         <module>CommonCollision</module>
         <module>CommonEnemy</module>
+        <module>CommonGraphics</module>
         <module>Input</module>
         <module>Bullet</module>
         <module>Asteroid</module>
@@ -28,6 +29,7 @@
         <module>CollisionStrategies</module>
         <module>Enemy</module>
         <module>Star</module>
+        <module>Graphics</module>
     </modules>
 
     <properties>
