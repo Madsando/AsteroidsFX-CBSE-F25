@@ -15,7 +15,7 @@
         <module>Common</module>
         <module>CommonInput</module>
         <module>CommonBullet</module>
-        <module>CommonBulletCP</module>
+        <module>CommonEntityCP</module>
         <module>CommonAsteroid</module>
         <module>CommonPlayer</module>
         <module>CommonCollision</module>

@@ -4,6 +4,7 @@ import dk.sdu.cbse.common.bullet.IBulletSPI;
 
 module Bullet {
     requires Common;
+    requires CommonEntityCP;
     requires CommonBullet;
     requires CommonCollision;
 

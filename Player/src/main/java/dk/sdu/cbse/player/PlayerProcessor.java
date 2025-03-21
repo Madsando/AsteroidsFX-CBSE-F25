@@ -1,10 +1,11 @@
 package dk.sdu.cbse.player;
 
 import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
-import dk.sdu.cbse.common.bulletcp.BulletCP;
+import dk.sdu.cbse.common.entitycomponents.BulletCP;
 import dk.sdu.cbse.common.player.Player;
 
 public class PlayerProcessor implements IEntityProcessingService {

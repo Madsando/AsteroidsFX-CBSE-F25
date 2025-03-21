@@ -1,6 +1,7 @@
 package dk.sdu.cbse.asteroid;
 
 import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.services.IEntityProcessingService;

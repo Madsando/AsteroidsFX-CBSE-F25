@@ -5,6 +5,7 @@ import dk.sdu.cbse.star.StarProcessor;
 
 module Star {
     requires Common;
+    requires CommonEntityCP;
 
     provides IGamePluginService with StarPlugin;
     provides IEntityProcessingService with StarProcessor;

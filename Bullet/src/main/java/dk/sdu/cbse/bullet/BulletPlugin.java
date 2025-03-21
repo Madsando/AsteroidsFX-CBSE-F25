@@ -1,6 +1,6 @@
 package dk.sdu.cbse.bullet;
 
-import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
@@ -10,7 +10,7 @@ import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.bullet.Bullet;
 import dk.sdu.cbse.common.bullet.IBulletSPI;
-import dk.sdu.cbse.common.collision.CollisionCP;
+import dk.sdu.cbse.common.entitycomponents.CollisionCP;
 import dk.sdu.cbse.common.collision.ECollisionType;
 
 public class BulletPlugin implements IGamePluginService, IBulletSPI {

@@ -1,6 +1,7 @@
 package dk.sdu.cbse.star;
 
 import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
 

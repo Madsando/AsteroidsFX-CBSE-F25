@@ -1,10 +1,11 @@
 import dk.sdu.cbse.common.bullet.IBulletSPI;
 
-module CommonBulletCP {
+module CommonEntityCP {
     requires Common;
     requires CommonBullet;
+    requires CommonCollision;
 
-    exports dk.sdu.cbse.common.bulletcp;
+    exports dk.sdu.cbse.common.entitycomponents;
 
     uses IBulletSPI;
 }

@@ -31,5 +31,10 @@
             <artifactId>CommonCollision</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonEntityCP</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

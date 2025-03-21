@@ -1,9 +1,8 @@
-package dk.sdu.cbse.common.entitycomponents;
+package dk.sdu.cbse.common.entity;
 
-import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 
-public interface EntityComponent {
+public interface CustomEntityBehaviour {
     public void process(GameData gameData, World world, Entity entity);
 }

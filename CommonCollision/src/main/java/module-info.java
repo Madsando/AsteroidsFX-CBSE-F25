@@ -1,5 +1,3 @@
-import dk.sdu.cbse.common.entitycomponents.EntityComponent;
-
 module CommonCollision {
     requires Common;
 

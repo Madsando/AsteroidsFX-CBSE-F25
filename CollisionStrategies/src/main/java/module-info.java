@@ -2,6 +2,7 @@ import dk.sdu.cbse.common.collision.ICollisionStrategy;
 
 module CollisionStrategies {
     requires Common;
+    requires CommonEntityCP;
     requires CommonCollision;
 
     provides ICollisionStrategy with dk.sdu.cbse.collisionstrategies.AsteroidStrategy,

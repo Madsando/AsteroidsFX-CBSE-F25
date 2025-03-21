@@ -1,10 +1,11 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
+import dk.sdu.cbse.common.entity.EntityComponent;
 
-public class ShapeCP implements EntityComponent{
+public class ShapeCP implements EntityComponent {
     private double[] polygonCoordinates;
     private double radius;
     private int[] color;

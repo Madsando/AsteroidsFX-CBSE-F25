@@ -1,8 +1,9 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
+import dk.sdu.cbse.common.entity.EntityComponent;
 
 public class PositionCP implements EntityComponent {
     private double x;

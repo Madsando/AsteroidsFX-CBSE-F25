@@ -5,9 +5,9 @@ import dk.sdu.cbse.graphics.*;
 
 module Graphics {
     requires Common;
+    requires CommonEntityCP;
     requires CommonGraphics;
     requires javafx.graphics;
-    requires java.desktop;
 
     provides IGraphicsComponent with
             EntityRenderer,
