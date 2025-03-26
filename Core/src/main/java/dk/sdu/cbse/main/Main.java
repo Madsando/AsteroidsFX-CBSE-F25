@@ -1,91 +1,21 @@
 package dk.sdu.cbse.main;
 
-import dk.sdu.cbse.common.data.*;
-import dk.sdu.cbse.common.graphics.IGraphicsComponent;
-import dk.sdu.cbse.common.services.*;
-
-import java.util.ArrayList;
-
-import dk.sdu.cbse.common.data.World;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main extends Application {
-    private final GameData gameData = new GameData();
-    private final World world = new World();
-    private final Pane gameWindow = new Pane();
-    private final ArrayList<IGraphicsComponent> graphicsComponents = new ArrayList<>();
-
     public static void main(String[] args) {
         launch(Main.class);
     }
 
     @Override
-    public void start(Stage window) throws Exception {
-        gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        Scene scene = new Scene(gameWindow);
+    public void start(Stage stage) throws Exception {
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(ModuleConfig.class);
 
-        gameWindow.heightProperty().addListener((observable, oldValue, newValue) -> {
-            gameData.setDisplayHeight(newValue.intValue());
-        });
-
-        gameWindow.widthProperty().addListener((observable, oldValue, newValue) -> {
-            gameData.setDisplayWidth(newValue.intValue());
-        });
-
-        ModuleConfig.getIBackgroundComponents().stream().findFirst().ifPresent(backgroundComponent -> {
-            gameWindow.setBackground(backgroundComponent.getBackground());
-        });
-
-        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
-            scene.setOnKeyPressed(service.getInputHandlerPress(gameData));
-        });
-        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
-            scene.setOnKeyReleased(service.getInputHandlerRelease(gameData));
-        });
-
-        // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : ModuleConfig.getPluginServices()) {
-            iGamePlugin.start(gameData, world);
-        }
-
-        graphicsComponents.addAll(ModuleConfig.getIGraphicComponents());
-        for (IGraphicsComponent graphicsComponent : graphicsComponents) {
-            gameWindow.getChildren().add(graphicsComponent.createComponent(gameData, world));
-        }
-
-        render();
-        window.setScene(scene);
-        window.setTitle("Asteroids");
-        window.show();
-    }
-
-    private void render() {
-        new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                gameData.getInputs().update();
-                update();
-                draw();
-            }
-        }.start();
-    }
-
-    private void update() {
-        for (IEntityProcessingService entityProcessorService : ModuleConfig.getEntityProcessingServices()) {
-            entityProcessorService.process(gameData, world);
-        }
-        for (IPostEntityProcessingService postEntityProcessorService : ModuleConfig.getPostEntityProcessingServices()) {
-            postEntityProcessorService.process(gameData, world);
-        }
-    }
-
-    private void draw() {
-        for (IGraphicsComponent graphicsComponent : graphicsComponents) {
-            graphicsComponent.updateComponent(gameData, world);
-        }
+        Game game = ctx.getBean(Game.class);
+        game.start(stage);
+        game.render();
     }
 }
