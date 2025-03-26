@@ -6,7 +6,14 @@ module Core {
     requires CommonUI;
     requires javafx.graphics;
 
-    opens dk.sdu.cbse.main to javafx.graphics;
+    requires spring.core;
+    requires spring.context;
+    requires spring.beans;
+
+    opens dk.sdu.cbse.main to javafx.graphics,
+            spring.core,
+            spring.context,
+            spring.beans;
 
     uses IGamePluginService;
     uses ISystemService;

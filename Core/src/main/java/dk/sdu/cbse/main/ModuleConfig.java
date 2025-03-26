@@ -6,12 +6,23 @@ import dk.sdu.cbse.common.services.ISystemService;
 import dk.sdu.cbse.common.utility.ISystemComparator;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
+@Configuration
 public class ModuleConfig {
-    public static Collection<? extends IGamePluginService> getPluginServices() {
+
+    public ModuleConfig() {}
+
+    @Bean
+    public Game game() {
+        return new Game(getIGraphicComponents(), getEntityProcessingServices(), getPostEntityProcessingServices(), getPluginServices(), getIInputService(), getIBackgroundComponents());
+    }
+
+    @Bean
+    public static List<IGamePluginService> getPluginServices() {
         return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
