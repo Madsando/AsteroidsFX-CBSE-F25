@@ -22,7 +22,7 @@ public class ModuleConfig {
 
     @Bean
     public Game game() {
-        return new Game(getIGraphicComponents(), getEntityProcessingServices(), getPostEntityProcessingServices(), getPluginServices(), getIInputService(), getIBackgroundComponents());
+        return new Game();
     }
 
     @Bean
