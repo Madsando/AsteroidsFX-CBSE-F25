@@ -71,7 +71,9 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
 
         ));
 
-        bullet.addComponent(new CollisionCP());
+        bullet.addComponent(new CollisionCP(
+                new BulletCollisionBehaviour()
+        ));
 
         return bullet;
     }

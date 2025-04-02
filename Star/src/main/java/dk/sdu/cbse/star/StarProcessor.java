@@ -11,7 +11,7 @@ import java.util.Random;
 public class StarProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity star : world.getEntities(EEntityType.STAR)) {
+        for (Entity star : world.getEntities(EEntityType.OTHER)) {
             ShapeCP shapeCP = star.getComponent(ShapeCP.class);
 
             int[] colors =  shapeCP.getColor();

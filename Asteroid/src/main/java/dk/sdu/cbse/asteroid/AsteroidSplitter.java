@@ -48,7 +48,9 @@ public class AsteroidSplitter implements CustomEntityBehaviour {
                     new AsteroidSplitter()
             ));
 
-            asteroid.addComponent(new CollisionCP());
+            asteroid.addComponent(new CollisionCP(
+                    new AsteroidCollisionBehaviour()
+            ));
 
             asteroid.addComponent(new MovementCP(
                     1,

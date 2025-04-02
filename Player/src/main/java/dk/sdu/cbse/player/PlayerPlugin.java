@@ -67,7 +67,9 @@ public class PlayerPlugin implements IGamePluginService {
                 false
         ));
 
-        player.addComponent(new CollisionCP());
+        player.addComponent(new CollisionCP(
+                new PlayerCollisionBehaviour()
+        ));
 
         return player;
     }

@@ -21,13 +21,13 @@ public class StarPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity star : world.getEntities(EEntityType.STAR)) {
+        for (Entity star : world.getEntities(EEntityType.OTHER)) {
             world.removeEntity(star);
         }
     }
 
     private Entity createStar(GameData gameData) {
-        Entity star = new Entity(EEntityType.STAR);
+        Entity star = new Entity(EEntityType.OTHER);
         Random rng = new Random();
 
         // The polygon-coordinates describe a shape that rather closely follows a circle with radius 1.

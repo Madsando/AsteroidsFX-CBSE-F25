@@ -12,7 +12,6 @@ import dk.sdu.cbse.common.utility.UnorderedPair;
 import java.util.ArrayList;
 
 public class CollisionDetector implements IPostEntityProcessingService {
-    private final CollisionResolver resolver = new CollisionResolver();
     private final ArrayList<UnorderedPair<Entity>> collidingEntityPairs = new ArrayList<>();
 
     @Override
@@ -20,17 +19,14 @@ public class CollisionDetector implements IPostEntityProcessingService {
         collidingEntityPairs.clear();
 
         for (Entity e : world.getEntities()) {
-
             if (e.getComponent(CollisionCP.class) == null) {
                 continue;
             }
-
 
             for (Entity e2 : world.getEntities()) {
                 if (e2.getComponent(CollisionCP.class) == null) {
                     continue;
                 }
-
 
                 // Make sure entities are different. Cannot collide with oneself
                 if (e.getID().equals(e2.getID())) {
@@ -56,9 +52,19 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     }
 
                     collidingEntityPairs.add(collidingEntityPair);
-                    resolver.resolveCollision(gameData, world, collidingEntityPair);
+                    this.resolveCollision(collidingEntityPair);
                 }
             }
         }
+    }
+
+    private void resolveCollision(UnorderedPair<Entity> entityPair) {
+        CollisionCP e1CollisionCP = entityPair.getK().getComponent(CollisionCP.class);
+        e1CollisionCP.setTargetType(entityPair.getV().getEntityType());
+        e1CollisionCP.setHasCollided(true);
+
+        CollisionCP e2CollisionCP = entityPair.getV().getComponent(CollisionCP.class);
+        e2CollisionCP.setTargetType(entityPair.getK().getEntityType());
+        e2CollisionCP.setHasCollided(true);
     }
 }

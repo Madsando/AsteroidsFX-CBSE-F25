@@ -23,7 +23,6 @@
         <module>Asteroid</module>
         <module>Player</module>
         <module>Collision</module>
-        <module>CollisionStrategies</module>
         <module>Enemy</module>
         <module>Star</module>
         <module>Graphics</module>

@@ -5,5 +5,5 @@ public enum EEntityType {
     ENEMY,
     BULLET, // Remove life from others. Split asteroid
     ASTEROID,
-    STAR
+    OTHER
 }

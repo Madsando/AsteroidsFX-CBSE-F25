@@ -74,7 +74,9 @@ public class EnemyPlugin implements IGamePluginService {
                 false
         ));
 
-        enemy.addComponent(new CollisionCP());
+        enemy.addComponent(new CollisionCP(
+                new EnemyCollisionBehaviour()
+        ));
 
         return enemy;
     }
