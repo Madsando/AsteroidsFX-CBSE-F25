@@ -1,4 +1,4 @@
-package dk.sdu.cbse.common.player;
+package dk.sdu.cbse.player;
 
 import dk.sdu.cbse.common.entity.Entity;
 

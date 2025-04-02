@@ -4,7 +4,6 @@ import dk.sdu.cbse.common.services.IGamePluginService;
 module Asteroid {
     requires Common;
     requires CommonEntityCP;
-    requires CommonAsteroid;
     requires CommonCollision;
 
     provides IGamePluginService with dk.sdu.cbse.asteroid.AsteroidPlugin;

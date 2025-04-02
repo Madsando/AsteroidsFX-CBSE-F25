@@ -4,5 +4,5 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 
 public interface EntityComponent {
-    public void process(GameData gameData, World world, Entity entity);
+    void process(GameData gameData, World world, Entity entity);
 }

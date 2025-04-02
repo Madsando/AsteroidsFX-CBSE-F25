@@ -6,7 +6,6 @@ import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
 import dk.sdu.cbse.common.entitycomponents.BulletCP;
-import dk.sdu.cbse.common.enemy.Enemy;
 
 import java.util.Random;
 

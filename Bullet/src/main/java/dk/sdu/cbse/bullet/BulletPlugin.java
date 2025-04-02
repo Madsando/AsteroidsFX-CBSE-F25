@@ -8,7 +8,6 @@ import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IGamePluginService;
-import dk.sdu.cbse.common.bullet.Bullet;
 import dk.sdu.cbse.common.bullet.IBulletSPI;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
 import dk.sdu.cbse.common.collision.ECollisionType;

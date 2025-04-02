@@ -3,7 +3,6 @@ import dk.sdu.cbse.common.services.IGamePluginService;
 
 module Player {
     requires Common;
-    requires CommonPlayer;
     requires CommonEntityCP;
     requires CommonCollision;
 

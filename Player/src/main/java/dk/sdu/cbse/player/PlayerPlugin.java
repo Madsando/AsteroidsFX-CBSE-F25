@@ -7,7 +7,6 @@ import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
 import dk.sdu.cbse.common.collision.ECollisionType;
-import dk.sdu.cbse.common.player.Player;
 
 public class PlayerPlugin implements IGamePluginService {
     @Override
