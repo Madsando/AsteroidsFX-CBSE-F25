@@ -9,7 +9,7 @@ import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
-import dk.sdu.cbse.common.collision.ECollisionType;
+import dk.sdu.cbse.common.entity.ECollisionType;
 
 import java.util.Random;
 

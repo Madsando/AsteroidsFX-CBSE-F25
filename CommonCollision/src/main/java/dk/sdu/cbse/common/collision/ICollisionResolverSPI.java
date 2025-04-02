@@ -6,5 +6,5 @@ import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.utility.UnorderedPair;
 
 public interface ICollisionResolverSPI {
-    public void resolveCollision(GameData gamedata, World world, UnorderedPair<Entity> entityPair);
+    void resolveCollision(GameData gamedata, World world, UnorderedPair<Entity> entityPair);
 }

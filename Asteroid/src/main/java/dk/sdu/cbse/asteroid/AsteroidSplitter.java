@@ -6,7 +6,7 @@ import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entity.CustomEntityBehaviour;
 import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
-import dk.sdu.cbse.common.collision.ECollisionType;
+import dk.sdu.cbse.common.entity.ECollisionType;
 
 public class AsteroidSplitter implements CustomEntityBehaviour {
     @Override

@@ -5,7 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
 
 public interface IInputSPI {
-    public EventHandler<InputEvent> getInputHandlerPress(GameData gameData);
+    EventHandler<InputEvent> getInputHandlerPress(GameData gameData);
 
-    public EventHandler<InputEvent> getInputHandlerRelease(GameData gameData);
+    EventHandler<InputEvent> getInputHandlerRelease(GameData gameData);
 }
