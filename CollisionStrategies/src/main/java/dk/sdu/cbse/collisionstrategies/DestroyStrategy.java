@@ -5,13 +5,13 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.utility.UnorderedPair;
-import dk.sdu.cbse.common.entity.ECollisionType;
+import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.collision.ICollisionStrategy;
 
 public class DestroyStrategy implements ICollisionStrategy {
     @Override
-    public UnorderedPair<ECollisionType>[] getCollisionSignatures() {
-        return new UnorderedPair[]{new UnorderedPair<>(ECollisionType.ENTITY, ECollisionType.ENTITY)};
+    public UnorderedPair<EEntityType>[] getCollisionSignatures() {
+        return new UnorderedPair[]{new UnorderedPair<>(EEntityType.ENTITY, EEntityType.ENTITY)};
     }
 
     @Override

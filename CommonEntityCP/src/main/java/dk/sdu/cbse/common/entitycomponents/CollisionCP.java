@@ -1,15 +1,15 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.entity.ECollisionType;
+import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entity.EntityComponent;
 
 public class CollisionCP implements EntityComponent {
-    private ECollisionType collisionType;
+    private EEntityType collisionType;
 
-    public CollisionCP(ECollisionType collisionType) {
+    public CollisionCP(EEntityType collisionType) {
         this.collisionType = collisionType;
     }
 
@@ -17,11 +17,11 @@ public class CollisionCP implements EntityComponent {
     public void process(GameData gameData, World world, Entity entity) {
     }
 
-    public ECollisionType getCollisionType() {
+    public EEntityType getCollisionType() {
         return this.collisionType;
     }
 
-    public void setCollisionType(ECollisionType collisionType) {
+    public void setCollisionType(EEntityType collisionType) {
         this.collisionType = collisionType;
     }
 }

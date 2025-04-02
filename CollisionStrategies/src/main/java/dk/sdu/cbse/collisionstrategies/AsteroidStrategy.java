@@ -5,15 +5,15 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.utility.UnorderedPair;
-import dk.sdu.cbse.common.entity.ECollisionType;
+import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.collision.ICollisionStrategy;
 
 public class AsteroidStrategy implements ICollisionStrategy {
     @Override
-    public UnorderedPair<ECollisionType>[] getCollisionSignatures() {
+    public UnorderedPair<EEntityType>[] getCollisionSignatures() {
         return new UnorderedPair[]{
-                new UnorderedPair<>(ECollisionType.ASTEROID, ECollisionType.ENTITY),
-                new UnorderedPair<>(ECollisionType.ASTEROID, ECollisionType.BULLET)
+                new UnorderedPair<>(EEntityType.ASTEROID, EEntityType.ENTITY),
+                new UnorderedPair<>(EEntityType.ASTEROID, EEntityType.BULLET)
         };
     }
 

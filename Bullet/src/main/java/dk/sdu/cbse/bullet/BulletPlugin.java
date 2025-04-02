@@ -10,7 +10,7 @@ import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.bullet.IBulletSPI;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
-import dk.sdu.cbse.common.entity.ECollisionType;
+import dk.sdu.cbse.common.entity.EEntityType;
 
 public class BulletPlugin implements IGamePluginService, IBulletSPI {
     @Override
@@ -72,7 +72,7 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
         ));
 
         bullet.addComponent(new CollisionCP(
-                ECollisionType.BULLET
+                EEntityType.BULLET
         ));
 
         return bullet;

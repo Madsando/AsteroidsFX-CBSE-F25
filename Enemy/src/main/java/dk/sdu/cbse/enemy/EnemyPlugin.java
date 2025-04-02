@@ -6,7 +6,7 @@ import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
-import dk.sdu.cbse.common.entity.ECollisionType;
+import dk.sdu.cbse.common.entity.EEntityType;
 
 import java.util.Random;
 
@@ -75,7 +75,7 @@ public class EnemyPlugin implements IGamePluginService {
         ));
 
         enemy.addComponent(new CollisionCP(
-                ECollisionType.ENTITY
+                EEntityType.ENTITY
         ));
 
         return enemy;

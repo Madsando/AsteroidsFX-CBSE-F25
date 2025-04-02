@@ -9,7 +9,7 @@ import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
-import dk.sdu.cbse.common.entity.ECollisionType;
+import dk.sdu.cbse.common.entity.EEntityType;
 
 import java.util.Random;
 
@@ -68,7 +68,7 @@ public class AsteroidPlugin implements IGamePluginService {
         ));
 
         asteroid.addComponent(new CollisionCP(
-                ECollisionType.ASTEROID
+                EEntityType.ASTEROID
         ));
 
         asteroid.addComponent(new MovementCP(
