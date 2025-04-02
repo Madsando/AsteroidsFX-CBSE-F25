@@ -24,13 +24,13 @@ public class AsteroidPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity asteroid : world.getEntities(Asteroid.class)) {
+        for (Entity asteroid : world.getEntities(EEntityType.ASTEROID)) {
             world.removeEntity(asteroid);
         }
     }
 
     private Entity createAsteroid(GameData gameData) {
-        Entity asteroid = new Asteroid();
+        Entity asteroid = new Entity(EEntityType.ASTEROID);
         Random rng = new Random();
 
         // The polygon-coordinates describe a shape that rather closely follows a circle with radius 1.
@@ -67,9 +67,7 @@ public class AsteroidPlugin implements IGamePluginService {
                 new AsteroidSplitter()
         ));
 
-        asteroid.addComponent(new CollisionCP(
-                EEntityType.ASTEROID
-        ));
+        asteroid.addComponent(new CollisionCP());
 
         asteroid.addComponent(new MovementCP(
                 1,

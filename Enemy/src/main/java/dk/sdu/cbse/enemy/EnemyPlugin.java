@@ -21,13 +21,13 @@ public class EnemyPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity enemy : world.getEntities(Enemy.class)) {
+        for (Entity enemy : world.getEntities(EEntityType.ENEMY)) {
             world.removeEntity(enemy);
         }
     }
 
     private Entity createEnemy(GameData gameData) {
-        Enemy enemy = new Enemy();
+        Entity enemy = new Entity(EEntityType.ENEMY);
         Random rng = new Random();
 
         double scalingFactor = 4.5;
@@ -74,9 +74,7 @@ public class EnemyPlugin implements IGamePluginService {
                 false
         ));
 
-        enemy.addComponent(new CollisionCP(
-                EEntityType.ENTITY
-        ));
+        enemy.addComponent(new CollisionCP());
 
         return enemy;
     }

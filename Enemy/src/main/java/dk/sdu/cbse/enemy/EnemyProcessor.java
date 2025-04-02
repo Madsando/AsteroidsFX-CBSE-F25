@@ -1,6 +1,7 @@
 package dk.sdu.cbse.enemy;
 
 import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
@@ -12,7 +13,7 @@ import java.util.Random;
 public class EnemyProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity enemy : world.getEntities(Enemy.class)) {
+        for (Entity enemy : world.getEntities(EEntityType.ENEMY)) {
             Random rng = new Random();
 
             enemy.getComponent(HealthCP.class).process(gameData, world, enemy);

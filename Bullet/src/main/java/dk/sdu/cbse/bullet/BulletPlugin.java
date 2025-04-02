@@ -20,14 +20,14 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity bullet : world.getEntities(Bullet.class)) {
+        for (Entity bullet : world.getEntities(EEntityType.BULLET)) {
             world.removeEntity(bullet);
         }
     }
 
     @Override
     public Entity createBullet(Entity shooter) {
-        Entity bullet = new Bullet();
+        Entity bullet = new Entity(EEntityType.BULLET);
 
         PositionCP shooterPositionCP = shooter.getComponent(PositionCP.class);
         double shooterX = shooterPositionCP.getX();
@@ -71,9 +71,7 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
 
         ));
 
-        bullet.addComponent(new CollisionCP(
-                EEntityType.BULLET
-        ));
+        bullet.addComponent(new CollisionCP());
 
         return bullet;
     }

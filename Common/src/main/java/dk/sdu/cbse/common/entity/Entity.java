@@ -9,8 +9,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Entity implements Serializable {
     private final UUID ID = UUID.randomUUID();
     private Map<Class<? extends EntityComponent>, EntityComponent> entityComponentMap;
+    private final EEntityType entityType;
 
-    public Entity() {
+    public Entity(EEntityType entityType) {
+        this.entityType = entityType;
         entityComponentMap = new ConcurrentHashMap<>();
     }
 
@@ -36,5 +38,9 @@ public class Entity implements Serializable {
 
     public Collection<EntityComponent> getComponents() {
         return entityComponentMap.values();
+    }
+
+    public EEntityType getEntityType() {
+        return entityType;
     }
 }

@@ -11,7 +11,10 @@ import dk.sdu.cbse.common.collision.ICollisionStrategy;
 public class DestroyStrategy implements ICollisionStrategy {
     @Override
     public UnorderedPair<EEntityType>[] getCollisionSignatures() {
-        return new UnorderedPair[]{new UnorderedPair<>(EEntityType.ENTITY, EEntityType.ENTITY)};
+        return new UnorderedPair[]{
+                new UnorderedPair<>(EEntityType.PLAYER, EEntityType.PLAYER),
+                new UnorderedPair<>(EEntityType.ENEMY, EEntityType.ENEMY),
+                new UnorderedPair<>(EEntityType.PLAYER, EEntityType.ENEMY),};
     }
 
     @Override

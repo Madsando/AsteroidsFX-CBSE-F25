@@ -12,7 +12,8 @@ public class AsteroidStrategy implements ICollisionStrategy {
     @Override
     public UnorderedPair<EEntityType>[] getCollisionSignatures() {
         return new UnorderedPair[]{
-                new UnorderedPair<>(EEntityType.ASTEROID, EEntityType.ENTITY),
+                new UnorderedPair<>(EEntityType.ASTEROID, EEntityType.PLAYER),
+                new UnorderedPair<>(EEntityType.ASTEROID, EEntityType.ENEMY),
                 new UnorderedPair<>(EEntityType.ASTEROID, EEntityType.BULLET)
         };
     }

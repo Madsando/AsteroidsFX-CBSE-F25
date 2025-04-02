@@ -1,5 +1,6 @@
 package dk.sdu.cbse.common.data;
 
+import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.entity.Entity;
 
 import java.util.ArrayList;
@@ -8,10 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- *
- * @author jcs
- */
 public class World {
 
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
@@ -33,13 +30,11 @@ public class World {
         return entityMap.values();
     }
 
-    public <E extends Entity> List<Entity> getEntities(Class<E>... entityTypes) {
+    public List<Entity> getEntities(EEntityType entityType) {
         List<Entity> r = new ArrayList<>();
         for (Entity e : getEntities()) {
-            for (Class<E> entityType : entityTypes) {
-                if (entityType.equals(e.getClass())) {
-                    r.add(e);
-                }
+            if (e.getEntityType() == entityType) {
+                r.add(e);
             }
         }
         return r;

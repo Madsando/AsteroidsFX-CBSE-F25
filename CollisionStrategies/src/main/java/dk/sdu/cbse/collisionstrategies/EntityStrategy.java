@@ -13,24 +13,24 @@ public class EntityStrategy implements ICollisionStrategy {
     @Override
     public UnorderedPair<EEntityType>[] getCollisionSignatures() {
         return new UnorderedPair[]{
-                new UnorderedPair<>(EEntityType.ENTITY, EEntityType.BULLET),
+                new UnorderedPair<>(EEntityType.ENEMY, EEntityType.BULLET),
+                new UnorderedPair<>(EEntityType.PLAYER, EEntityType.BULLET),
         };
     }
 
     @Override
     public void handleCollision(GameData gamedata, World world, UnorderedPair<Entity> entityPair) {
-        CollisionCP entityCCP = entityPair.getK().getComponent(CollisionCP.class);
-        if (entityCCP.getCollisionType().equals(EEntityType.ENTITY)) {
+        if (entityPair.getK().getEntityType().equals(EEntityType.BULLET)) {
+            HealthCP e = entityPair.getK().getComponent(HealthCP.class);
+            e.setHealth(0);
+
+            HealthCP e2 = entityPair.getV().getComponent(HealthCP.class);
+            e2.subtractHealth(1);
+        } else {
             HealthCP e = entityPair.getK().getComponent(HealthCP.class);
             e.subtractHealth(1);
 
             HealthCP e2 = entityPair.getV().getComponent(HealthCP.class);
-            e2.setHealth(0);
-        } else {
-            HealthCP e = entityPair.getV().getComponent(HealthCP.class);
-            e.subtractHealth(1);
-
-            HealthCP e2 = entityPair.getK().getComponent(HealthCP.class);
             e2.setHealth(0);
         }
 

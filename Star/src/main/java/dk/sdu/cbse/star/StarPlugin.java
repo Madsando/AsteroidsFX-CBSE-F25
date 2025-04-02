@@ -1,5 +1,6 @@
 package dk.sdu.cbse.star;
 
+import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
@@ -20,13 +21,13 @@ public class StarPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity star : world.getEntities(Star.class)) {
+        for (Entity star : world.getEntities(EEntityType.STAR)) {
             world.removeEntity(star);
         }
     }
 
     private Entity createStar(GameData gameData) {
-        Entity star = new Star();
+        Entity star = new Entity(EEntityType.STAR);
         Random rng = new Random();
 
         // The polygon-coordinates describe a shape that rather closely follows a circle with radius 1.

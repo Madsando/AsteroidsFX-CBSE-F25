@@ -31,11 +31,6 @@
             <artifactId>CommonBullet</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CommonCollision</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <build>

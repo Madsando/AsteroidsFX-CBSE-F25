@@ -30,14 +30,7 @@ public class CollisionResolver implements ICollisionResolverSPI {
 
     @Override
     public void resolveCollision(GameData gamedata, World world, UnorderedPair<Entity> entityPair) {
-        CollisionCP entityCollisionCP = entityPair.getK().getComponent(CollisionCP.class);
-        CollisionCP otherCollisionCP = entityPair.getV().getComponent(CollisionCP.class);
-
-        if (entityCollisionCP == null | otherCollisionCP == null) {
-            return;
-        }
-
-        UnorderedPair<EEntityType> collisionSignature = new UnorderedPair<>(entityCollisionCP.getCollisionType(), otherCollisionCP.getCollisionType());
+        UnorderedPair<EEntityType> collisionSignature = new UnorderedPair<>(entityPair.getK().getEntityType(), entityPair.getV().getEntityType());
 
         if (collisionMap.containsKey(collisionSignature)) {
             collisionMap.get(collisionSignature).handleCollision(gamedata, world, entityPair);

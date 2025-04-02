@@ -17,13 +17,13 @@ public class PlayerPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity player : world.getEntities(Player.class)) {
+        for (Entity player : world.getEntities(EEntityType.PLAYER)) {
             world.removeEntity(player);
         }
     }
 
     private Entity createPlayer(GameData gameData) {
-        Player player = new Player();
+        Entity player = new Entity(EEntityType.PLAYER);
 
         double scalingFactor = 5;
         double size = 3 * scalingFactor;
@@ -67,9 +67,7 @@ public class PlayerPlugin implements IGamePluginService {
                 false
         ));
 
-        player.addComponent(new CollisionCP(
-                EEntityType.ENTITY
-        ));
+        player.addComponent(new CollisionCP());
 
         return player;
     }

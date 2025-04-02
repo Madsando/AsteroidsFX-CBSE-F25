@@ -1,6 +1,7 @@
 package dk.sdu.cbse.player;
 
 import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
@@ -10,7 +11,7 @@ import dk.sdu.cbse.common.entitycomponents.BulletCP;
 public class PlayerProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity player : world.getEntities(Player.class)) {
+        for (Entity player : world.getEntities(EEntityType.PLAYER)) {
 
             player.getComponent(HealthCP.class).process(gameData, world, player);
 
