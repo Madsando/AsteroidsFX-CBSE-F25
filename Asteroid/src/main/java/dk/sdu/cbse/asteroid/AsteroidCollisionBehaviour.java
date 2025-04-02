@@ -12,14 +12,14 @@ public class AsteroidCollisionBehaviour implements ICollisionBehaviour {
 
     @Override
     public void process(GameData gameData, World world, Entity entity) {
+        HealthCP healthCP = entity.getComponent(HealthCP.class);
         switch (targetEntityType) {
             case ASTEROID, OTHER:
-            case null:
                 break;
-            default:
-                HealthCP healthCP = entity.getComponent(HealthCP.class);
+            case ENEMY, BULLET, PLAYER:
                 healthCP.setHealth(0);
                 gameData.addScore(1);
+                break;
         }
     }
 

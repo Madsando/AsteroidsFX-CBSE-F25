@@ -14,7 +14,6 @@ public class BulletCollisionBehaviour implements ICollisionBehaviour {
     public void process(GameData gameData, World world, Entity entity) {
         switch (targetEntityType) {
             case BULLET, OTHER:
-            case null:
                 break;
             default:
                 HealthCP healthCP = entity.getComponent(HealthCP.class);

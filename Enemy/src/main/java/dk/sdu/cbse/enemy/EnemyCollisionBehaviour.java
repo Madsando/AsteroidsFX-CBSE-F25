@@ -15,7 +15,6 @@ public class EnemyCollisionBehaviour implements ICollisionBehaviour {
         HealthCP healthCP = entity.getComponent(HealthCP.class);
         switch (targetEntityType) {
             case OTHER:
-            case null:
                 break;
             case ENEMY, PLAYER, ASTEROID:
                 healthCP.setHealth(0);
