@@ -13,26 +13,30 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class Game {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Pane gameWindow = new Pane();
-    private List<IGraphicsComponent> iGraphicsComponents;
-    private List<IEntityProcessingService> iEntityProcessingServices;
-    private List<IPostEntityProcessingService> iPostEntityProcessingServices;
-    private List<IGamePluginService> iGamePluginServices;
-    private List<IInputSPI> iInputSPIs;
-    private List<IBackgroundComponent> iBackgroundComponents;
 
-    public Game(List<IGraphicsComponent> iGraphicsComponents, List<IEntityProcessingService> iEntityProcessingServices, List<IPostEntityProcessingService> iPostEntityProcessingServices, List<IGamePluginService> iGamePluginServices, List<IInputSPI> iInputSPIs, List<IBackgroundComponent> iBackgroundComponents) {
-        this.iGraphicsComponents = iGraphicsComponents;
-        this.iEntityProcessingServices = iEntityProcessingServices;
-        this.iPostEntityProcessingServices = iPostEntityProcessingServices;
-        this.iGamePluginServices = iGamePluginServices;
-        this.iInputSPIs = iInputSPIs;
-        this.iBackgroundComponents = iBackgroundComponents;
-    }
+    @Autowired
+    private List<IGraphicsComponent> iGraphicsComponents;
+
+    @Autowired
+    private List<IEntityProcessingService> iEntityProcessingServices;
+
+    @Autowired
+    private List<IPostEntityProcessingService> iPostEntityProcessingServices;
+
+    @Autowired
+    private List<IGamePluginService> iGamePluginServices;
+
+    @Autowired
+    private List<IInputSPI> iInputSPIs;
+
+    @Autowired
+    private List<IBackgroundComponent> iBackgroundComponents;
 
     public void start(Stage window) throws Exception {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
