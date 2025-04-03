@@ -7,18 +7,30 @@ import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
+import dk.sdu.cbse.common.services.IFeatureFlag;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
 import dk.sdu.cbse.common.entity.EEntityType;
 
+import java.util.Collection;
 import java.util.Random;
+import java.util.ServiceLoader;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.util.stream.Collectors.toList;
 
 public class AsteroidPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
-        for (int i = 0; i < 25; i++) {
-            Entity asteroid = createAsteroid(gameData);
-            world.addEntity(asteroid);
+        AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
+        getFeatureFlagLoader().stream().findFirst().ifPresent(f -> {
+            isFeatureEnabled.set(f.isFeatureEnabled("asteroids"));});
+
+        if (isFeatureEnabled.get()) {
+            for (int i = 0; i < 25; i++) {
+                Entity asteroid = createAsteroid(gameData);
+                world.addEntity(asteroid);
+            }
         }
     }
 
@@ -81,4 +93,7 @@ public class AsteroidPlugin implements IGamePluginService {
         return asteroid;
     }
 
+    public static Collection<? extends IFeatureFlag> getFeatureFlagLoader() {
+        return ServiceLoader.load(IFeatureFlag.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
 }

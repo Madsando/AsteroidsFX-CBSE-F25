@@ -4,15 +4,28 @@ import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.*;
+import dk.sdu.cbse.common.services.IFeatureFlag;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
 import dk.sdu.cbse.common.entity.EEntityType;
 
+import java.util.Collection;
+import java.util.ServiceLoader;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.util.stream.Collectors.toList;
+
 public class PlayerPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
-        Entity player = createPlayer(gameData);
-        world.addEntity(player);
+        AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
+        getFeatureFlagLoader().stream().findFirst().ifPresent(f -> {
+            isFeatureEnabled.set(f.isFeatureEnabled("player"));});
+
+        if (isFeatureEnabled.get()) {
+            Entity player = createPlayer(gameData);
+            world.addEntity(player);
+        }
     }
 
     @Override
@@ -72,4 +85,7 @@ public class PlayerPlugin implements IGamePluginService {
         return player;
     }
 
+    public static Collection<? extends IFeatureFlag> getFeatureFlagLoader() {
+        return ServiceLoader.load(IFeatureFlag.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
 }

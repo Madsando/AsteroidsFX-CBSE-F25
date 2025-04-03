@@ -4,19 +4,32 @@ import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.*;
+import dk.sdu.cbse.common.services.IFeatureFlag;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
 import dk.sdu.cbse.common.entity.EEntityType;
 
+import java.util.Collection;
 import java.util.Random;
+import java.util.ServiceLoader;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.util.stream.Collectors.toList;
 
 public class EnemyPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
-        for (int i = 0; i < 3; i++) {
-            Entity enemy = createEnemy(gameData);
-            world.addEntity(enemy);
+        AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
+        getFeatureFlagLoader().stream().findFirst().ifPresent(f -> {
+            isFeatureEnabled.set(f.isFeatureEnabled("enemies"));});
+
+        if (isFeatureEnabled.get()) {
+            for (int i = 0; i < 3; i++) {
+                Entity enemy = createEnemy(gameData);
+                world.addEntity(enemy);
+            }
         }
+
     }
 
     @Override
@@ -79,4 +92,7 @@ public class EnemyPlugin implements IGamePluginService {
         return enemy;
     }
 
+    public static Collection<? extends IFeatureFlag> getFeatureFlagLoader() {
+        return ServiceLoader.load(IFeatureFlag.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
 }

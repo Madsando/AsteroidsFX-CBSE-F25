@@ -6,16 +6,28 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
+import dk.sdu.cbse.common.services.IFeatureFlag;
 import dk.sdu.cbse.common.services.IGamePluginService;
 
+import java.util.Collection;
 import java.util.Random;
+import java.util.ServiceLoader;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.util.stream.Collectors.toList;
 
 public class StarPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
-        for (int i = 0; i < 150; i++) {
-            Entity star = createStar(gameData);
-            world.addEntity(star);
+        AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
+        getFeatureFlagLoader().stream().findFirst().ifPresent(f -> {
+            isFeatureEnabled.set(f.isFeatureEnabled("stars"));});
+
+        if (isFeatureEnabled.get()) {
+            for (int i = 0; i < 150; i++) {
+                Entity star = createStar(gameData);
+                world.addEntity(star);
+            }
         }
     }
 
@@ -59,4 +71,7 @@ public class StarPlugin implements IGamePluginService {
         return star;
     }
 
+    public static Collection<? extends IFeatureFlag> getFeatureFlagLoader() {
+        return ServiceLoader.load(IFeatureFlag.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
 }
