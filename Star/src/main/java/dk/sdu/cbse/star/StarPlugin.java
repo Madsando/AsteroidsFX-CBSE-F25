@@ -20,8 +20,7 @@ public class StarPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
         AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
-        getFeatureFlagLoader().stream().findFirst().ifPresent(f -> {
-            isFeatureEnabled.set(f.isFeatureEnabled("stars"));});
+        getFeatureFlagLoader().stream().findFirst().ifPresent(f -> isFeatureEnabled.set(f.isFeatureEnabled("stars")));
 
         if (isFeatureEnabled.get()) {
             for (int i = 0; i < 150; i++) {

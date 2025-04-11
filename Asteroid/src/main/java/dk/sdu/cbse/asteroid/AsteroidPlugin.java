@@ -23,8 +23,7 @@ public class AsteroidPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
         AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
-        getFeatureFlagLoader().stream().findFirst().ifPresent(f -> {
-            isFeatureEnabled.set(f.isFeatureEnabled("asteroids"));});
+        getFeatureFlagLoader().stream().findFirst().ifPresent(f -> isFeatureEnabled.set(f.isFeatureEnabled("asteroids")));
 
         if (isFeatureEnabled.get()) {
             for (int i = 0; i < 25; i++) {

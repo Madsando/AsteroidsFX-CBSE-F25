@@ -6,7 +6,6 @@ import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.IFeatureFlag;
 import dk.sdu.cbse.common.services.IGamePluginService;
-import dk.sdu.cbse.common.entitycomponents.CollisionCP;
 import dk.sdu.cbse.common.entity.EEntityType;
 
 import java.util.Collection;
@@ -20,8 +19,7 @@ public class EnemyPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
         AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
-        getFeatureFlagLoader().stream().findFirst().ifPresent(f -> {
-            isFeatureEnabled.set(f.isFeatureEnabled("enemies"));});
+        getFeatureFlagLoader().stream().findFirst().ifPresent(f -> isFeatureEnabled.set(f.isFeatureEnabled("enemies")));
 
         if (isFeatureEnabled.get()) {
             for (int i = 0; i < 3; i++) {

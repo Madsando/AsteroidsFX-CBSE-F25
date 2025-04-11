@@ -11,7 +11,7 @@ import dk.sdu.cbse.common.data.EGameInputs;
 public class InputHandler implements IInputSPI {
     @Override
     public EventHandler<InputEvent> getInputHandlerPress(GameData gameData) {
-        return new EventHandler<InputEvent>() {
+        return new EventHandler<>() {
             @Override
             public void handle(InputEvent inputEvent) {
                 if (inputEvent instanceof KeyEvent keyEvent) {
@@ -28,7 +28,7 @@ public class InputHandler implements IInputSPI {
 
     @Override
     public EventHandler<InputEvent> getInputHandlerRelease(GameData gameData) {
-        return new EventHandler<InputEvent>() {
+        return new EventHandler<>() {
             @Override
             public void handle(InputEvent inputEvent) {
                 if (inputEvent instanceof KeyEvent keyEvent) {

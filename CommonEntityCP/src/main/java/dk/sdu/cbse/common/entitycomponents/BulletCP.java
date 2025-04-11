@@ -13,11 +13,11 @@ import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
 
 public class BulletCP implements EntityComponent {
+    private final Random rand;
     private int attackChance;
     private int attackCooldown;
     private long lastAttack;
     private boolean shouldAttack;
-    private Random rand;
 
     public BulletCP(int attackChance, int attackCooldown, boolean shouldAttack) {
         this.attackChance = attackChance;

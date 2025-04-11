@@ -4,10 +4,8 @@ import dk.sdu.cbse.common.data.*;
 import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.entity.EntityComponent;
-import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
-import dk.sdu.cbse.common.entitycomponents.BulletCP;
 
 import java.util.Random;
 

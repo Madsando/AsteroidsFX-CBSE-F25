@@ -8,7 +8,7 @@ import dk.sdu.cbse.common.entity.EntityComponent;
 
 public class HealthCP implements EntityComponent {
     private int health;
-    private CustomEntityBehaviour behaviour;
+    private final CustomEntityBehaviour behaviour;
 
     public HealthCP(int health, CustomEntityBehaviour behaviour) {
         this.health = health;

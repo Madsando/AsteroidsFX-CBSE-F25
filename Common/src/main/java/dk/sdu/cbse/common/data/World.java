@@ -13,9 +13,9 @@ public class World {
 
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
 
-    public String addEntity(Entity entity) {
+    public void addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);
-        return entity.getID();
+        entity.getID();
     }
 
     public void removeEntity(String entityID) {

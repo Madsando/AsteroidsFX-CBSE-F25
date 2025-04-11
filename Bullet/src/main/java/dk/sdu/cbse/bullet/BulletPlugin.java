@@ -15,7 +15,7 @@ import dk.sdu.cbse.common.entity.EEntityType;
 public class BulletPlugin implements IGamePluginService, IBulletSPI {
     @Override
     public void start(GameData gameData, World world) {
-        return; // No bullets should be spawned at the start
+        // No bullets should be spawned at the start
     }
 
     @Override

@@ -6,7 +6,6 @@ import dk.sdu.cbse.common.services.*;
 
 import java.util.ArrayList;
 
-import dk.sdu.cbse.common.data.World;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -28,24 +27,12 @@ public class Main extends Application {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         Scene scene = new Scene(gameWindow);
 
-        gameWindow.heightProperty().addListener((observable, oldValue, newValue) -> {
-            gameData.setDisplayHeight(newValue.intValue());
-        });
+        gameWindow.heightProperty().addListener((observable, oldValue, newValue) -> gameData.setDisplayHeight(newValue.intValue()));
+        gameWindow.widthProperty().addListener((observable, oldValue, newValue) -> gameData.setDisplayWidth(newValue.intValue()));
 
-        gameWindow.widthProperty().addListener((observable, oldValue, newValue) -> {
-            gameData.setDisplayWidth(newValue.intValue());
-        });
-
-        ModuleConfig.getIBackgroundComponents().stream().findFirst().ifPresent(backgroundComponent -> {
-            gameWindow.setBackground(backgroundComponent.getBackground());
-        });
-
-        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
-            scene.setOnKeyPressed(service.getInputHandlerPress(gameData));
-        });
-        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
-            scene.setOnKeyReleased(service.getInputHandlerRelease(gameData));
-        });
+        ModuleConfig.getIBackgroundComponents().stream().findFirst().ifPresent(backgroundComponent -> gameWindow.setBackground(backgroundComponent.getBackground()));
+        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> scene.setOnKeyPressed(service.getInputHandlerPress(gameData)));
+        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> scene.setOnKeyReleased(service.getInputHandlerRelease(gameData)));
 
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : ModuleConfig.getPluginServices()) {

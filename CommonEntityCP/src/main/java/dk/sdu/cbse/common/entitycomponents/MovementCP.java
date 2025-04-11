@@ -9,7 +9,7 @@ public class MovementCP implements EntityComponent {
     private double velocity;
     private double rotationSpeed;
     private boolean left, right, forward;
-    private boolean shouldCullOOB;
+    private final boolean shouldCullOOB;
 
     public MovementCP(double velocity, double rotationSpeed, boolean left, boolean right, boolean forward, boolean shouldCullOOB) {
         this.velocity = velocity;

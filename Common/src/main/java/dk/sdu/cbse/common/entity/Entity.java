@@ -21,8 +21,8 @@ public class Entity implements Serializable {
         return ID.toString();
     }
 
-    public <E extends EntityComponent> E getComponent(Class componentClass) {
-        return (E) entityComponentMap.get(componentClass);
+    public <E extends EntityComponent> E getComponent(Class<E> componentClass) {
+        return componentClass.cast(entityComponentMap.get(componentClass));
     }
 
     public void addComponent(EntityComponent component) {

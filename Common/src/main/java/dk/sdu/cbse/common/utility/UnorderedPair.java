@@ -23,8 +23,8 @@ public class UnorderedPair<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof UnorderedPair that) {
-            return ((k == that.k & v == that.v) ||
+        if (o instanceof UnorderedPair<?> that) {
+            return ((k == that.k & v == that.v) |
                     (k == that.v & v == that.k));
         } else {
             return false;
