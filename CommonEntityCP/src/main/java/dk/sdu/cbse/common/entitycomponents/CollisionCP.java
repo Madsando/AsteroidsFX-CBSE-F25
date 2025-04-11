@@ -25,6 +25,11 @@ public class CollisionCP implements EntityComponent {
         }
     }
 
+    @Override
+    public int getPriority() {
+        return 1;
+    }
+
     public void setTargetType(EEntityType targetType) {
         this.targetType = targetType;
     }

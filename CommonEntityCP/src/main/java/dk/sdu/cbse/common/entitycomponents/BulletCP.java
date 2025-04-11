@@ -38,6 +38,11 @@ public class BulletCP implements EntityComponent {
         }
     }
 
+    @Override
+    public int getPriority() {
+        return 3;
+    }
+
     private boolean isCooldownOver() {
         return (System.currentTimeMillis() - this.lastAttack > this.attackCooldown);
     }

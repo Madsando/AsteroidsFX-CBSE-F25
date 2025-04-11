@@ -66,6 +66,11 @@ public class MovementCP implements EntityComponent {
 
     }
 
+    @Override
+    public int getPriority() {
+        return 3;
+    }
+
     public boolean isLeft() {
         return left;
     }
