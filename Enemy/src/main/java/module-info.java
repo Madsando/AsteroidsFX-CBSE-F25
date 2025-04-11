@@ -5,6 +5,7 @@ import dk.sdu.cbse.common.services.IGamePluginService;
 module Enemy {
     requires Common;
     requires CommonEntityCP;
+    requires CommonCollision;
 
     uses IFeatureFlag;
 

@@ -43,4 +43,9 @@ public class PositionCP implements EntityComponent {
     @Override
     public void process(GameData gameData, World world, Entity entity) {
     }
+
+    @Override
+    public int getPriority() {
+        return 3;
+    }
 }

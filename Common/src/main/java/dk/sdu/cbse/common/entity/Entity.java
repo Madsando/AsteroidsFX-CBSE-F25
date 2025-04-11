@@ -5,10 +5,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class Entity implements Serializable {
     private final UUID ID = UUID.randomUUID();
-    private Map<Class<? extends EntityComponent>, EntityComponent> entityComponentMap;
+    private final Map<Class<? extends EntityComponent>, EntityComponent> entityComponentMap;
     private final EEntityType entityType;
 
     public Entity(EEntityType entityType) {
@@ -37,7 +38,7 @@ public class Entity implements Serializable {
     }
 
     public Collection<EntityComponent> getComponents() {
-        return entityComponentMap.values();
+        return entityComponentMap.values().stream().sorted(new ComponentComparator()).collect(Collectors.toList());
     }
 
     public EEntityType getEntityType() {

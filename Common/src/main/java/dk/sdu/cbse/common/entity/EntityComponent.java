@@ -5,4 +5,5 @@ import dk.sdu.cbse.common.data.World;
 
 public interface EntityComponent {
     void process(GameData gameData, World world, Entity entity);
+    int getPriority();
 }

@@ -25,6 +25,11 @@ public class HealthCP implements EntityComponent {
         }
     }
 
+    @Override
+    public int getPriority() {
+        return 2;
+    }
+
     public boolean isDead() {
         return health <= 0;
     }

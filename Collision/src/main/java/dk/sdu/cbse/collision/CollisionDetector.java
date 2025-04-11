@@ -7,58 +7,65 @@ import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IPostEntityProcessingService;
-import dk.sdu.cbse.common.utility.UnorderedPair;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CollisionDetector implements IPostEntityProcessingService {
-    private final CollisionResolver resolver = new CollisionResolver();
-    private final ArrayList<UnorderedPair<Entity>> collidingEntityPairs = new ArrayList<>();
+    private final Set<String> collidedEntities = Collections.synchronizedSet(new HashSet<>());
 
     @Override
     public void process(GameData gameData, World world) {
-        collidingEntityPairs.clear();
+        collidedEntities.clear();
 
         for (Entity e : world.getEntities()) {
-
             if (e.getComponent(CollisionCP.class) == null) {
                 continue;
             }
 
+            collidedEntities.add(e.getID());
 
             for (Entity e2 : world.getEntities()) {
-                if (e2.getComponent(CollisionCP.class) == null) {
-                    continue;
-                }
-
-
                 // Make sure entities are different. Cannot collide with oneself
-                if (e.getID().equals(e2.getID())) {
+                // Check that they can collide e.g. have CollisionCP
+                if (e2.getComponent(CollisionCP.class) == null | e.getID().equals(e2.getID())) {
                     continue;
                 }
 
-                // Using Pythagoras' distance formula
-                PositionCP ePositionCP = e.getComponent(PositionCP.class);
-                PositionCP e2PositionCP = e2.getComponent(PositionCP.class);
+                if (collidedEntities.contains(e2.getID())) {
+                    continue;
+                }
 
-                double xDistance = ePositionCP.getX() - e2PositionCP.getX();
-                double yDistance = ePositionCP.getY() - e2PositionCP.getY();
-                double distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
-
-                ShapeCP eShape = e.getComponent(ShapeCP.class);
-                ShapeCP e2Shape = e2.getComponent(ShapeCP.class);
-
-                if (distance <= (eShape.getRadius() + e2Shape.getRadius())) {
-                    UnorderedPair<Entity> collidingEntityPair = new UnorderedPair<>(e, e2);
-
-                    if (collidingEntityPairs.contains(collidingEntityPair)) {
-                        continue;
-                    }
-
-                    collidingEntityPairs.add(collidingEntityPair);
-                    resolver.resolveCollision(gameData, world, collidingEntityPair);
+                if (entitiesCollide(e, e2)) {
+                    resolveCollision(e, e2);
                 }
             }
         }
+    }
+
+    private Boolean entitiesCollide(Entity e1, Entity e2) {
+        // Using Pythagoras' distance formula
+        PositionCP ePositionCP = e1.getComponent(PositionCP.class);
+        PositionCP e2PositionCP = e2.getComponent(PositionCP.class);
+
+        double xDistance = ePositionCP.getX() - e2PositionCP.getX();
+        double yDistance = ePositionCP.getY() - e2PositionCP.getY();
+        double distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+
+        ShapeCP eShape = e1.getComponent(ShapeCP.class);
+        ShapeCP e2Shape = e2.getComponent(ShapeCP.class);
+
+        return distance <= (eShape.getRadius() + e2Shape.getRadius());
+    }
+
+    private void resolveCollision(Entity source, Entity target) {
+        CollisionCP sourceCollisionCP = source.getComponent(CollisionCP.class);
+        sourceCollisionCP.setTargetType(target.getEntityType());
+        sourceCollisionCP.setHasCollided(true);
+
+        CollisionCP targetCollisionCP = target.getComponent(CollisionCP.class);
+        targetCollisionCP.setTargetType(source.getEntityType());
+        targetCollisionCP.setHasCollided(true);
     }
 }

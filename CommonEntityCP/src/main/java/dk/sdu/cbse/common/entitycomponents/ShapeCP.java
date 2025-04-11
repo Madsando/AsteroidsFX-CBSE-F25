@@ -21,6 +21,11 @@ public class ShapeCP implements EntityComponent {
         // TODO
     }
 
+    @Override
+    public int getPriority() {
+        return 3;
+    }
+
     public double[] getPolygonCoordinates() {
         return polygonCoordinates;
     }
