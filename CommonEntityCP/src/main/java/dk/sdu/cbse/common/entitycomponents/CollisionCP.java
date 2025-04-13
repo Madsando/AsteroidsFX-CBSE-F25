@@ -7,21 +7,22 @@ import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entity.EntityComponent;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 public class CollisionCP implements EntityComponent {
     private final ICollisionBehaviour collisionBehaviour;
-    private EEntityType targetType;
-    private boolean hasCollided = false;
+    private final Queue<EEntityType> collisions;
 
     public CollisionCP(ICollisionBehaviour collisionBehaviour) {
         this.collisionBehaviour = collisionBehaviour;
+        this.collisions = new ConcurrentLinkedQueue<>();
     }
 
     @Override
     public void process(GameData gameData, World world, Entity entity) {
-        if (hasCollided) {
-            hasCollided = false;
-            collisionBehaviour.setTarget(targetType);
-            collisionBehaviour.process(gameData, world, entity);
+        while (!collisions.isEmpty()) {
+            collisionBehaviour.process(gameData, world, entity, collisions.poll());
         }
     }
 
@@ -30,11 +31,7 @@ public class CollisionCP implements EntityComponent {
         return 1;
     }
 
-    public void setTargetType(EEntityType targetType) {
-        this.targetType = targetType;
-    }
-
-    public void setHasCollided(boolean hasCollided) {
-        this.hasCollided = hasCollided;
+    public void addCollision(EEntityType targetType) {
+        collisions.add(targetType);
     }
 }

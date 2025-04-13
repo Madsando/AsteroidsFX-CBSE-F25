@@ -19,26 +19,18 @@ public class CollisionDetector implements IPostEntityProcessingService {
     public void process(GameData gameData, World world) {
         collidedEntities.clear();
 
-        for (Entity e : world.getEntities()) {
-            if (e.getComponent(CollisionCP.class) == null) {
-                continue;
-            }
+        for (Entity e1 : world.getEntitiesWithComponent(CollisionCP.class)) {
+            collidedEntities.add(e1.getID());
 
-            collidedEntities.add(e.getID());
-
-            for (Entity e2 : world.getEntities()) {
+            for (Entity e2 : world.getEntitiesWithComponent(CollisionCP.class)) {
                 // Make sure entities are different. Cannot collide with oneself
-                // Check that they can collide e.g. have CollisionCP
-                if (e2.getComponent(CollisionCP.class) == null | e.getID().equals(e2.getID())) {
+                // Make sure collisions with the selected entity has not been checked already
+                if (e1.getID().equals(e2.getID()) | collidedEntities.contains(e2.getID())) {
                     continue;
                 }
 
-                if (collidedEntities.contains(e2.getID())) {
-                    continue;
-                }
-
-                if (entitiesCollide(e, e2)) {
-                    resolveCollision(e, e2);
+                if (entitiesCollide(e1, e2)) {
+                    resolveCollision(e1, e2);
                 }
             }
         }
@@ -60,12 +52,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
     }
 
     private void resolveCollision(Entity source, Entity target) {
-        CollisionCP sourceCollisionCP = source.getComponent(CollisionCP.class);
-        sourceCollisionCP.setTargetType(target.getEntityType());
-        sourceCollisionCP.setHasCollided(true);
-
-        CollisionCP targetCollisionCP = target.getComponent(CollisionCP.class);
-        targetCollisionCP.setTargetType(source.getEntityType());
-        targetCollisionCP.setHasCollided(true);
+        source.getComponent(CollisionCP.class).addCollision(target.getEntityType());
+        target.getComponent(CollisionCP.class).addCollision(source.getEntityType());
     }
 }

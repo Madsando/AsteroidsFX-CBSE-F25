@@ -8,12 +8,10 @@ import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 
 public class EnemyCollisionBehaviour implements ICollisionBehaviour {
-    private EEntityType targetEntityType;
-
     @Override
-    public void process(GameData gameData, World world, Entity entity) {
+    public void process(GameData gameData, World world, Entity entity, EEntityType targetType) {
         HealthCP healthCP = entity.getComponent(HealthCP.class);
-        switch (targetEntityType) {
+        switch (targetType) {
             case OTHER:
                 break;
             case ENEMY, PLAYER, ASTEROID:
@@ -23,10 +21,5 @@ public class EnemyCollisionBehaviour implements ICollisionBehaviour {
                 healthCP.subtractHealth(1);
                 break;
         }
-    }
-
-    @Override
-    public void setTarget(EEntityType target) {
-        this.targetEntityType = target;
     }
 }

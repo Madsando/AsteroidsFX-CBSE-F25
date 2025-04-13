@@ -2,6 +2,7 @@ package dk.sdu.cbse.common.data;
 
 import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.entity.EntityComponent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +35,16 @@ public class World {
         List<Entity> r = new ArrayList<>();
         for (Entity e : getEntities()) {
             if (e.getEntityType() == entityType) {
+                r.add(e);
+            }
+        }
+        return r;
+    }
+
+    public <E extends EntityComponent> List<Entity> getEntitiesWithComponent(Class<E> entityComponent) {
+        List<Entity> r = new ArrayList<>();
+        for (Entity e : getEntities()) {
+            if (e.getComponent(entityComponent) != null) {
                 r.add(e);
             }
         }

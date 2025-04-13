@@ -8,11 +8,9 @@ import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 
 public class BulletCollisionBehaviour implements ICollisionBehaviour {
-    private EEntityType targetEntityType;
-
     @Override
-    public void process(GameData gameData, World world, Entity entity) {
-        switch (targetEntityType) {
+    public void process(GameData gameData, World world, Entity entity, EEntityType targetType) {
+        switch (targetType) {
             case BULLET, OTHER:
                 break;
             default:
@@ -20,10 +18,5 @@ public class BulletCollisionBehaviour implements ICollisionBehaviour {
                 healthCP.setHealth(0);
                 break;
         }
-    }
-
-    @Override
-    public void setTarget(EEntityType target) {
-        this.targetEntityType = target;
     }
 }
