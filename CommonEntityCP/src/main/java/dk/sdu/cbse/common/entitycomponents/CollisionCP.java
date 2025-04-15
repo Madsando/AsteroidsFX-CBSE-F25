@@ -5,12 +5,12 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.EntityComponent;
+import dk.sdu.cbse.common.entity.IEntityComponent;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class CollisionCP implements EntityComponent {
+public class CollisionCP implements IEntityComponent {
     private final ICollisionBehaviour collisionBehaviour;
     private final Queue<EEntityType> collisions;
 

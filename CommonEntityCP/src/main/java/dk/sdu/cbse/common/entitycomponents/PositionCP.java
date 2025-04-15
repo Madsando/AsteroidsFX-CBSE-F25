@@ -3,9 +3,9 @@ package dk.sdu.cbse.common.entitycomponents;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.EntityComponent;
+import dk.sdu.cbse.common.entity.IEntityComponent;
 
-public class PositionCP implements EntityComponent {
+public class PositionCP implements IEntityComponent {
     private double x;
     private double y;
     private double rotation;

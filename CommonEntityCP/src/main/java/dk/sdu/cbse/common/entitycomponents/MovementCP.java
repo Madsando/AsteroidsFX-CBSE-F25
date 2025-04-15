@@ -3,9 +3,9 @@ package dk.sdu.cbse.common.entitycomponents;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.EntityComponent;
+import dk.sdu.cbse.common.entity.IEntityComponent;
 
-public class MovementCP implements EntityComponent {
+public class MovementCP implements IEntityComponent {
     private double velocity;
     private double rotationSpeed;
     private boolean left, right, forward;
@@ -68,7 +68,7 @@ public class MovementCP implements EntityComponent {
 
     @Override
     public int getPriority() {
-        return 3;
+        return 4;
     }
 
     public boolean isLeft() {

@@ -3,11 +3,11 @@ package dk.sdu.cbse.asteroid;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.CustomEntityBehaviour;
+import dk.sdu.cbse.common.entity.ICustomEntityBehaviour;
 import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.entity.EEntityType;
 
-public class AsteroidSplitter implements CustomEntityBehaviour {
+public class AsteroidSplitter implements ICustomEntityBehaviour {
     @Override
     public void process(GameData gameData, World world, Entity entity) {
         ShapeCP shape = entity.getComponent(ShapeCP.class);

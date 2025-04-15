@@ -78,6 +78,10 @@ public class PlayerPlugin implements IGamePluginService {
                 false
         ));
 
+        player.addComponent(new InputMovementControlCP());
+
+        player.addComponent(new InputBulletControlCP());
+
         player.addComponent(new CollisionCP(
                 new PlayerCollisionBehaviour()
         ));

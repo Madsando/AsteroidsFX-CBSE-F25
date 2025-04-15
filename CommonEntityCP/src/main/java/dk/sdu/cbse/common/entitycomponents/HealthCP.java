@@ -3,14 +3,14 @@ package dk.sdu.cbse.common.entitycomponents;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.CustomEntityBehaviour;
-import dk.sdu.cbse.common.entity.EntityComponent;
+import dk.sdu.cbse.common.entity.ICustomEntityBehaviour;
+import dk.sdu.cbse.common.entity.IEntityComponent;
 
-public class HealthCP implements EntityComponent {
+public class HealthCP implements IEntityComponent {
     private int health;
-    private final CustomEntityBehaviour behaviour;
+    private final ICustomEntityBehaviour behaviour;
 
-    public HealthCP(int health, CustomEntityBehaviour behaviour) {
+    public HealthCP(int health, ICustomEntityBehaviour behaviour) {
         this.health = health;
         this.behaviour = behaviour;
     }

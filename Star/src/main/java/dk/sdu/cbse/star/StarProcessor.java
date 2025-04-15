@@ -3,6 +3,7 @@ package dk.sdu.cbse.star;
 import dk.sdu.cbse.common.data.*;
 import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.entity.IEntityComponent;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IEntityProcessingService;
 
@@ -12,16 +13,9 @@ public class StarProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity star : world.getEntities(EEntityType.OTHER)) {
-            ShapeCP shapeCP = star.getComponent(ShapeCP.class);
-
-            int[] colors =  shapeCP.getColor();
-            Random rng = new Random();
-            if (rng.nextInt(20) == 1) {
-                for (int i = 0; i < colors.length; i++) {
-                    colors[i] = (colors[i] + 1) % 150 + 105;
-                }
+            for (IEntityComponent entityComponent : star.getComponents()) {
+                entityComponent.process(gameData, world, star);
             }
-            shapeCP.setColor(colors);
         }
     }
 }

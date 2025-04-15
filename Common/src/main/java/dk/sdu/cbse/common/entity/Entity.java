@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class Entity implements Serializable {
     private final UUID ID = UUID.randomUUID();
-    private final Map<Class<? extends EntityComponent>, EntityComponent> entityComponentMap;
+    private final Map<Class<? extends IEntityComponent>, IEntityComponent> entityComponentMap;
     private final EEntityType entityType;
 
     public Entity(EEntityType entityType) {
@@ -21,23 +21,23 @@ public class Entity implements Serializable {
         return ID.toString();
     }
 
-    public <E extends EntityComponent> E getComponent(Class<E> componentClass) {
+    public <E extends IEntityComponent> E getComponent(Class<E> componentClass) {
         return componentClass.cast(entityComponentMap.get(componentClass));
     }
 
-    public void addComponent(EntityComponent component) {
+    public void addComponent(IEntityComponent component) {
         entityComponentMap.put(component.getClass(), component);
     }
 
-    public void removeComponent(Class<? extends EntityComponent> componentClass) {
+    public void removeComponent(Class<? extends IEntityComponent> componentClass) {
         entityComponentMap.remove(componentClass);
     }
 
-    public void removeComponent(EntityComponent component) {
+    public void removeComponent(IEntityComponent component) {
         entityComponentMap.remove(component.getClass());
     }
 
-    public Collection<EntityComponent> getComponents() {
+    public Collection<IEntityComponent> getComponents() {
         return entityComponentMap.values().stream().sorted(new ComponentComparator()).collect(Collectors.toList());
     }
 

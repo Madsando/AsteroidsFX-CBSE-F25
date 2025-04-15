@@ -3,9 +3,9 @@ package dk.sdu.cbse.common.entitycomponents;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.EntityComponent;
+import dk.sdu.cbse.common.entity.IEntityComponent;
 
-public class ShapeCP implements EntityComponent {
+public class ShapeCP implements IEntityComponent {
     private double[] polygonCoordinates;
     private double radius;
     private int[] color;
@@ -23,7 +23,7 @@ public class ShapeCP implements EntityComponent {
 
     @Override
     public int getPriority() {
-        return 3;
+        return 4;
     }
 
     public double[] getPolygonCoordinates() {

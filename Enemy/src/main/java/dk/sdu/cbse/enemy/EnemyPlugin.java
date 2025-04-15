@@ -89,6 +89,8 @@ public class EnemyPlugin implements IGamePluginService {
                 new EnemyCollisionBehaviour()
         ));
 
+        enemy.addComponent(new RandomMovementControlCP());
+
         return enemy;
     }
 

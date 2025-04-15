@@ -4,6 +4,7 @@ import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
+import dk.sdu.cbse.common.entitycomponents.FlickeringShapeCP;
 import dk.sdu.cbse.common.entitycomponents.PositionCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IFeatureFlag;
@@ -66,6 +67,8 @@ public class StarPlugin implements IGamePluginService {
                 y,
                 rng.nextInt(0, 180)
         ));
+
+        star.addComponent(new FlickeringShapeCP());
 
         return star;
     }

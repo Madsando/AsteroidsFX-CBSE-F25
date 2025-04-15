@@ -4,7 +4,7 @@ import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.bullet.IBulletSPI;
-import dk.sdu.cbse.common.entity.EntityComponent;
+import dk.sdu.cbse.common.entity.IEntityComponent;
 
 import java.util.Collection;
 import java.util.Random;
@@ -12,7 +12,7 @@ import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
-public class BulletCP implements EntityComponent {
+public class BulletCP implements IEntityComponent {
     private final Random rand;
     private int attackChance;
     private int attackCooldown;
@@ -40,7 +40,7 @@ public class BulletCP implements EntityComponent {
 
     @Override
     public int getPriority() {
-        return 3;
+        return 4;
     }
 
     private boolean isCooldownOver() {
