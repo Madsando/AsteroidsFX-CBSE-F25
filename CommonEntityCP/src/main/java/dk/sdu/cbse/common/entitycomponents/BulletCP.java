@@ -40,7 +40,7 @@ public class BulletCP implements IEntityComponent {
 
     @Override
     public int getPriority() {
-        return 4;
+        return 5;
     }
 
     private boolean isCooldownOver() {

@@ -1,6 +1,8 @@
 package dk.sdu.cbse.main;
 
 import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.entity.IEntityComponent;
 import dk.sdu.cbse.common.graphics.IGraphicsComponent;
 import dk.sdu.cbse.common.services.*;
 
@@ -43,7 +45,6 @@ public class Main extends Application {
         for (IGraphicsComponent graphicsComponent : graphicsComponents) {
             gameWindow.getChildren().add(graphicsComponent.createComponent(gameData, world));
         }
-
         render();
         window.setScene(scene);
         window.setTitle("Asteroids");
@@ -62,9 +63,12 @@ public class Main extends Application {
     }
 
     private void update() {
-        for (IEntityProcessingService entityProcessorService : ModuleConfig.getEntityProcessingServices()) {
-            entityProcessorService.process(gameData, world);
+        for (Entity entity : world.getEntities()) {
+            for (IEntityComponent component : entity.getComponents()) {
+                component.process(gameData, world, entity);
+            }
         }
+
         for (IPostEntityProcessingService postEntityProcessorService : ModuleConfig.getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }

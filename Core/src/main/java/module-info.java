@@ -12,7 +12,6 @@ module Core {
     opens dk.sdu.cbse.main to javafx.graphics;
 
     uses IGamePluginService;
-    uses IEntityProcessingService;
     uses IPostEntityProcessingService;
     uses IInputSPI;
     uses IGraphicsComponent;
