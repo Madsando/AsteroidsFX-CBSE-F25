@@ -40,8 +40,8 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
         int bulletRadius = 2;
         double changeX = Math.cos(Math.toRadians(shooterRotation));
         double changeY = Math.sin(Math.toRadians(shooterRotation));
-        double bulletX = shooterX + changeX * (shooterRadius + bulletRadius);
-        double bulletY = shooterY + changeY * (shooterRadius + bulletRadius);
+        double bulletX = shooterX + changeX * (shooterRadius + bulletRadius + 2);
+        double bulletY = shooterY + changeY * (shooterRadius + bulletRadius + 2);
 
         bullet.addComponent(new ShapeCP(
                 new double[]{2, -1, 2, 1, -1, 1, -1, -1},
