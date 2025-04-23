@@ -5,15 +5,17 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entity.IEntityComponent;
 
-public class PositionCP implements IEntityComponent {
+public class TransformCP implements IEntityComponent {
     private double x;
     private double y;
     private double rotation;
+    private double radius;
 
-    public PositionCP(double x, double y, double rotation) {
+    public TransformCP(double x, double y, double rotation, double radius) {
         this.x = x;
         this.y = y;
         this.rotation = rotation;
+        this.radius = radius;
     }
 
     public double getX() {
@@ -38,6 +40,14 @@ public class PositionCP implements IEntityComponent {
 
     public void setRotation(double rotation) {
         this.rotation = rotation;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
     }
 
     @Override

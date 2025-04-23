@@ -55,14 +55,14 @@ public class EnemyPlugin implements IGamePluginService {
 
         enemy.addComponent(new ShapeCP(
                 polygonCoordinates,
-                radius,
                 new int[]{254, 0, 0}
         ));
 
-        enemy.addComponent(new PositionCP(
+        enemy.addComponent(new TransformCP(
                 rng.nextInt(gameData.getDisplayWidth()),
                 rng.nextInt(gameData.getDisplayHeight()),
-                90
+                90,
+                radius
         ));
 
         enemy.addComponent(new HealthCP(

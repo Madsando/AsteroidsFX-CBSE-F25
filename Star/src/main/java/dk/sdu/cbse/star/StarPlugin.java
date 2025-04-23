@@ -5,7 +5,7 @@ import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.FlickeringShapeCP;
-import dk.sdu.cbse.common.entitycomponents.PositionCP;
+import dk.sdu.cbse.common.entitycomponents.TransformCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IFeatureFlag;
 import dk.sdu.cbse.common.services.IGamePluginService;
@@ -52,7 +52,6 @@ public class StarPlugin implements IGamePluginService {
         int color = rng.nextInt(120, 255);
         star.addComponent(new ShapeCP(
                 polygonCoordinates,
-                scalingFactor,
                 new int[]{color, color, color}
         ));
 
@@ -62,10 +61,11 @@ public class StarPlugin implements IGamePluginService {
         int x = (int) (Math.cos(angle) * radius) + gameData.getDisplayWidth() / 2;
         int y = (int) (Math.sin(angle) * radius) + gameData.getDisplayHeight() / 2;
 
-        star.addComponent(new PositionCP(
+        star.addComponent(new TransformCP(
                 x,
                 y,
-                rng.nextInt(0, 180)
+                rng.nextInt(0, 180),
+                scalingFactor
         ));
 
         star.addComponent(new FlickeringShapeCP());

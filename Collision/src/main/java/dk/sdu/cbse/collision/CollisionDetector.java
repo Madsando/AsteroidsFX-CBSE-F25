@@ -4,7 +4,7 @@ import dk.sdu.cbse.common.entitycomponents.CollisionCP;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entitycomponents.PositionCP;
+import dk.sdu.cbse.common.entitycomponents.TransformCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IPostEntityProcessingService;
 
@@ -38,17 +38,14 @@ public class CollisionDetector implements IPostEntityProcessingService {
 
     private Boolean entitiesCollide(Entity e1, Entity e2) {
         // Using Pythagoras' distance formula
-        PositionCP ePositionCP = e1.getComponent(PositionCP.class);
-        PositionCP e2PositionCP = e2.getComponent(PositionCP.class);
+        TransformCP eTransformCP = e1.getComponent(TransformCP.class);
+        TransformCP e2TransformCP = e2.getComponent(TransformCP.class);
 
-        double xDistance = ePositionCP.getX() - e2PositionCP.getX();
-        double yDistance = ePositionCP.getY() - e2PositionCP.getY();
+        double xDistance = eTransformCP.getX() - e2TransformCP.getX();
+        double yDistance = eTransformCP.getY() - e2TransformCP.getY();
         double distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 
-        ShapeCP eShape = e1.getComponent(ShapeCP.class);
-        ShapeCP e2Shape = e2.getComponent(ShapeCP.class);
-
-        return distance <= (eShape.getRadius() + e2Shape.getRadius());
+        return distance <= (eTransformCP.getRadius() + e2TransformCP.getRadius());
     }
 
     private void resolveCollision(Entity source, Entity target) {

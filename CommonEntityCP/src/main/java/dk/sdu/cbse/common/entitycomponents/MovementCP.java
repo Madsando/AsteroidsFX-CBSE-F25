@@ -22,46 +22,46 @@ public class MovementCP implements IEntityComponent {
 
     @Override
     public void process(GameData gameData, World world, Entity entity) {
-        PositionCP positionCP = entity.getComponent(PositionCP.class);
+        TransformCP transformCP = entity.getComponent(TransformCP.class);
 
         if (forward) {
-            double angle = Math.toRadians(positionCP.getRotation());
+            double angle = Math.toRadians(transformCP.getRotation());
             double changeX = Math.cos(angle);
             double changeY = Math.sin(angle);
 
-            positionCP.setX(positionCP.getX() + changeX * velocity);
-            positionCP.setY(positionCP.getY() + changeY * velocity);
+            transformCP.setX(transformCP.getX() + changeX * velocity);
+            transformCP.setY(transformCP.getY() + changeY * velocity);
         }
         if (left) {
-            positionCP.setRotation(positionCP.getRotation() - rotationSpeed);
+            transformCP.setRotation(transformCP.getRotation() - rotationSpeed);
         }
 
         if (right) {
-            positionCP.setRotation(positionCP.getRotation() + rotationSpeed);
+            transformCP.setRotation(transformCP.getRotation() + rotationSpeed);
         }
 
-        if (positionCP.getX() < 0) {
+        if (transformCP.getX() < 0) {
             if (shouldCullOOB) {
                 world.removeEntity(entity);
             }
-            positionCP.setX(gameData.getDisplayWidth());
-        } else if (positionCP.getX() > gameData.getDisplayWidth()) {
+            transformCP.setX(gameData.getDisplayWidth());
+        } else if (transformCP.getX() > gameData.getDisplayWidth()) {
             if (shouldCullOOB) {
                 world.removeEntity(entity);
             }
-            positionCP.setX(0);
+            transformCP.setX(0);
         }
 
-        if (positionCP.getY() < 0) {
+        if (transformCP.getY() < 0) {
             if (shouldCullOOB) {
                 world.removeEntity(entity);
             }
-            positionCP.setY(gameData.getDisplayHeight());
-        } else if (positionCP.getY() > gameData.getDisplayHeight()) {
+            transformCP.setY(gameData.getDisplayHeight());
+        } else if (transformCP.getY() > gameData.getDisplayHeight()) {
             if (shouldCullOOB) {
                 world.removeEntity(entity);
             }
-            positionCP.setY(0);
+            transformCP.setY(0);
         }
 
     }

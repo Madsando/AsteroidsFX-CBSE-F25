@@ -5,7 +5,7 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
-import dk.sdu.cbse.common.entitycomponents.PositionCP;
+import dk.sdu.cbse.common.entitycomponents.TransformCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.bullet.IBulletSPI;
@@ -29,13 +29,11 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
     public Entity createBullet(Entity shooter) {
         Entity bullet = new Entity(EEntityType.BULLET);
 
-        PositionCP shooterPositionCP = shooter.getComponent(PositionCP.class);
-        double shooterX = shooterPositionCP.getX();
-        double shooterY = shooterPositionCP.getY();
-        double shooterRotation = shooterPositionCP.getRotation();
-
-        ShapeCP shooterShapeCP = shooter.getComponent(ShapeCP.class);
-        double shooterRadius = shooterShapeCP.getRadius();
+        TransformCP shooterTransformCP = shooter.getComponent(TransformCP.class);
+        double shooterX = shooterTransformCP.getX();
+        double shooterY = shooterTransformCP.getY();
+        double shooterRotation = shooterTransformCP.getRotation();
+        double shooterRadius = shooterTransformCP.getRadius();
 
         int bulletRadius = 2;
         double changeX = Math.cos(Math.toRadians(shooterRotation));
@@ -45,7 +43,6 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
 
         bullet.addComponent(new ShapeCP(
                 new double[]{2, -1, 2, 1, -1, 1, -1, -1},
-                bulletRadius,
                 new int[]{0, 254, 34}
         ));
 
@@ -54,11 +51,11 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
                 null
         ));
 
-        bullet.addComponent(new PositionCP(
+        bullet.addComponent(new TransformCP(
                 bulletX,
                 bulletY,
-                shooterRotation
-
+                shooterRotation,
+                bulletRadius
         ));
 
         bullet.addComponent(new MovementCP(
@@ -68,7 +65,6 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
                 false,
                 true,
                 true
-
         ));
 
         bullet.addComponent(new CollisionCP(

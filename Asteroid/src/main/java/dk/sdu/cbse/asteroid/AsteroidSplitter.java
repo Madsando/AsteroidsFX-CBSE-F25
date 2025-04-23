@@ -10,13 +10,12 @@ import dk.sdu.cbse.common.entity.EEntityType;
 public class AsteroidSplitter implements ICustomEntityBehaviour {
     @Override
     public void process(GameData gameData, World world, Entity entity) {
-        ShapeCP shape = entity.getComponent(ShapeCP.class);
-        double size = shape.getRadius() / 2;
 
-        PositionCP position = entity.getComponent(PositionCP.class);
-        double x = position.getX();
-        double y = position.getY();
-        double rotation = position.getRotation();
+        TransformCP transformCP = entity.getComponent(TransformCP.class);
+        double x = transformCP.getX();
+        double y = transformCP.getY();
+        double rotation = transformCP.getRotation();
+        double size = transformCP.getRadius() / 2;
 
         if (size < 5) { // Stop if the split asteroid is too small
             return;
@@ -32,14 +31,14 @@ public class AsteroidSplitter implements ICustomEntityBehaviour {
 
             asteroid.addComponent(new ShapeCP(
                     polygonCoordinates,
-                    size,
                     new int[]{155, 155, 155}
             ));
 
-            asteroid.addComponent(new PositionCP(
+            asteroid.addComponent(new TransformCP(
                     x + i * size,
                     y + i * size,
-                    rotation + i * 90
+                    rotation + i * 90,
+                    size
             ));
 
             asteroid.addComponent(new HealthCP(

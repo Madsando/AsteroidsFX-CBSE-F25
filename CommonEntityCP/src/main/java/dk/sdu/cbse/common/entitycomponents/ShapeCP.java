@@ -7,12 +7,10 @@ import dk.sdu.cbse.common.entity.IEntityComponent;
 
 public class ShapeCP implements IEntityComponent {
     private double[] polygonCoordinates;
-    private double radius;
     private int[] color;
 
-    public ShapeCP(double[] polygonCoordinates, double radius, int[] color) {
+    public ShapeCP(double[] polygonCoordinates, int[] color) {
         this.polygonCoordinates = polygonCoordinates;
-        this.radius = radius;
         this.color = color;
     }
 
@@ -32,14 +30,6 @@ public class ShapeCP implements IEntityComponent {
 
     public void setPolygonCoordinates(double[] polygonCoordinates) {
         this.polygonCoordinates = polygonCoordinates;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
     }
 
     public int[] getColor() {

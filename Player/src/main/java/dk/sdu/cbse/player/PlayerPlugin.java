@@ -48,14 +48,14 @@ public class PlayerPlugin implements IGamePluginService {
 
         player.addComponent(new ShapeCP(
                 polygonCoordinates,
-                size,
                 new int[]{0, 0, 254}
         ));
 
-        player.addComponent(new PositionCP(
+        player.addComponent(new TransformCP(
                 (double) gameData.getDisplayWidth() / 2,
                 (double) gameData.getDisplayHeight() / 2,
-                270
+                270,
+                size
         ));
 
         player.addComponent(new HealthCP(

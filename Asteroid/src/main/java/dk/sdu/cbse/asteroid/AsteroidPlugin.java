@@ -5,7 +5,7 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
-import dk.sdu.cbse.common.entitycomponents.PositionCP;
+import dk.sdu.cbse.common.entitycomponents.TransformCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IFeatureFlag;
 import dk.sdu.cbse.common.services.IGamePluginService;
@@ -53,7 +53,6 @@ public class AsteroidPlugin implements IGamePluginService {
 
         asteroid.addComponent(new ShapeCP(
                 polygonCoordinates,
-                scalingFactor,
                 new int[]{120, 120, 120}
         ));
 
@@ -67,10 +66,11 @@ public class AsteroidPlugin implements IGamePluginService {
             y = rng.nextInt(gameData.getDisplayHeight());
         }
 
-        asteroid.addComponent(new PositionCP(
+        asteroid.addComponent(new TransformCP(
                 x,
                 y,
-                rng.nextInt(360)
+                rng.nextInt(360),
+                scalingFactor
         ));
 
         asteroid.addComponent(new HealthCP(
