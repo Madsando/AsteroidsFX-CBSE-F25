@@ -49,13 +49,4 @@ public class TransformCP implements IEntityComponent {
     public void setRadius(double radius) {
         this.radius = radius;
     }
-
-    @Override
-    public void process(GameData gameData, World world, Entity entity) {
-    }
-
-    @Override
-    public int getPriority() {
-        return 3;
-    }
 }

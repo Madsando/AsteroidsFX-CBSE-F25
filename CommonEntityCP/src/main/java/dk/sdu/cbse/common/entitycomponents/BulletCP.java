@@ -13,7 +13,6 @@ import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
 
 public class BulletCP implements IEntityComponent {
-    private final Random rand;
     private int attackChance;
     private int attackCooldown;
     private long lastAttack;
@@ -24,27 +23,14 @@ public class BulletCP implements IEntityComponent {
         this.attackCooldown = attackCooldown;
         this.shouldAttack = shouldAttack;
         this.lastAttack = 0;
-        rand = new Random();
     }
 
-    @Override
-    public void process(GameData gameData, World world, Entity entity) {
-        if (shouldAttack & isCooldownOver() & rand.nextInt(attackChance) == 0) {
-            this.lastAttack = System.currentTimeMillis();
-
-            getIBulletSPI().stream().findFirst().ifPresent(
-                    spi -> world.addEntity(spi.createBullet(entity))
-            );
-        }
+    public long getLastAttack() {
+        return lastAttack;
     }
 
-    @Override
-    public int getPriority() {
-        return 5;
-    }
-
-    private boolean isCooldownOver() {
-        return (System.currentTimeMillis() - this.lastAttack > this.attackCooldown);
+    public void setLastAttack(long lastAttack) {
+        this.lastAttack = lastAttack;
     }
 
     public boolean shouldAttack() {
@@ -69,9 +55,5 @@ public class BulletCP implements IEntityComponent {
 
     public void setAttackChance(int attackChance) {
         this.attackChance = attackChance;
-    }
-
-    private Collection<? extends IBulletSPI> getIBulletSPI() {
-        return ServiceLoader.load(IBulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

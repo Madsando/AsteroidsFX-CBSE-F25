@@ -5,18 +5,17 @@ import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.TransformCP;
-import dk.sdu.cbse.common.entitycomponents.ShapeCP;
-import dk.sdu.cbse.common.services.IPostEntityProcessingService;
+import dk.sdu.cbse.common.services.ISystemService;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CollisionDetector implements IPostEntityProcessingService {
+public class CollisionDetectorSystem implements ISystemService {
     private final Set<String> collidedEntities = Collections.synchronizedSet(new HashSet<>());
 
     @Override
-    public void process(GameData gameData, World world) {
+    public void update(GameData gameData, World world) {
         collidedEntities.clear();
 
         for (Entity e1 : world.getEntitiesWithComponent(CollisionCP.class)) {
@@ -51,5 +50,10 @@ public class CollisionDetector implements IPostEntityProcessingService {
     private void resolveCollision(Entity source, Entity target) {
         source.getComponent(CollisionCP.class).addCollision(target.getEntityType());
         target.getComponent(CollisionCP.class).addCollision(source.getEntityType());
+    }
+
+    @Override
+    public int getPriority() {
+        return 10;
     }
 }

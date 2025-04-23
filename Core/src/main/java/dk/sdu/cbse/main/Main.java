@@ -63,14 +63,8 @@ public class Main extends Application {
     }
 
     private void update() {
-        for (Entity entity : world.getEntities()) {
-            for (IEntityComponent component : entity.getComponents()) {
-                component.process(gameData, world, entity);
-            }
-        }
-
-        for (IPostEntityProcessingService postEntityProcessorService : ModuleConfig.getPostEntityProcessingServices()) {
-            postEntityProcessorService.process(gameData, world);
+        for (ISystemService systemService: ModuleConfig.getISystemServices()) {
+            systemService.update(gameData, world);
         }
     }
 

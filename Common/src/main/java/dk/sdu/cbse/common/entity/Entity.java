@@ -1,5 +1,7 @@
 package dk.sdu.cbse.common.entity;
 
+import dk.sdu.cbse.common.utility.SystemComparator;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
@@ -38,7 +40,7 @@ public class Entity implements Serializable {
     }
 
     public Collection<IEntityComponent> getComponents() {
-        return entityComponentMap.values().stream().sorted(new ComponentComparator()).collect(Collectors.toList());
+        return entityComponentMap.values();
     }
 
     public EEntityType getEntityType() {

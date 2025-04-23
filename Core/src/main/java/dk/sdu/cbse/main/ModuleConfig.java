@@ -3,8 +3,9 @@ package dk.sdu.cbse.main;
 import dk.sdu.cbse.common.graphics.IBackgroundComponent;
 import dk.sdu.cbse.common.graphics.IGraphicsComponent;
 import dk.sdu.cbse.common.services.IGamePluginService;
-import dk.sdu.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.cbse.common.input.spi.IInputSPI;
+import dk.sdu.cbse.common.services.ISystemService;
+import dk.sdu.cbse.common.utility.SystemComparator;
 
 import java.util.Collection;
 import java.util.ServiceLoader;
@@ -16,8 +17,8 @@ public class ModuleConfig {
         return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
-    public static Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
-        return ServiceLoader.load(IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    public static Collection<? extends ISystemService> getISystemServices() {
+        return ServiceLoader.load(ISystemService.class).stream().map(ServiceLoader.Provider::get).sorted(new SystemComparator()).collect(toList());
     }
 
     public static Collection<? extends IInputSPI> getIInputService() {

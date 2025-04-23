@@ -14,16 +14,6 @@ public class ShapeCP implements IEntityComponent {
         this.color = color;
     }
 
-    @Override
-    public void process(GameData gameData, World world, Entity entity) {
-        // TODO
-    }
-
-    @Override
-    public int getPriority() {
-        return 4;
-    }
-
     public double[] getPolygonCoordinates() {
         return polygonCoordinates;
     }

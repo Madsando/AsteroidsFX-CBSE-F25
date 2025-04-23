@@ -20,57 +20,6 @@ public class MovementCP implements IEntityComponent {
         this.shouldCullOOB = shouldCullOOB;
     }
 
-    @Override
-    public void process(GameData gameData, World world, Entity entity) {
-        TransformCP transformCP = entity.getComponent(TransformCP.class);
-
-        if (forward) {
-            double angle = Math.toRadians(transformCP.getRotation());
-            double changeX = Math.cos(angle);
-            double changeY = Math.sin(angle);
-
-            transformCP.setX(transformCP.getX() + changeX * velocity);
-            transformCP.setY(transformCP.getY() + changeY * velocity);
-        }
-        if (left) {
-            transformCP.setRotation(transformCP.getRotation() - rotationSpeed);
-        }
-
-        if (right) {
-            transformCP.setRotation(transformCP.getRotation() + rotationSpeed);
-        }
-
-        if (transformCP.getX() < 0) {
-            if (shouldCullOOB) {
-                world.removeEntity(entity);
-            }
-            transformCP.setX(gameData.getDisplayWidth());
-        } else if (transformCP.getX() > gameData.getDisplayWidth()) {
-            if (shouldCullOOB) {
-                world.removeEntity(entity);
-            }
-            transformCP.setX(0);
-        }
-
-        if (transformCP.getY() < 0) {
-            if (shouldCullOOB) {
-                world.removeEntity(entity);
-            }
-            transformCP.setY(gameData.getDisplayHeight());
-        } else if (transformCP.getY() > gameData.getDisplayHeight()) {
-            if (shouldCullOOB) {
-                world.removeEntity(entity);
-            }
-            transformCP.setY(0);
-        }
-
-    }
-
-    @Override
-    public int getPriority() {
-        return 4;
-    }
-
     public boolean isLeft() {
         return left;
     }
@@ -109,5 +58,9 @@ public class MovementCP implements IEntityComponent {
 
     public void setVelocity(double velocity) {
         this.velocity = velocity;
+    }
+
+    public boolean shouldCullOOB() {
+        return shouldCullOOB;
     }
 }
