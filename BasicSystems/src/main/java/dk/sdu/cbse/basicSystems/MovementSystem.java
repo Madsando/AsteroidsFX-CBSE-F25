@@ -34,30 +34,6 @@ public class MovementSystem implements ISystemService {
             if (movementCP.isRight()) {
                 transformCP.setRotation(transformCP.getRotation() + movementCP.getRotationSpeed());
             }
-
-            if (transformCP.getX() < 0) {
-                if (movementCP.shouldCullOOB()) {
-                    world.removeEntity(entity);
-                }
-                transformCP.setX(gameData.getDisplayWidth());
-            } else if (transformCP.getX() > gameData.getDisplayWidth()) {
-                if (movementCP.shouldCullOOB()) {
-                    world.removeEntity(entity);
-                }
-                transformCP.setX(0);
-            }
-
-            if (transformCP.getY() < 0) {
-                if (movementCP.shouldCullOOB()) {
-                    world.removeEntity(entity);
-                }
-                transformCP.setY(gameData.getDisplayHeight());
-            } else if (transformCP.getY() > gameData.getDisplayHeight()) {
-                if (movementCP.shouldCullOOB()) {
-                    world.removeEntity(entity);
-                }
-                transformCP.setY(0);
-            }
         }
     }
 }

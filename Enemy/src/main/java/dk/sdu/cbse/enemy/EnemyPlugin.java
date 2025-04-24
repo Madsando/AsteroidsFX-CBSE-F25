@@ -81,9 +81,10 @@ public class EnemyPlugin implements IGamePluginService {
                 3,
                 false,
                 false,
-                true,
-                false
+                true
         ));
+
+        enemy.addComponent(new WraparoundCP());
 
         enemy.addComponent(new CollisionCP(
                 new EnemyCollisionBehaviour()

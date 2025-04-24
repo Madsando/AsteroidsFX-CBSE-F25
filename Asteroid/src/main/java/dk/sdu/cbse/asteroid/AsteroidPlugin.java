@@ -3,13 +3,9 @@ package dk.sdu.cbse.asteroid;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entitycomponents.HealthCP;
-import dk.sdu.cbse.common.entitycomponents.MovementCP;
-import dk.sdu.cbse.common.entitycomponents.TransformCP;
-import dk.sdu.cbse.common.entitycomponents.ShapeCP;
+import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.IFeatureFlag;
 import dk.sdu.cbse.common.services.IGamePluginService;
-import dk.sdu.cbse.common.entitycomponents.CollisionCP;
 import dk.sdu.cbse.common.entity.EEntityType;
 
 import java.util.Collection;
@@ -87,9 +83,10 @@ public class AsteroidPlugin implements IGamePluginService {
                 0,
                 false,
                 false,
-                true,
-                false
+                true
         ));
+
+        asteroid.addComponent(new WraparoundCP());
 
         return asteroid;
     }

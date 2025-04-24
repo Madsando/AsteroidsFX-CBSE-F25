@@ -1,23 +1,18 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.entity.Entity;
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entity.IEntityComponent;
 
 public class MovementCP implements IEntityComponent {
     private double velocity;
     private double rotationSpeed;
     private boolean left, right, forward;
-    private final boolean shouldCullOOB;
 
-    public MovementCP(double velocity, double rotationSpeed, boolean left, boolean right, boolean forward, boolean shouldCullOOB) {
+    public MovementCP(double velocity, double rotationSpeed, boolean left, boolean right, boolean forward) {
         this.velocity = velocity;
         this.rotationSpeed = rotationSpeed;
         this.left = left;
         this.right = right;
         this.forward = forward;
-        this.shouldCullOOB = shouldCullOOB;
     }
 
     public boolean isLeft() {
@@ -58,9 +53,5 @@ public class MovementCP implements IEntityComponent {
 
     public void setVelocity(double velocity) {
         this.velocity = velocity;
-    }
-
-    public boolean shouldCullOOB() {
-        return shouldCullOOB;
     }
 }

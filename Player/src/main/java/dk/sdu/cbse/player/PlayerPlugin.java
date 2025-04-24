@@ -74,9 +74,10 @@ public class PlayerPlugin implements IGamePluginService {
                 3,
                 false,
                 false,
-                false,
                 false
         ));
+
+        player.addComponent(new WraparoundCP());
 
         player.addComponent(new InputMovementControlCP());
 

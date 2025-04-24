@@ -55,9 +55,10 @@ public class AsteroidSplitter implements ICustomEntityBehaviour {
                     0,
                     false,
                     false,
-                    true,
-                    false
+                    true
             ));
+
+            asteroid.addComponent(new WraparoundCP());
 
             world.addEntity(asteroid);
         }
