@@ -10,6 +10,7 @@ import dk.sdu.cbse.common.entity.EEntityType;
 public class AsteroidSplitter implements ICustomEntityBehaviour {
     @Override
     public void process(GameData gameData, World world, Entity entity) {
+        gameData.addScore(1);
 
         TransformCP transformCP = entity.getComponent(TransformCP.class);
         double x = transformCP.getX();
@@ -46,9 +47,7 @@ public class AsteroidSplitter implements ICustomEntityBehaviour {
                     new AsteroidSplitter()
             ));
 
-            asteroid.addComponent(new CollisionCP(
-                    new AsteroidCollisionBehaviour()
-            ));
+            asteroid.addComponent(new CollisionCP());
 
             asteroid.addComponent(new MovementCP(
                     1,

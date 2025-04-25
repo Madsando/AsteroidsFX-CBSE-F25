@@ -48,8 +48,8 @@ public class CollisionDetectorSystem implements ISystemService {
     }
 
     private void resolveCollision(Entity source, Entity target) {
-        source.getComponent(CollisionCP.class).addCollision(target.getEntityType());
-        target.getComponent(CollisionCP.class).addCollision(source.getEntityType());
+        source.getComponent(CollisionCP.class).addCollision(target);
+        target.getComponent(CollisionCP.class).addCollision(source);
     }
 
     @Override

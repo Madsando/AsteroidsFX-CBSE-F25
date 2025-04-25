@@ -74,9 +74,11 @@ public class AsteroidPlugin implements IGamePluginService {
                 new AsteroidSplitter()
         ));
 
-        asteroid.addComponent(new CollisionCP(
-                new AsteroidCollisionBehaviour()
-        ));
+        asteroid.addComponent(new CollisionCP());
+
+        asteroid.addComponent(new CollisionIgnoreCP(1,1));
+
+        asteroid.addComponent(new DamageCP(Integer.MAX_VALUE));
 
         asteroid.addComponent(new MovementCP(
                 1,

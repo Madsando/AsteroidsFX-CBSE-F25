@@ -83,9 +83,9 @@ public class PlayerPlugin implements IGamePluginService {
 
         player.addComponent(new InputBulletControlCP());
 
-        player.addComponent(new CollisionCP(
-                new PlayerCollisionBehaviour()
-        ));
+        player.addComponent(new DamageCP(Integer.MAX_VALUE));
+
+        player.addComponent(new CollisionCP());
 
         return player;
     }
