@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class World {
-
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
+    private int nextTypeId = 0;
 
     public void addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);
@@ -31,10 +31,10 @@ public class World {
         return entityMap.values();
     }
 
-    public List<Entity> getEntities(EEntityType entityType) {
+    public List<Entity> getEntities(int typeId) {
         List<Entity> r = new ArrayList<>();
         for (Entity e : getEntities()) {
-            if (e.getEntityType() == entityType) {
+            if (e.getTypeID() == typeId) {
                 r.add(e);
             }
         }
@@ -53,5 +53,10 @@ public class World {
 
     public Entity getEntity(String ID) {
         return entityMap.get(ID);
+    }
+
+    public int generateTypeId() {
+        nextTypeId++;
+        return nextTypeId;
     }
 }

@@ -1,7 +1,5 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.collision.ICollisionBehaviour;
-import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.entity.IEntityComponent;
 

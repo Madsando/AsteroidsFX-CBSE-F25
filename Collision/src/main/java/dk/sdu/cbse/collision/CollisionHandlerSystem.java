@@ -2,10 +2,9 @@ package dk.sdu.cbse.collision;
 
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.EEntityType;
 import dk.sdu.cbse.common.entity.Entity;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
-import dk.sdu.cbse.common.entitycomponents.CollisionIgnoreCP;
+import dk.sdu.cbse.common.entitycomponents.CollisionIgnoreSelfCP;
 import dk.sdu.cbse.common.entitycomponents.DamageCP;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.services.ISystemService;
@@ -28,11 +27,10 @@ public class CollisionHandlerSystem implements ISystemService {
             while (!collisions.isEmpty()) {
                 Entity collidingEntity = collisions.poll();
 
-                CollisionIgnoreCP entityCollisionIgnoreCP = e.getComponent(CollisionIgnoreCP.class);
-                CollisionIgnoreCP collidingEntityCollisionIgnoreCP = collidingEntity.getComponent(CollisionIgnoreCP.class);
+                CollisionIgnoreSelfCP entityCollisionIgnoreSelfCP = e.getComponent(CollisionIgnoreSelfCP.class);
 
-                if (collidingEntityCollisionIgnoreCP != null & entityCollisionIgnoreCP != null) {
-                    if (Arrays.stream(entityCollisionIgnoreCP.getIgnoreCollisionsWithIds()).anyMatch(id -> id == collidingEntityCollisionIgnoreCP.getId())) {
+                if (entityCollisionIgnoreSelfCP != null) {
+                    if (e.getTypeID() == collidingEntity.getTypeID()) {
                         continue;
                     }
                 }

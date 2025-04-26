@@ -16,12 +16,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static java.util.stream.Collectors.toList;
 
 public class AsteroidPlugin implements IGamePluginService {
+    private static int typeId = 0;
+
     @Override
     public void start(GameData gameData, World world) {
         AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
         getFeatureFlagLoader().stream().findFirst().ifPresent(f -> isFeatureEnabled.set(f.isFeatureEnabled("asteroids")));
 
         if (isFeatureEnabled.get()) {
+            typeId = world.generateTypeId();
             for (int i = 0; i < 25; i++) {
                 Entity asteroid = createAsteroid(gameData);
                 world.addEntity(asteroid);
@@ -31,13 +34,13 @@ public class AsteroidPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity asteroid : world.getEntities(EEntityType.ASTEROID)) {
+        for (Entity asteroid : world.getEntities(typeId)) {
             world.removeEntity(asteroid);
         }
     }
 
     private Entity createAsteroid(GameData gameData) {
-        Entity asteroid = new Entity(EEntityType.ASTEROID);
+        Entity asteroid = new Entity(typeId);
         Random rng = new Random();
 
         // The polygon-coordinates describe a shape that rather closely follows a circle with radius 1.
@@ -76,7 +79,7 @@ public class AsteroidPlugin implements IGamePluginService {
 
         asteroid.addComponent(new CollisionCP());
 
-        asteroid.addComponent(new CollisionIgnoreCP(1,1));
+        asteroid.addComponent(new CollisionIgnoreSelfCP());
 
         asteroid.addComponent(new DamageCP(Integer.MAX_VALUE));
 

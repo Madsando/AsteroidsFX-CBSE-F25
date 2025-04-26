@@ -16,12 +16,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static java.util.stream.Collectors.toList;
 
 public class EnemyPlugin implements IGamePluginService {
+    private static int typeId = 0;
+
     @Override
     public void start(GameData gameData, World world) {
         AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
         getFeatureFlagLoader().stream().findFirst().ifPresent(f -> isFeatureEnabled.set(f.isFeatureEnabled("enemies")));
 
         if (isFeatureEnabled.get()) {
+            typeId = world.generateTypeId();
             for (int i = 0; i < 3; i++) {
                 Entity enemy = createEnemy(gameData);
                 world.addEntity(enemy);
@@ -32,13 +35,13 @@ public class EnemyPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity enemy : world.getEntities(EEntityType.ENEMY)) {
+        for (Entity enemy : world.getEntities(typeId)) {
             world.removeEntity(enemy);
         }
     }
 
     private Entity createEnemy(GameData gameData) {
-        Entity enemy = new Entity(EEntityType.ENEMY);
+        Entity enemy = new Entity(typeId);
         Random rng = new Random();
 
         double scalingFactor = 4.5;

@@ -15,12 +15,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static java.util.stream.Collectors.toList;
 
 public class PlayerPlugin implements IGamePluginService {
+    private static int typeId = 0;
+
     @Override
     public void start(GameData gameData, World world) {
         AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
         getFeatureFlagLoader().stream().findFirst().ifPresent(f -> isFeatureEnabled.set(f.isFeatureEnabled("player")));
 
         if (isFeatureEnabled.get()) {
+            typeId = world.generateTypeId();
             Entity player = createPlayer(gameData);
             world.addEntity(player);
         }
@@ -28,13 +31,13 @@ public class PlayerPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity player : world.getEntities(EEntityType.PLAYER)) {
+        for (Entity player : world.getEntities(typeId)) {
             world.removeEntity(player);
         }
     }
 
     private Entity createPlayer(GameData gameData) {
-        Entity player = new Entity(EEntityType.PLAYER);
+        Entity player = new Entity(typeId);
 
         double scalingFactor = 5;
         double size = 3 * scalingFactor;

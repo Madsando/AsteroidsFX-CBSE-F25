@@ -9,21 +9,24 @@ import dk.sdu.cbse.common.bullet.IBulletSPI;
 import dk.sdu.cbse.common.entity.EEntityType;
 
 public class BulletPlugin implements IGamePluginService, IBulletSPI {
+    private static int typeId = 0;
+
     @Override
     public void start(GameData gameData, World world) {
         // No bullets should be spawned at the start
+        typeId = world.generateTypeId();
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity bullet : world.getEntities(EEntityType.BULLET)) {
+        for (Entity bullet : world.getEntities(typeId)) {
             world.removeEntity(bullet);
         }
     }
 
     @Override
     public Entity createBullet(Entity shooter) {
-        Entity bullet = new Entity(EEntityType.BULLET);
+        Entity bullet = new Entity(typeId);
 
         TransformCP shooterTransformCP = shooter.getComponent(TransformCP.class);
         double shooterX = shooterTransformCP.getX();

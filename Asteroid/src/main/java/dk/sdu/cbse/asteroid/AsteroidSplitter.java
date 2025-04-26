@@ -23,7 +23,7 @@ public class AsteroidSplitter implements ICustomEntityBehaviour {
         }
 
         for (int i = -1; i <= 1; i += 2) {
-            Entity asteroid = new Entity(EEntityType.ASTEROID);
+            Entity asteroid = new Entity(entity.getTypeID());
 
             double[] polygonCoordinates = {0.5, -1, 1.03, -0.33, 1.19, 0.45, 0.16, 1.1, -0.83, 0.89, -1.09, 0.38, -0.86, -0.76};
             for (int j = 0; j < polygonCoordinates.length; j++) {

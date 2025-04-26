@@ -1,21 +1,18 @@
 package dk.sdu.cbse.common.entity;
 
-import dk.sdu.cbse.common.utility.SystemComparator;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 public class Entity implements Serializable {
     private final UUID ID = UUID.randomUUID();
+    private final int typeID;
     private final Map<Class<? extends IEntityComponent>, IEntityComponent> entityComponentMap;
-    private final EEntityType entityType;
 
-    public Entity(EEntityType entityType) {
-        this.entityType = entityType;
+    public Entity(int typeID) {
+        this.typeID = typeID;
         entityComponentMap = new ConcurrentHashMap<>();
     }
 
@@ -43,7 +40,7 @@ public class Entity implements Serializable {
         return entityComponentMap.values();
     }
 
-    public EEntityType getEntityType() {
-        return entityType;
+    public int getTypeID() {
+        return typeID;
     }
 }
