@@ -1,16 +1,6 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.entity.Entity;
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.bullet.IBulletSPI;
-import dk.sdu.cbse.common.entity.IEntityComponent;
-
-import java.util.Collection;
-import java.util.Random;
-import java.util.ServiceLoader;
-
-import static java.util.stream.Collectors.toList;
+import dk.sdu.cbse.common.services.IEntityComponent;
 
 public class BulletCP implements IEntityComponent {
     private int attackChance;

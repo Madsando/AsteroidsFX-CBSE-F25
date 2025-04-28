@@ -1,6 +1,6 @@
 package dk.sdu.cbse.collision;
 
-import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.entitycomponents.TransformCP;
 

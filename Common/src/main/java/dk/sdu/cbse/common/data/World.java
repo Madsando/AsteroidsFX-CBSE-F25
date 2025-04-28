@@ -1,8 +1,6 @@
 package dk.sdu.cbse.common.data;
 
-import dk.sdu.cbse.common.entity.EEntityType;
-import dk.sdu.cbse.common.entity.Entity;
-import dk.sdu.cbse.common.entity.IEntityComponent;
+import dk.sdu.cbse.common.services.IEntityComponent;
 
 import java.util.ArrayList;
 import java.util.Collection;

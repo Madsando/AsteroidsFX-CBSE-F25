@@ -31,10 +31,5 @@
             <artifactId>javafx-graphics</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>Common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 </project>

@@ -1,9 +1,6 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.entity.Entity;
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.IEntityComponent;
+import dk.sdu.cbse.common.services.IEntityComponent;
 
 public class TransformCP implements IEntityComponent {
     private double x;

@@ -2,7 +2,7 @@ package dk.sdu.cbse.basicSystems;
 
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.entitycomponents.TransformCP;
 import dk.sdu.cbse.common.services.ISystemService;

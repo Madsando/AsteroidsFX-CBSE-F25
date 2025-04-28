@@ -1,7 +1,7 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.entity.ICustomEntityBehaviour;
-import dk.sdu.cbse.common.entity.IEntityComponent;
+import dk.sdu.cbse.common.services.ICustomEntityBehaviour;
+import dk.sdu.cbse.common.services.IEntityComponent;
 
 public class HealthCP implements IEntityComponent {
     private int health;

@@ -1,8 +1,6 @@
 package dk.sdu.cbse.main;
 
 import dk.sdu.cbse.common.data.*;
-import dk.sdu.cbse.common.entity.Entity;
-import dk.sdu.cbse.common.entity.IEntityComponent;
 import dk.sdu.cbse.common.graphics.IGraphicsComponent;
 import dk.sdu.cbse.common.services.*;
 
@@ -33,8 +31,8 @@ public class Main extends Application {
         gameWindow.widthProperty().addListener((observable, oldValue, newValue) -> gameData.setDisplayWidth(newValue.intValue()));
 
         ModuleConfig.getIBackgroundComponents().stream().findFirst().ifPresent(backgroundComponent -> gameWindow.setBackground(backgroundComponent.getBackground()));
-        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> scene.setOnKeyPressed(service.getInputHandlerPress(gameData)));
-        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> scene.setOnKeyReleased(service.getInputHandlerRelease(gameData)));
+        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> scene.setOnKeyPressed(service.getInputHandlerPress(gameData.getInputs())));
+        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> scene.setOnKeyReleased(service.getInputHandlerRelease(gameData.getInputs())));
 
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : ModuleConfig.getPluginServices()) {

@@ -3,7 +3,7 @@ package dk.sdu.cbse.bullet;
 import dk.sdu.cbse.common.bullet.IBulletSPI;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.entitycomponents.BulletCP;
 import dk.sdu.cbse.common.services.ISystemService;
 

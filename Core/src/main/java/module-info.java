@@ -1,6 +1,6 @@
 import dk.sdu.cbse.common.graphics.IBackgroundComponent;
 import dk.sdu.cbse.common.graphics.IGraphicsComponent;
-import dk.sdu.cbse.common.input.spi.IInputSPI;
+import dk.sdu.cbse.common.input.IInputSPI;
 import dk.sdu.cbse.common.services.*;
 
 module Core {

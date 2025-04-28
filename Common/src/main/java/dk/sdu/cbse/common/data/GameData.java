@@ -1,12 +1,12 @@
 package dk.sdu.cbse.common.data;
 
-public class GameData {
+import dk.sdu.cbse.common.input.GameInputs;
 
+public class GameData {
     private int displayWidth  = 800 ;
     private int displayHeight = 800;
     private int score = 0;
     private final GameInputs inputs = new GameInputs();
-
 
     public GameInputs getInputs() {
         return inputs;

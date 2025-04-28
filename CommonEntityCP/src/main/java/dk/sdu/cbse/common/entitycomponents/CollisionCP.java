@@ -1,7 +1,7 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.entity.Entity;
-import dk.sdu.cbse.common.entity.IEntityComponent;
+import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.services.IEntityComponent;
 
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;

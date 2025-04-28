@@ -1,4 +1,4 @@
-package dk.sdu.cbse.common.data;
+package dk.sdu.cbse.common.input;
 
 public enum EGameInputs {
     FORWARD,

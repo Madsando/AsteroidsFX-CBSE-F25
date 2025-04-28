@@ -4,6 +4,7 @@ import dk.sdu.cbse.common.services.ISystemService;
 module BasicSystems {
     requires Common;
     requires CommonEntityCP;
+    requires CommonInput;
 
     provides ISystemService with
             HealthSystem,

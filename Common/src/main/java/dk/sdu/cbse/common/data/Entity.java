@@ -1,4 +1,6 @@
-package dk.sdu.cbse.common.entity;
+package dk.sdu.cbse.common.data;
+
+import dk.sdu.cbse.common.services.IEntityComponent;
 
 import java.io.Serializable;
 import java.util.Collection;

@@ -1,11 +1,10 @@
 package dk.sdu.cbse.asteroid;
 
-import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.ICustomEntityBehaviour;
+import dk.sdu.cbse.common.services.ICustomEntityBehaviour;
 import dk.sdu.cbse.common.entitycomponents.*;
-import dk.sdu.cbse.common.entity.EEntityType;
 
 public class AsteroidSplitter implements ICustomEntityBehaviour {
     @Override

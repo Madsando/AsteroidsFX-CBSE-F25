@@ -9,6 +9,7 @@ module Bullet {
     requires CommonEntityCP;
     requires CommonBullet;
     requires CommonCollision;
+    requires CommonInput;
 
     provides IGamePluginService with dk.sdu.cbse.bullet.BulletPlugin;
     provides IBulletSPI with dk.sdu.cbse.bullet.BulletPlugin;

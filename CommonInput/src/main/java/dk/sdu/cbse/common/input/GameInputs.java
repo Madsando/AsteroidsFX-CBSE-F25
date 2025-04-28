@@ -1,4 +1,4 @@
-package dk.sdu.cbse.common.data;
+package dk.sdu.cbse.common.input;
 
 import java.util.Collections;
 import java.util.EnumMap;

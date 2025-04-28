@@ -2,14 +2,13 @@ package dk.sdu.cbse.collision;
 
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
 import dk.sdu.cbse.common.entitycomponents.CollisionIgnoreSelfCP;
 import dk.sdu.cbse.common.entitycomponents.DamageCP;
 import dk.sdu.cbse.common.entitycomponents.HealthCP;
 import dk.sdu.cbse.common.services.ISystemService;
 
-import java.util.Arrays;
 import java.util.Queue;
 
 public class CollisionHandlerSystem implements ISystemService {
