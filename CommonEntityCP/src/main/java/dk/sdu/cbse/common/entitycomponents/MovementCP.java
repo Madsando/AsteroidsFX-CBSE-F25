@@ -1,74 +1,18 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.entity.Entity;
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.EntityComponent;
+import dk.sdu.cbse.common.services.IEntityComponent;
 
-public class MovementCP implements EntityComponent {
+public class MovementCP implements IEntityComponent {
     private double velocity;
     private double rotationSpeed;
     private boolean left, right, forward;
-    private final boolean shouldCullOOB;
 
-    public MovementCP(double velocity, double rotationSpeed, boolean left, boolean right, boolean forward, boolean shouldCullOOB) {
+    public MovementCP(double velocity, double rotationSpeed, boolean left, boolean right, boolean forward) {
         this.velocity = velocity;
         this.rotationSpeed = rotationSpeed;
         this.left = left;
         this.right = right;
         this.forward = forward;
-        this.shouldCullOOB = shouldCullOOB;
-    }
-
-    @Override
-    public void process(GameData gameData, World world, Entity entity) {
-        PositionCP positionCP = entity.getComponent(PositionCP.class);
-
-        if (forward) {
-            double angle = Math.toRadians(positionCP.getRotation());
-            double changeX = Math.cos(angle);
-            double changeY = Math.sin(angle);
-
-            positionCP.setX(positionCP.getX() + changeX * velocity);
-            positionCP.setY(positionCP.getY() + changeY * velocity);
-        }
-        if (left) {
-            positionCP.setRotation(positionCP.getRotation() - rotationSpeed);
-        }
-
-        if (right) {
-            positionCP.setRotation(positionCP.getRotation() + rotationSpeed);
-        }
-
-        if (positionCP.getX() < 0) {
-            if (shouldCullOOB) {
-                world.removeEntity(entity);
-            }
-            positionCP.setX(gameData.getDisplayWidth());
-        } else if (positionCP.getX() > gameData.getDisplayWidth()) {
-            if (shouldCullOOB) {
-                world.removeEntity(entity);
-            }
-            positionCP.setX(0);
-        }
-
-        if (positionCP.getY() < 0) {
-            if (shouldCullOOB) {
-                world.removeEntity(entity);
-            }
-            positionCP.setY(gameData.getDisplayHeight());
-        } else if (positionCP.getY() > gameData.getDisplayHeight()) {
-            if (shouldCullOOB) {
-                world.removeEntity(entity);
-            }
-            positionCP.setY(0);
-        }
-
-    }
-
-    @Override
-    public int getPriority() {
-        return 3;
     }
 
     public boolean isLeft() {

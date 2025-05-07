@@ -1,9 +1,9 @@
 package dk.sdu.cbse.graphics;
 
-import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entitycomponents.PositionCP;
+import dk.sdu.cbse.common.entitycomponents.TransformCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.graphics.IGraphicsComponent;
 import javafx.scene.Node;
@@ -62,10 +62,10 @@ public class EntityRenderer implements IGraphicsComponent {
             polygon.setFill(Color.rgb(rbgValues[0] % 256, rbgValues[1] % 256, rbgValues[2] % 256));
 
             // Change position of rendered polygon
-            PositionCP positionCP = entity.getComponent(PositionCP.class);
-            polygon.setTranslateX(positionCP.getX());
-            polygon.setTranslateY(positionCP.getY());
-            polygon.setRotate(positionCP.getRotation());
+            TransformCP transformCP = entity.getComponent(TransformCP.class);
+            polygon.setTranslateX(transformCP.getX());
+            polygon.setTranslateY(transformCP.getY());
+            polygon.setRotate(transformCP.getRotation());
         }
     }
 }

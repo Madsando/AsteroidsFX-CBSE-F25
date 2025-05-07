@@ -1,51 +1,46 @@
 package dk.sdu.cbse.bullet;
 
-import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entitycomponents.HealthCP;
-import dk.sdu.cbse.common.entitycomponents.MovementCP;
-import dk.sdu.cbse.common.entitycomponents.PositionCP;
-import dk.sdu.cbse.common.entitycomponents.ShapeCP;
+import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.bullet.IBulletSPI;
-import dk.sdu.cbse.common.entitycomponents.CollisionCP;
-import dk.sdu.cbse.common.entity.EEntityType;
 
 public class BulletPlugin implements IGamePluginService, IBulletSPI {
+    private static int typeId = 0;
+
     @Override
     public void start(GameData gameData, World world) {
         // No bullets should be spawned at the start
+        typeId = world.generateTypeId();
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity bullet : world.getEntities(EEntityType.BULLET)) {
+        for (Entity bullet : world.getEntities(typeId)) {
             world.removeEntity(bullet);
         }
     }
 
     @Override
     public Entity createBullet(Entity shooter) {
-        Entity bullet = new Entity(EEntityType.BULLET);
+        Entity bullet = new Entity(typeId);
 
-        PositionCP shooterPositionCP = shooter.getComponent(PositionCP.class);
-        double shooterX = shooterPositionCP.getX();
-        double shooterY = shooterPositionCP.getY();
-        double shooterRotation = shooterPositionCP.getRotation();
-
-        ShapeCP shooterShapeCP = shooter.getComponent(ShapeCP.class);
-        double shooterRadius = shooterShapeCP.getRadius();
+        TransformCP shooterTransformCP = shooter.getComponent(TransformCP.class);
+        double shooterX = shooterTransformCP.getX();
+        double shooterY = shooterTransformCP.getY();
+        double shooterRotation = shooterTransformCP.getRotation();
+        double shooterRadius = shooterTransformCP.getRadius();
 
         int bulletRadius = 2;
         double changeX = Math.cos(Math.toRadians(shooterRotation));
         double changeY = Math.sin(Math.toRadians(shooterRotation));
-        double bulletX = shooterX + changeX * (shooterRadius + bulletRadius);
-        double bulletY = shooterY + changeY * (shooterRadius + bulletRadius);
+        double bulletX = shooterX + changeX * (shooterRadius + bulletRadius + 2);
+        double bulletY = shooterY + changeY * (shooterRadius + bulletRadius + 2);
 
         bullet.addComponent(new ShapeCP(
                 new double[]{2, -1, 2, 1, -1, 1, -1, -1},
-                bulletRadius,
                 new int[]{0, 254, 34}
         ));
 
@@ -54,11 +49,11 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
                 null
         ));
 
-        bullet.addComponent(new PositionCP(
+        bullet.addComponent(new TransformCP(
                 bulletX,
                 bulletY,
-                shooterRotation
-
+                shooterRotation,
+                bulletRadius
         ));
 
         bullet.addComponent(new MovementCP(
@@ -66,14 +61,14 @@ public class BulletPlugin implements IGamePluginService, IBulletSPI {
                 0,
                 false,
                 false,
-                true,
                 true
-
         ));
 
-        bullet.addComponent(new CollisionCP(
-                new BulletCollisionBehaviour()
-        ));
+        bullet.addComponent(new DamageCP(1));
+
+        bullet.addComponent(new CullingCP());
+
+        bullet.addComponent(new CollisionCP());
 
         return bullet;
     }

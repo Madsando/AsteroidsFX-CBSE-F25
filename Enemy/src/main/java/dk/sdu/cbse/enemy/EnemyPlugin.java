@@ -1,12 +1,11 @@
 package dk.sdu.cbse.enemy;
 
-import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.IFeatureFlag;
 import dk.sdu.cbse.common.services.IGamePluginService;
-import dk.sdu.cbse.common.entity.EEntityType;
 
 import java.util.Collection;
 import java.util.Random;
@@ -16,12 +15,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static java.util.stream.Collectors.toList;
 
 public class EnemyPlugin implements IGamePluginService {
+    private static int typeId = 0;
+
     @Override
     public void start(GameData gameData, World world) {
         AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
         getFeatureFlagLoader().stream().findFirst().ifPresent(f -> isFeatureEnabled.set(f.isFeatureEnabled("enemies")));
 
         if (isFeatureEnabled.get()) {
+            typeId = world.generateTypeId();
             for (int i = 0; i < 3; i++) {
                 Entity enemy = createEnemy(gameData);
                 world.addEntity(enemy);
@@ -32,13 +34,13 @@ public class EnemyPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity enemy : world.getEntities(EEntityType.ENEMY)) {
+        for (Entity enemy : world.getEntities(typeId)) {
             world.removeEntity(enemy);
         }
     }
 
     private Entity createEnemy(GameData gameData) {
-        Entity enemy = new Entity(EEntityType.ENEMY);
+        Entity enemy = new Entity(typeId);
         Random rng = new Random();
 
         double scalingFactor = 4.5;
@@ -55,14 +57,14 @@ public class EnemyPlugin implements IGamePluginService {
 
         enemy.addComponent(new ShapeCP(
                 polygonCoordinates,
-                radius,
                 new int[]{254, 0, 0}
         ));
 
-        enemy.addComponent(new PositionCP(
+        enemy.addComponent(new TransformCP(
                 rng.nextInt(gameData.getDisplayWidth()),
                 rng.nextInt(gameData.getDisplayHeight()),
-                90
+                90,
+                radius
         ));
 
         enemy.addComponent(new HealthCP(
@@ -81,13 +83,16 @@ public class EnemyPlugin implements IGamePluginService {
                 3,
                 false,
                 false,
-                true,
-                false
+                true
         ));
 
-        enemy.addComponent(new CollisionCP(
-                new EnemyCollisionBehaviour()
-        ));
+        enemy.addComponent(new WraparoundCP());
+
+        enemy.addComponent(new DamageCP(Integer.MAX_VALUE));
+
+        enemy.addComponent(new CollisionCP());
+
+        enemy.addComponent(new RandomMovementControlCP());
 
         return enemy;
     }

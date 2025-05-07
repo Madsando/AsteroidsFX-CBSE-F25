@@ -1,10 +1,10 @@
 package dk.sdu.cbse.star;
 
-import dk.sdu.cbse.common.entity.EEntityType;
-import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entitycomponents.PositionCP;
+import dk.sdu.cbse.common.entitycomponents.FlickeringShapeCP;
+import dk.sdu.cbse.common.entitycomponents.TransformCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
 import dk.sdu.cbse.common.services.IFeatureFlag;
 import dk.sdu.cbse.common.services.IGamePluginService;
@@ -17,12 +17,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static java.util.stream.Collectors.toList;
 
 public class StarPlugin implements IGamePluginService {
+    private static int typeId = 0;
+
     @Override
     public void start(GameData gameData, World world) {
         AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
         getFeatureFlagLoader().stream().findFirst().ifPresent(f -> isFeatureEnabled.set(f.isFeatureEnabled("stars")));
 
         if (isFeatureEnabled.get()) {
+            typeId = world.generateTypeId();
             for (int i = 0; i < 150; i++) {
                 Entity star = createStar(gameData);
                 world.addEntity(star);
@@ -32,13 +35,13 @@ public class StarPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity star : world.getEntities(EEntityType.OTHER)) {
+        for (Entity star : world.getEntities(typeId)) {
             world.removeEntity(star);
         }
     }
 
     private Entity createStar(GameData gameData) {
-        Entity star = new Entity(EEntityType.OTHER);
+        Entity star = new Entity(typeId);
         Random rng = new Random();
 
         // The polygon-coordinates describe a shape that rather closely follows a circle with radius 1.
@@ -51,7 +54,6 @@ public class StarPlugin implements IGamePluginService {
         int color = rng.nextInt(120, 255);
         star.addComponent(new ShapeCP(
                 polygonCoordinates,
-                scalingFactor,
                 new int[]{color, color, color}
         ));
 
@@ -61,11 +63,14 @@ public class StarPlugin implements IGamePluginService {
         int x = (int) (Math.cos(angle) * radius) + gameData.getDisplayWidth() / 2;
         int y = (int) (Math.sin(angle) * radius) + gameData.getDisplayHeight() / 2;
 
-        star.addComponent(new PositionCP(
+        star.addComponent(new TransformCP(
                 x,
                 y,
-                rng.nextInt(0, 180)
+                rng.nextInt(0, 180),
+                scalingFactor
         ));
+
+        star.addComponent(new FlickeringShapeCP());
 
         return star;
     }

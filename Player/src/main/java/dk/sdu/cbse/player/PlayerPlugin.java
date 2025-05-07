@@ -1,12 +1,11 @@
 package dk.sdu.cbse.player;
 
-import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.IFeatureFlag;
 import dk.sdu.cbse.common.services.IGamePluginService;
-import dk.sdu.cbse.common.entity.EEntityType;
 
 import java.util.Collection;
 import java.util.ServiceLoader;
@@ -15,12 +14,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static java.util.stream.Collectors.toList;
 
 public class PlayerPlugin implements IGamePluginService {
+    private static int typeId = 0;
+
     @Override
     public void start(GameData gameData, World world) {
         AtomicBoolean isFeatureEnabled = new AtomicBoolean(false);
         getFeatureFlagLoader().stream().findFirst().ifPresent(f -> isFeatureEnabled.set(f.isFeatureEnabled("player")));
 
         if (isFeatureEnabled.get()) {
+            typeId = world.generateTypeId();
             Entity player = createPlayer(gameData);
             world.addEntity(player);
         }
@@ -28,13 +30,13 @@ public class PlayerPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity player : world.getEntities(EEntityType.PLAYER)) {
+        for (Entity player : world.getEntities(typeId)) {
             world.removeEntity(player);
         }
     }
 
     private Entity createPlayer(GameData gameData) {
-        Entity player = new Entity(EEntityType.PLAYER);
+        Entity player = new Entity(typeId);
 
         double scalingFactor = 5;
         double size = 3 * scalingFactor;
@@ -48,14 +50,14 @@ public class PlayerPlugin implements IGamePluginService {
 
         player.addComponent(new ShapeCP(
                 polygonCoordinates,
-                size,
                 new int[]{0, 0, 254}
         ));
 
-        player.addComponent(new PositionCP(
+        player.addComponent(new TransformCP(
                 (double) gameData.getDisplayWidth() / 2,
                 (double) gameData.getDisplayHeight() / 2,
-                270
+                270,
+                size
         ));
 
         player.addComponent(new HealthCP(
@@ -74,13 +76,18 @@ public class PlayerPlugin implements IGamePluginService {
                 3,
                 false,
                 false,
-                false,
                 false
         ));
 
-        player.addComponent(new CollisionCP(
-                new PlayerCollisionBehaviour()
-        ));
+        player.addComponent(new WraparoundCP());
+
+        player.addComponent(new InputMovementControlCP());
+
+        player.addComponent(new InputBulletControlCP());
+
+        player.addComponent(new DamageCP(Integer.MAX_VALUE));
+
+        player.addComponent(new CollisionCP());
 
         return player;
     }

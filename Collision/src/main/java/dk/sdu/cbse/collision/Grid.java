@@ -1,8 +1,8 @@
 package dk.sdu.cbse.collision;
 
-import dk.sdu.cbse.common.entity.Entity;
+import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.entitycomponents.PositionCP;
+import dk.sdu.cbse.common.entitycomponents.TransformCP;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,7 @@ public class Grid {
     }
 
     public void insertEntity(Entity entity) {
-        PositionCP pos = entity.getComponent(PositionCP.class);
+        TransformCP pos = entity.getComponent(TransformCP.class);
 
         grid.get(calculateRow(pos.getX())).get(calculateColumn(pos.getY())).add(entity);
     }

@@ -1,19 +1,8 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.entity.Entity;
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.bullet.IBulletSPI;
-import dk.sdu.cbse.common.entity.EntityComponent;
+import dk.sdu.cbse.common.services.IEntityComponent;
 
-import java.util.Collection;
-import java.util.Random;
-import java.util.ServiceLoader;
-
-import static java.util.stream.Collectors.toList;
-
-public class BulletCP implements EntityComponent {
-    private final Random rand;
+public class BulletCP implements IEntityComponent {
     private int attackChance;
     private int attackCooldown;
     private long lastAttack;
@@ -24,27 +13,14 @@ public class BulletCP implements EntityComponent {
         this.attackCooldown = attackCooldown;
         this.shouldAttack = shouldAttack;
         this.lastAttack = 0;
-        rand = new Random();
     }
 
-    @Override
-    public void process(GameData gameData, World world, Entity entity) {
-        if (shouldAttack & isCooldownOver() & rand.nextInt(attackChance) == 0) {
-            this.lastAttack = System.currentTimeMillis();
-
-            getIBulletSPI().stream().findFirst().ifPresent(
-                    spi -> world.addEntity(spi.createBullet(entity))
-            );
-        }
+    public long getLastAttack() {
+        return lastAttack;
     }
 
-    @Override
-    public int getPriority() {
-        return 3;
-    }
-
-    private boolean isCooldownOver() {
-        return (System.currentTimeMillis() - this.lastAttack > this.attackCooldown);
+    public void setLastAttack(long lastAttack) {
+        this.lastAttack = lastAttack;
     }
 
     public boolean shouldAttack() {
@@ -69,9 +45,5 @@ public class BulletCP implements EntityComponent {
 
     public void setAttackChance(int attackChance) {
         this.attackChance = attackChance;
-    }
-
-    private Collection<? extends IBulletSPI> getIBulletSPI() {
-        return ServiceLoader.load(IBulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

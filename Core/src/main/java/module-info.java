@@ -1,6 +1,6 @@
 import dk.sdu.cbse.common.graphics.IBackgroundComponent;
 import dk.sdu.cbse.common.graphics.IGraphicsComponent;
-import dk.sdu.cbse.common.input.spi.IInputSPI;
+import dk.sdu.cbse.common.input.IInputSPI;
 import dk.sdu.cbse.common.services.*;
 
 module Core {
@@ -12,8 +12,7 @@ module Core {
     opens dk.sdu.cbse.main to javafx.graphics;
 
     uses IGamePluginService;
-    uses IEntityProcessingService;
-    uses IPostEntityProcessingService;
+    uses ISystemService;
     uses IInputSPI;
     uses IGraphicsComponent;
     uses IBackgroundComponent;

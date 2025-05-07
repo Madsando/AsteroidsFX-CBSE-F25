@@ -1,4 +1,4 @@
-import dk.sdu.cbse.common.input.spi.IInputSPI;
+import dk.sdu.cbse.common.input.IInputSPI;
 
 module Input {
     requires Common;

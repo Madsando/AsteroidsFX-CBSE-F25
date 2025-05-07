@@ -1,10 +1,15 @@
-import dk.sdu.cbse.common.services.IPostEntityProcessingService;
+import dk.sdu.cbse.collision.CollisionDetectorSystem;
+import dk.sdu.cbse.collision.CollisionHandlerSystem;
+import dk.sdu.cbse.common.services.ISystemService;
 
 module Collision {
     requires Common;
     requires CommonEntityCP;
+    requires CommonCollision;
 
-    provides IPostEntityProcessingService with dk.sdu.cbse.collision.CollisionDetector;
+    provides ISystemService with
+            CollisionDetectorSystem,
+            CollisionHandlerSystem;
 }
 
 

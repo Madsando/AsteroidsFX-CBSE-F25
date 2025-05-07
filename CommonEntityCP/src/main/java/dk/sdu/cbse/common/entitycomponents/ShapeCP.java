@@ -1,29 +1,14 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.entity.Entity;
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.EntityComponent;
+import dk.sdu.cbse.common.services.IEntityComponent;
 
-public class ShapeCP implements EntityComponent {
+public class ShapeCP implements IEntityComponent {
     private double[] polygonCoordinates;
-    private double radius;
     private int[] color;
 
-    public ShapeCP(double[] polygonCoordinates, double radius, int[] color) {
+    public ShapeCP(double[] polygonCoordinates, int[] color) {
         this.polygonCoordinates = polygonCoordinates;
-        this.radius = radius;
         this.color = color;
-    }
-
-    @Override
-    public void process(GameData gameData, World world, Entity entity) {
-        // TODO
-    }
-
-    @Override
-    public int getPriority() {
-        return 3;
     }
 
     public double[] getPolygonCoordinates() {
@@ -32,14 +17,6 @@ public class ShapeCP implements EntityComponent {
 
     public void setPolygonCoordinates(double[] polygonCoordinates) {
         this.polygonCoordinates = polygonCoordinates;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
     }
 
     public int[] getColor() {

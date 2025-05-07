@@ -31,8 +31,8 @@ public class Main extends Application {
         gameWindow.widthProperty().addListener((observable, oldValue, newValue) -> gameData.setDisplayWidth(newValue.intValue()));
 
         ModuleConfig.getIBackgroundComponents().stream().findFirst().ifPresent(backgroundComponent -> gameWindow.setBackground(backgroundComponent.getBackground()));
-        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> scene.setOnKeyPressed(service.getInputHandlerPress(gameData)));
-        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> scene.setOnKeyReleased(service.getInputHandlerRelease(gameData)));
+        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> scene.setOnKeyPressed(service.getInputHandlerPress(gameData.getInputs())));
+        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> scene.setOnKeyReleased(service.getInputHandlerRelease(gameData.getInputs())));
 
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : ModuleConfig.getPluginServices()) {
@@ -43,7 +43,6 @@ public class Main extends Application {
         for (IGraphicsComponent graphicsComponent : graphicsComponents) {
             gameWindow.getChildren().add(graphicsComponent.createComponent(gameData, world));
         }
-
         render();
         window.setScene(scene);
         window.setTitle("Asteroids");
@@ -62,11 +61,8 @@ public class Main extends Application {
     }
 
     private void update() {
-        for (IEntityProcessingService entityProcessorService : ModuleConfig.getEntityProcessingServices()) {
-            entityProcessorService.process(gameData, world);
-        }
-        for (IPostEntityProcessingService postEntityProcessorService : ModuleConfig.getPostEntityProcessingServices()) {
-            postEntityProcessorService.process(gameData, world);
+        for (ISystemService systemService: ModuleConfig.getISystemServices()) {
+            systemService.update(gameData, world);
         }
     }
 

@@ -1,37 +1,24 @@
 package dk.sdu.cbse.common.entitycomponents;
 
-import dk.sdu.cbse.common.collision.ICollisionBehaviour;
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.entity.EEntityType;
-import dk.sdu.cbse.common.entity.Entity;
-import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entity.EntityComponent;
+import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.services.IEntityComponent;
 
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
-public class CollisionCP implements EntityComponent {
-    private final ICollisionBehaviour collisionBehaviour;
-    private final Queue<EEntityType> collisions;
+public class CollisionCP implements IEntityComponent {
+    private final BlockingQueue<Entity> collisions;
 
-    public CollisionCP(ICollisionBehaviour collisionBehaviour) {
-        this.collisionBehaviour = collisionBehaviour;
-        this.collisions = new ConcurrentLinkedQueue<>();
+    public CollisionCP() {
+        this.collisions = new ArrayBlockingQueue<>(3);
     }
 
-    @Override
-    public void process(GameData gameData, World world, Entity entity) {
-        while (!collisions.isEmpty()) {
-            collisionBehaviour.process(gameData, world, entity, collisions.poll());
-        }
+    public void addCollision(Entity entity) {
+        collisions.offer(entity); // Offer collision to queue. If the queue is full, it ignores it
     }
 
-    @Override
-    public int getPriority() {
-        return 1;
-    }
-
-    public void addCollision(EEntityType targetType) {
-        collisions.add(targetType);
+    public Queue<Entity> getCollisions() {
+        return collisions;
     }
 }

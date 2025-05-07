@@ -27,6 +27,7 @@
         <module>Star</module>
         <module>Graphics</module>
         <module>FeatureFlags</module>
+        <module>BasicSystems</module>
     </modules>
 
     <properties>
