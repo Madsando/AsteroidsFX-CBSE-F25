@@ -3,8 +3,11 @@ package dk.sdu.cbse.star;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.entitycomponents.CullingCP;
 import dk.sdu.cbse.common.entitycomponents.FlickeringShapeCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
+import dk.sdu.cbse.common.entitycomponents.TransformCP;
+import dk.sdu.cbse.common.services.IEntityComponent;
 import dk.sdu.cbse.common.services.ISystemService;
 
 import java.util.Random;
@@ -17,7 +20,8 @@ public class FlickeringStarSystem implements ISystemService {
 
     @Override
     public void update(GameData gameData, World world) {
-        for (Entity e : world.getEntitiesWithComponent(FlickeringShapeCP.class)) {
+        Class<? extends IEntityComponent>[] components = new Class[]{FlickeringStarSystem.class, ShapeCP.class};
+        for (Entity e : world.getEntitiesWithComponents(components)) {
             ShapeCP shapeCP = e.getComponent(ShapeCP.class);
 
             int[] colors =  shapeCP.getColor();

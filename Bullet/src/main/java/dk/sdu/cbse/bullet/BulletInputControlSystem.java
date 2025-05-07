@@ -1,11 +1,14 @@
 package dk.sdu.cbse.bullet;
 
+import dk.sdu.cbse.common.entitycomponents.CullingCP;
+import dk.sdu.cbse.common.entitycomponents.TransformCP;
 import dk.sdu.cbse.common.input.EGameInputs;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.entitycomponents.BulletCP;
 import dk.sdu.cbse.common.entitycomponents.InputBulletControlCP;
+import dk.sdu.cbse.common.services.IEntityComponent;
 import dk.sdu.cbse.common.services.ISystemService;
 
 public class BulletInputControlSystem implements ISystemService {
@@ -16,11 +19,10 @@ public class BulletInputControlSystem implements ISystemService {
 
     @Override
     public void update(GameData gameData, World world) {
-        for (Entity e : world.getEntitiesWithComponent(InputBulletControlCP.class)) {
+        Class<? extends IEntityComponent>[] components = new Class[]{InputBulletControlCP.class, BulletCP.class};
+        for (Entity e : world.getEntitiesWithComponents(components)) {
             BulletCP bulletCP = e.getComponent(BulletCP.class);
-            if (bulletCP != null) {
-                bulletCP.setShouldAttack(gameData.getInputs().isDown(EGameInputs.ACTION));
-            }
+            bulletCP.setShouldAttack(gameData.getInputs().isDown(EGameInputs.ACTION));
         }
     }
 }

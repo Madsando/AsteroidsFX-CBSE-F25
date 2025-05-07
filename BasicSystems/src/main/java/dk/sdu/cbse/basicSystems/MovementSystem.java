@@ -3,8 +3,10 @@ package dk.sdu.cbse.basicSystems;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.entitycomponents.CullingCP;
 import dk.sdu.cbse.common.entitycomponents.MovementCP;
 import dk.sdu.cbse.common.entitycomponents.TransformCP;
+import dk.sdu.cbse.common.services.IEntityComponent;
 import dk.sdu.cbse.common.services.ISystemService;
 
 public class MovementSystem implements ISystemService {
@@ -15,7 +17,8 @@ public class MovementSystem implements ISystemService {
 
     @Override
     public void update(GameData gameData, World world) {
-        for (Entity entity: world.getEntitiesWithComponent(MovementCP.class)) {
+        Class<? extends IEntityComponent>[] components = new Class[]{MovementCP.class, TransformCP.class};
+        for (Entity entity: world.getEntitiesWithComponents(components)) {
             TransformCP transformCP = entity.getComponent(TransformCP.class);
             MovementCP movementCP = entity.getComponent(MovementCP.class);
 
