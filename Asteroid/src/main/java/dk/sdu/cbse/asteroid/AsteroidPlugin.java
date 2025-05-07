@@ -39,20 +39,10 @@ public class AsteroidPlugin implements IGamePluginService {
     }
 
     private Entity createAsteroid(GameData gameData) {
-        Entity asteroid = new Entity(typeId);
         Random rng = new Random();
 
         // The polygon-coordinates describe a shape that rather closely follows a circle with radius 1.
-        double[] polygonCoordinates = {0.5, -1, 1.03, -0.33, 1.19, 0.45, 0.16, 1.1, -0.83, 0.89, -1.09, 0.38, -0.86, -0.76};
-        int scalingFactor = rng.nextInt(10) + 5;
-        for (int i = 0; i < polygonCoordinates.length; i++) {
-            polygonCoordinates[i] *= scalingFactor;
-        }
-
-        asteroid.addComponent(new ShapeCP(
-                polygonCoordinates,
-                new int[]{120, 120, 120}
-        ));
+        int size = rng.nextInt(10) + 5;
 
         int x = rng.nextInt(gameData.getDisplayWidth());
         while (x > (gameData.getDisplayWidth() / 2) - 50 & x < (gameData.getDisplayWidth() / 2) + 50) {
@@ -64,35 +54,7 @@ public class AsteroidPlugin implements IGamePluginService {
             y = rng.nextInt(gameData.getDisplayHeight());
         }
 
-        asteroid.addComponent(new TransformCP(
-                x,
-                y,
-                rng.nextInt(360),
-                scalingFactor
-        ));
-
-        asteroid.addComponent(new HealthCP(
-                1,
-                new AsteroidSplitter()
-        ));
-
-        asteroid.addComponent(new CollisionCP());
-
-        asteroid.addComponent(new CollisionIgnoreSelfCP());
-
-        asteroid.addComponent(new DamageCP(Integer.MAX_VALUE));
-
-        asteroid.addComponent(new MovementCP(
-                1,
-                0,
-                false,
-                false,
-                true
-        ));
-
-        asteroid.addComponent(new WraparoundCP());
-
-        return asteroid;
+        return AsteroidFactory.createAsteroid(typeId, x, y, rng.nextInt(360), size);
     }
 
     public static Collection<? extends IFeatureFlag> getFeatureFlagLoader() {

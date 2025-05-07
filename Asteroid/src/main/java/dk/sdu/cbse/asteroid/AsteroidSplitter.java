@@ -15,48 +15,18 @@ public class AsteroidSplitter implements ICustomEntityBehaviour {
         double x = transformCP.getX();
         double y = transformCP.getY();
         double rotation = transformCP.getRotation();
-        double size = transformCP.getRadius() / 2;
+        double asteroidSize = transformCP.getRadius() / 2;
 
-        if (size < 5) { // Stop if the split asteroid is too small
+        if (asteroidSize < 5) { // Stop if the split asteroid is too small
             return;
         }
 
         for (int i = -1; i <= 1; i += 2) {
-            Entity asteroid = new Entity(entity.getTypeID());
+            double asteroidX = x + i * asteroidSize;
+            double asteroidY = y + i * asteroidSize;
+            double asteroidRotation = rotation + i * 90;
 
-            double[] polygonCoordinates = {0.5, -1, 1.03, -0.33, 1.19, 0.45, 0.16, 1.1, -0.83, 0.89, -1.09, 0.38, -0.86, -0.76};
-            for (int j = 0; j < polygonCoordinates.length; j++) {
-                polygonCoordinates[j] *= size;
-            }
-
-            asteroid.addComponent(new ShapeCP(
-                    polygonCoordinates,
-                    new int[]{155, 155, 155}
-            ));
-
-            asteroid.addComponent(new TransformCP(
-                    x + i * size,
-                    y + i * size,
-                    rotation + i * 90,
-                    size
-            ));
-
-            asteroid.addComponent(new HealthCP(
-                    1,
-                    new AsteroidSplitter()
-            ));
-
-            asteroid.addComponent(new CollisionCP());
-
-            asteroid.addComponent(new MovementCP(
-                    1,
-                    0,
-                    false,
-                    false,
-                    true
-            ));
-
-            asteroid.addComponent(new WraparoundCP());
+            Entity asteroid = AsteroidFactory.createAsteroid(entity.getTypeID(), asteroidX, asteroidY, asteroidRotation, asteroidSize);
 
             world.addEntity(asteroid);
         }
