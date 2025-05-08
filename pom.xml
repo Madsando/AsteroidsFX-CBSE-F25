@@ -22,7 +22,7 @@
         <module>Bullet</module>
         <module>Asteroid</module>
         <module>Player</module>
-        <module>Collision</module>
+        <!-- <module>Collision</module> -->
         <module>Enemy</module>
         <module>Star</module>
         <module>Graphics</module>

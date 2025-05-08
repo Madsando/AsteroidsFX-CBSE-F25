@@ -1,9 +1,7 @@
 package dk.sdu.cbse.bullet;
 
 import dk.sdu.cbse.common.bullet.IBulletSPI;
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.data.*;
 import dk.sdu.cbse.common.entitycomponents.BulletCP;
 import dk.sdu.cbse.common.services.ISystemService;
 
@@ -15,15 +13,24 @@ import static java.util.stream.Collectors.toList;
 
 public class BulletSystem implements ISystemService {
     @Override
+    public NodeSignature getNodeSignature() {
+        return new NodeSignature(
+                new Class[]{BulletCP.class},
+                null
+        );
+    }
+
+    @Override
     public int getPriority() {
         return 5;
     }
 
     @Override
-    public void update(GameData gameData, World world) {
+    public void update(Collection<Node> nodes,GameData gameData, World world) {
         Random rand = new Random();
-        for (Entity e : world.getEntitiesWithComponent(BulletCP.class)) {
-            BulletCP bulletCP = e.getComponent(BulletCP.class);
+
+        for (Node node: nodes) {
+            BulletCP bulletCP = (BulletCP) node.getComponent(BulletCP.class);
 
             if (bulletCP.shouldAttack()
                     & isCooldownOver(bulletCP.getAttackCooldown(), bulletCP.getLastAttack())
@@ -31,7 +38,7 @@ public class BulletSystem implements ISystemService {
                 bulletCP.setLastAttack(System.currentTimeMillis());
 
                 getIBulletSPI().stream().findFirst().ifPresent(
-                        spi -> world.addEntity(spi.createBullet(e))
+                        spi -> world.addEntity(spi.createBullet(world.getEntity(node.getEntityID())))
                 );
             }
         }

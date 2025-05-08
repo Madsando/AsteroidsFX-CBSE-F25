@@ -5,6 +5,7 @@ import dk.sdu.cbse.common.graphics.IGraphicsComponent;
 import dk.sdu.cbse.common.services.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -16,7 +17,8 @@ public class Main extends Application {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Pane gameWindow = new Pane();
-    private final ArrayList<IGraphicsComponent> graphicsComponents = new ArrayList<>();
+    private final List<IGraphicsComponent> graphicsComponents = new ArrayList<>();
+    private final List<ISystemService> systemServices = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(Main.class);
@@ -43,6 +45,12 @@ public class Main extends Application {
         for (IGraphicsComponent graphicsComponent : graphicsComponents) {
             gameWindow.getChildren().add(graphicsComponent.createComponent(gameData, world));
         }
+
+        systemServices.addAll(ModuleConfig.getISystemServices());
+        for (ISystemService iSystemService : systemServices) {
+            world.addNode(iSystemService.getNodeSignature());
+        }
+
         render();
         window.setScene(scene);
         window.setTitle("Asteroids");
@@ -62,8 +70,9 @@ public class Main extends Application {
 
     private void update() {
         for (ISystemService systemService: ModuleConfig.getISystemServices()) {
-            systemService.update(gameData, world);
+            systemService.update(world.getNodes(systemService.getNodeSignature()), gameData, world);
         }
+        world.update();
     }
 
     private void draw() {
