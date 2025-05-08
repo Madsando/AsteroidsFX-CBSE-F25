@@ -4,7 +4,9 @@ import dk.sdu.cbse.common.entitycomponents.CollisionCP;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
+import dk.sdu.cbse.common.entitycomponents.CullingCP;
 import dk.sdu.cbse.common.entitycomponents.TransformCP;
+import dk.sdu.cbse.common.services.IEntityComponent;
 import dk.sdu.cbse.common.services.ISystemService;
 
 import java.util.Collections;
@@ -18,10 +20,11 @@ public class CollisionDetectorSystem implements ISystemService {
     public void update(GameData gameData, World world) {
         collidedEntities.clear();
 
-        for (Entity e1 : world.getEntitiesWithComponent(CollisionCP.class)) {
+        Class<? extends IEntityComponent>[] components = new Class[]{CollisionCP.class, TransformCP.class};
+        for (Entity e1 : world.getEntitiesWithComponents(components)) {
             collidedEntities.add(e1.getID());
 
-            for (Entity e2 : world.getEntitiesWithComponent(CollisionCP.class)) {
+            for (Entity e2 : world.getEntitiesWithComponents(components)) {
                 // Make sure entities are different. Cannot collide with oneself
                 // Make sure collisions with the selected entity has not been checked already
                 if (e1.getID().equals(e2.getID()) | collidedEntities.contains(e2.getID())) {

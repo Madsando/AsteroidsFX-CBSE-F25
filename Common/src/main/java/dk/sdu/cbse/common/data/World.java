@@ -49,6 +49,24 @@ public class World {
         return r;
     }
 
+    public List<Entity> getEntitiesWithComponents(Class<? extends IEntityComponent>[] entityComponents) {
+        List<Entity> r = new ArrayList<>();
+        for (Entity e : getEntities()) {
+
+            boolean hasAllComponents = true;
+            for (Class<? extends IEntityComponent> entityComponent : entityComponents) {
+                if (e.getComponent(entityComponent) == null) {
+                    hasAllComponents = false;
+                    break;
+                }
+            }
+            if (hasAllComponents) {
+                r.add(e);
+            }
+        }
+        return r;
+    }
+
     public Entity getEntity(String ID) {
         return entityMap.get(ID);
     }

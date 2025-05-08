@@ -5,7 +5,10 @@ import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.entitycomponents.CullingCP;
 import dk.sdu.cbse.common.entitycomponents.TransformCP;
+import dk.sdu.cbse.common.services.IEntityComponent;
 import dk.sdu.cbse.common.services.ISystemService;
+
+import java.util.ArrayList;
 
 public class CullingSystem implements ISystemService {
     @Override
@@ -15,7 +18,8 @@ public class CullingSystem implements ISystemService {
 
     @Override
     public void update(GameData gameData, World world) {
-        for (Entity e : world.getEntitiesWithComponent(CullingCP.class)) {
+        Class<? extends IEntityComponent>[] components = new Class[]{CullingCP.class, TransformCP.class};
+        for (Entity e : world.getEntitiesWithComponents(components)) {
             TransformCP transformCP = e.getComponent(TransformCP.class);
 
             if (transformCP.getX() < 0 |
