@@ -9,8 +9,19 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class World {
+    private static World instance = null;
+
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
     private int nextTypeId = 0;
+
+    private World() {}
+
+    public static World getInstance() {
+        if (instance == null) {
+            instance = new World();
+        }
+        return instance;
+    }
 
     public void addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);

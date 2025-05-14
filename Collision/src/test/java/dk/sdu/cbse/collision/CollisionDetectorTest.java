@@ -1,14 +1,30 @@
 package dk.sdu.cbse.collision;
 
 import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
 import dk.sdu.cbse.common.entitycomponents.TransformCP;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CollisionDetectorTest {
+    private GameData gameData;
+    private World world;
+
+    @BeforeEach
+    public void init() {
+        world = World.getInstance();
+        gameData = GameData.getInstance();
+    }
+
+    @BeforeEach
+    public void cleanup() {
+        world.getEntities().clear();
+    }
+
     @Test
     public void canDetectNormalCollision() {
         CollisionDetectorSystem collisionDetectorSystem = new CollisionDetectorSystem();
@@ -27,11 +43,10 @@ public class CollisionDetectorTest {
         entity1.addComponent(transformCP);
         entity2.addComponent(transformCP);
 
-        World world = new World();
         world.addEntity(entity1);
         world.addEntity(entity2);
 
-        collisionDetectorSystem.update(null, world);
+        collisionDetectorSystem.update(gameData, world);
 
         assertEquals(1, collisionCP1.getCollisions().size());
         assertEquals(1, collisionCP2.getCollisions().size());
@@ -59,11 +74,10 @@ public class CollisionDetectorTest {
         entity1.addComponent(transformCP1);
         entity2.addComponent(transformCP2);
 
-        World world = new World();
         world.addEntity(entity1);
         world.addEntity(entity2);
 
-        collisionDetectorSystem.update(null, world);
+        collisionDetectorSystem.update(gameData, world);
 
         assertEquals(0, collisionCP1.getCollisions().size());
         assertEquals(0, collisionCP2.getCollisions().size());
@@ -87,11 +101,10 @@ public class CollisionDetectorTest {
         entity1.addComponent(transformCP);
         entity2.addComponent(transformCP);
 
-        World world = new World();
         world.addEntity(entity1);
         world.addEntity(entity2);
 
-        collisionDetectorSystem.update(null, world);
+        collisionDetectorSystem.update(gameData, world);
 
         assertEquals(1, collisionCP1.getCollisions().size());
         assertEquals(1, collisionCP2.getCollisions().size());
@@ -119,11 +132,10 @@ public class CollisionDetectorTest {
         entity1.addComponent(transformCP1);
         entity2.addComponent(transformCP2);
 
-        World world = new World();
         world.addEntity(entity1);
         world.addEntity(entity2);
 
-        collisionDetectorSystem.update(null, world);
+        collisionDetectorSystem.update(gameData, world);
 
         assertEquals(1, collisionCP1.getCollisions().size());
         assertEquals(1, collisionCP2.getCollisions().size());
@@ -157,12 +169,11 @@ public class CollisionDetectorTest {
         entity2.addComponent(transformCP2);
         entity3.addComponent(transformCP3);
 
-        World world = new World();
         world.addEntity(entity1);
         world.addEntity(entity2);
         world.addEntity(entity3);
 
-        collisionDetectorSystem.update(null, world);
+        collisionDetectorSystem.update(gameData, world);
 
         assertEquals(2, collisionCP1.getCollisions().size());
         assertEquals(1, collisionCP2.getCollisions().size());
@@ -172,6 +183,5 @@ public class CollisionDetectorTest {
         assertTrue(collisionCP1.getCollisions().contains(entity3));
         assertEquals(entity1, collisionCP2.getCollisions().peek());
         assertEquals(entity1, collisionCP3.getCollisions().peek());
-
     }
 }

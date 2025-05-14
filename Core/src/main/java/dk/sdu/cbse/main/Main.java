@@ -13,8 +13,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private final GameData gameData = new GameData();
-    private final World world = new World();
+    private final GameData gameData = GameData.getInstance();
+    private final World world = World.getInstance();
     private final Pane gameWindow = new Pane();
     private final ArrayList<IGraphicsComponent> graphicsComponents = new ArrayList<>();
 
