@@ -69,7 +69,7 @@ public class Main extends Application {
     }
 
     private void update() {
-        for (ISystemService systemService: ModuleConfig.getISystemServices()) {
+        for (ISystemService systemService: systemServices) {
             systemService.update(world.getNodes(systemService.getNodeSignature()), gameData, world);
         }
         world.update();

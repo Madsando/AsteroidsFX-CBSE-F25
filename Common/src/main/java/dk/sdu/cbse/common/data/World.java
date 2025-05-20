@@ -4,27 +4,28 @@ import dk.sdu.cbse.common.services.IEntityComponent;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class World {
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
     private final Map<NodeSignature, Collection<Node>> nodeMap = new ConcurrentHashMap<>();
-    private final Collection<Collection<Node>> nodeRemovalQueue = new ArrayList<>();
+    private final Queue<Collection<Node>> nodeRemovalQueue = new ConcurrentLinkedQueue<>();
+    private final Queue<String> entityRemovalQueue = new ConcurrentLinkedQueue<>();
+    private final Queue<Entity> newEntityQueue = new ConcurrentLinkedQueue<>();
     private int nextTypeId = 0;
 
-
     public void addEntity(Entity entity) {
-        entityMap.put(entity.getID(), entity);
-        createNodesFromEntity(entity);
+        newEntityQueue.add(entity);
     }
 
     public void removeEntity(String entityID) {
         removeNodesFromEntity(entityMap.get(entityID));
-        entityMap.remove(entityID);
+        entityRemovalQueue.add(entityID);
     }
 
     public void removeEntity(Entity entity) {
         removeNodesFromEntity(entity);
-        entityMap.remove(entity.getID());
+        entityRemovalQueue.add(entity.getID());
     }
 
     public Entity getEntity(String ID) {
@@ -99,12 +100,33 @@ public class World {
     }
 
     public void update() {
-        for (Collection<Node> nodes : nodeRemovalQueue) {
+        processEntities();
+        processNodes();
+    }
+
+    private void processNodes() {
+        while (!nodeRemovalQueue.isEmpty()) {
+            Collection<Node> nodes = nodeRemovalQueue.poll();
             for (Collection<Node> nodeCollection: nodeMap.values()) {
                 nodeCollection.removeAll(nodes);
             }
         }
     }
+
+    private void processEntities() {
+        // Remove queued entities
+        while (!entityRemovalQueue.isEmpty()) {
+            entityMap.remove(entityRemovalQueue.poll());
+        }
+
+        // Add new entities
+        while (!newEntityQueue.isEmpty()) {
+            Entity entity = newEntityQueue.poll();
+            entityMap.put(entity.getID(), entity);
+            createNodesFromEntity(entity);
+        }
+    }
+
 
     private Optional<Node> getNodeFromEntity(NodeSignature nodeSignature, Entity entity) {
         List<IEntityComponent> components = new ArrayList<>();
@@ -123,6 +145,6 @@ public class World {
             }
         }
 
-        return Optional.of(new Node(entity.getID(), components, optionalComponents));
+        return Optional.of(new Node(entity.getID(), entity.getTypeID(), components, optionalComponents));
     }
 }

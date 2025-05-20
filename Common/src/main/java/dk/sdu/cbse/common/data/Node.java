@@ -8,17 +8,23 @@ import java.util.Optional;
 
 public class Node {
     private final String entityID;
+    private final int typeID;
     private final List<IEntityComponent> components;
     private final List<Optional<IEntityComponent>> optionalComponents;
 
-    public Node(String entityID, List<IEntityComponent> components, List<Optional<IEntityComponent>> optionalComponents) {
+    public Node(String entityID, int typeID, List<IEntityComponent> components, List<Optional<IEntityComponent>> optionalComponents) {
         this.components = components;
         this.optionalComponents = optionalComponents;
         this.entityID = entityID;
+        this.typeID = typeID;
     }
 
     public String getEntityID() {
         return entityID;
+    }
+
+    public int getTypeID() {
+        return typeID;
     }
 
     public IEntityComponent getComponent(Class<? extends IEntityComponent> componentClass) {
@@ -26,7 +32,7 @@ public class Node {
     }
 
     public Optional<IEntityComponent> getOptionalComponent(Class<? extends IEntityComponent> componentClass) {
-        return optionalComponents.stream().filter(component -> componentClass.isAssignableFrom(component.getClass())).findFirst().orElse(null);
+        return optionalComponents.stream().filter(Optional::isPresent).filter(component -> component.get().getClass().isAssignableFrom(componentClass)).findFirst().orElse(Optional.empty());
     }
 
     public NodeSignature getNodeSignature() {
