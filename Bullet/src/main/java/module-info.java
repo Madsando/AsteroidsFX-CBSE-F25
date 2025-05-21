@@ -6,10 +6,11 @@ import dk.sdu.cbse.common.services.ISystemService;
 
 module Bullet {
     requires Common;
-    requires CommonEntityCP;
+    requires CommonEntityComponents;
     requires CommonBullet;
     requires CommonCollision;
     requires CommonInput;
+    requires CommonMovement;
 
     provides IGamePluginService with dk.sdu.cbse.bullet.BulletPlugin;
     provides IBulletSPI with dk.sdu.cbse.bullet.BulletPlugin;

@@ -28,7 +28,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CommonEntityCP</artifactId>
+            <artifactId>CommonEntityComponents</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

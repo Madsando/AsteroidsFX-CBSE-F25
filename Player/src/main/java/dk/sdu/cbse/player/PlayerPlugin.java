@@ -1,11 +1,15 @@
 package dk.sdu.cbse.player;
 
+import dk.sdu.cbse.common.bullet.BulletCP;
+import dk.sdu.cbse.common.bullet.InputBulletControlCP;
+import dk.sdu.cbse.common.collision.CollisionCP;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.IFeatureFlag;
 import dk.sdu.cbse.common.services.IGamePluginService;
+import dk.sdu.cbse.common.movement.*;
 
 import java.util.Collection;
 import java.util.ServiceLoader;

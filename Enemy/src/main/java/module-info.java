@@ -3,8 +3,10 @@ import dk.sdu.cbse.common.services.IGamePluginService;
 
 module Enemy {
     requires Common;
-    requires CommonEntityCP;
+    requires CommonEntityComponents;
     requires CommonCollision;
+    requires CommonBullet;
+    requires CommonMovement;
 
     uses IFeatureFlag;
 

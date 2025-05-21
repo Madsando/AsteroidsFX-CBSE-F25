@@ -1,11 +1,13 @@
 package dk.sdu.cbse.bullet;
 
+import dk.sdu.cbse.common.collision.CollisionCP;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.IGamePluginService;
 import dk.sdu.cbse.common.bullet.IBulletSPI;
+import dk.sdu.cbse.common.movement.*;
 
 public class BulletPlugin implements IGamePluginService, IBulletSPI {
     private static int typeId = 0;

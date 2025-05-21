@@ -1,9 +1,9 @@
 package dk.sdu.cbse.asteroid;
 
+import dk.sdu.cbse.common.collision.*;
+import dk.sdu.cbse.common.movement.*;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.entitycomponents.*;
-
-import java.util.Random;
 
 public class AsteroidFactory {
     public static Entity createAsteroid(int typeID, double x, double y, double rotation, double size) {

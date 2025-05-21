@@ -24,7 +24,7 @@ public class AsteroidPlugin implements IGamePluginService {
 
         if (isFeatureEnabled.get()) {
             typeId = world.generateTypeId();
-            for (int i = 0; i < 25; i++) {
+            for (int i = 0; i < 15; i++) {
                 Entity asteroid = createAsteroid(gameData);
                 world.addEntity(asteroid);
             }

@@ -3,8 +3,9 @@ import dk.sdu.cbse.common.services.IGamePluginService;
 
 module Asteroid {
     requires Common;
-    requires CommonEntityCP;
+    requires CommonEntityComponents;
     requires CommonCollision;
+    requires CommonMovement;
 
     uses IFeatureFlag;
 

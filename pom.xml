@@ -12,22 +12,32 @@
 
     <modules>
         <module>Core</module>
+
+        <!-- Common modules -->
         <module>Common</module>
         <module>CommonInput</module>
+        <module>CommonMovement</module>
         <module>CommonBullet</module>
-        <module>CommonEntityCP</module>
+        <module>CommonEntityComponents</module>
         <module>CommonCollision</module>
         <module>CommonGraphics</module>
-        <module>Input</module>
-        <module>Bullet</module>
-        <module>Asteroid</module>
+
+        <!-- Entities -->
         <module>Player</module>
-        <module>Collision</module>
+        <module>Asteroid</module>
+        <module>Bullet</module>
         <module>Enemy</module>
         <module>Star</module>
+
+        <!-- Systems -->
+        <module>Collision</module>
+        <module>Movement</module>
+        <module>Health</module>
+
+        <!-- Other -->
         <module>Graphics</module>
         <module>FeatureFlags</module>
-        <module>BasicSystems</module>
+        <module>Input</module>
     </modules>
 
     <properties>

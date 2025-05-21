@@ -5,7 +5,7 @@ import dk.sdu.cbse.graphics.*;
 
 module Graphics {
     requires Common;
-    requires CommonEntityCP;
+    requires CommonEntityComponents;
     requires CommonGraphics;
     requires javafx.graphics;
 

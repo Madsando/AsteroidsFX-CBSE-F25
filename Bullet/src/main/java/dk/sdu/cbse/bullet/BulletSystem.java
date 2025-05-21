@@ -2,7 +2,7 @@ package dk.sdu.cbse.bullet;
 
 import dk.sdu.cbse.common.bullet.IBulletSPI;
 import dk.sdu.cbse.common.data.*;
-import dk.sdu.cbse.common.entitycomponents.BulletCP;
+import dk.sdu.cbse.common.bullet.BulletCP;
 import dk.sdu.cbse.common.services.ISystemService;
 
 import java.util.Collection;

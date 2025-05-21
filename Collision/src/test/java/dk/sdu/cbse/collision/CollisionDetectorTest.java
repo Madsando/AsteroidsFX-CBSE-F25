@@ -4,7 +4,7 @@ import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.NodeSignature;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.entitycomponents.CollisionCP;
+import dk.sdu.cbse.common.collision.CollisionCP;
 import dk.sdu.cbse.common.entitycomponents.TransformCP;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -4,7 +4,7 @@ import dk.sdu.cbse.common.services.ISystemService;
 
 module Collision {
     requires Common;
-    requires CommonEntityCP;
+    requires CommonEntityComponents;
     requires CommonCollision;
 
     provides ISystemService with

@@ -1,7 +1,7 @@
 package dk.sdu.cbse.collision;
 
 import dk.sdu.cbse.common.data.*;
-import dk.sdu.cbse.common.entitycomponents.CollisionCP;
+import dk.sdu.cbse.common.collision.CollisionCP;
 import dk.sdu.cbse.common.entitycomponents.TransformCP;
 import dk.sdu.cbse.common.services.ISystemService;
 

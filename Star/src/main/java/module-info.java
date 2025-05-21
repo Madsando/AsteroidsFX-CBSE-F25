@@ -6,7 +6,7 @@ import dk.sdu.cbse.star.StarPlugin;
 
 module Star {
     requires Common;
-    requires CommonEntityCP;
+    requires CommonEntityComponents;
 
     uses IFeatureFlag;
 

@@ -2,8 +2,8 @@ package dk.sdu.cbse.bullet;
 
 import dk.sdu.cbse.common.data.*;
 import dk.sdu.cbse.common.input.EGameInputs;
-import dk.sdu.cbse.common.entitycomponents.BulletCP;
-import dk.sdu.cbse.common.entitycomponents.InputBulletControlCP;
+import dk.sdu.cbse.common.bullet.BulletCP;
+import dk.sdu.cbse.common.bullet.InputBulletControlCP;
 import dk.sdu.cbse.common.services.ISystemService;
 
 import java.util.Collection;
