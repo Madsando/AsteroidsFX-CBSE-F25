@@ -1,28 +1,30 @@
 package dk.sdu.cbse.star;
 
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.data.Entity;
-import dk.sdu.cbse.common.entitycomponents.CullingCP;
-import dk.sdu.cbse.common.entitycomponents.FlickeringShapeCP;
-import dk.sdu.cbse.common.entitycomponents.ShapeCP;
-import dk.sdu.cbse.common.entitycomponents.TransformCP;
-import dk.sdu.cbse.common.services.IEntityComponent;
+import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.ISystemService;
 
+import java.util.Collection;
 import java.util.Random;
 
 public class FlickeringStarSystem implements ISystemService {
+    @Override
+    public NodeSignature getNodeSignature() {
+        return new NodeSignature(
+                new Class[]{FlickeringShapeCP.class, ShapeCP.class},
+                null
+        );
+    }
+
     @Override
     public int getPriority() {
         return 3;
     }
 
     @Override
-    public void update(GameData gameData, World world) {
-        Class<? extends IEntityComponent>[] components = new Class[]{FlickeringStarSystem.class, ShapeCP.class};
-        for (Entity e : world.getEntitiesWithComponents(components)) {
-            ShapeCP shapeCP = e.getComponent(ShapeCP.class);
+    public void update(Collection<Node> nodes, GameData gameData, World world) {
+        for (Node node : nodes) {
+            ShapeCP shapeCP = (ShapeCP) node.getComponent(ShapeCP.class);
 
             int[] colors =  shapeCP.getColor();
             Random rng = new Random();
@@ -33,6 +35,5 @@ public class FlickeringStarSystem implements ISystemService {
             }
             shapeCP.setColor(colors);
         }
-
     }
 }

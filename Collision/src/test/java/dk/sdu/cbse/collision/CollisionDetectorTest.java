@@ -1,6 +1,7 @@
 package dk.sdu.cbse.collision;
 
 import dk.sdu.cbse.common.data.Entity;
+import dk.sdu.cbse.common.data.NodeSignature;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.CollisionCP;
@@ -45,14 +46,17 @@ public class CollisionDetectorTest {
 
         world.addEntity(entity1);
         world.addEntity(entity2);
+        world.update();
 
-        collisionDetectorSystem.update(gameData, world);
+        NodeSignature nodeSignature = new NodeSignature(new Class[] {CollisionCP.class,TransformCP.class},null);
+        world.addNode(nodeSignature);
+        collisionDetectorSystem.update(world.getNodes(nodeSignature),null, world);
 
         assertEquals(1, collisionCP1.getCollisions().size());
         assertEquals(1, collisionCP2.getCollisions().size());
 
-        assertEquals(entity2, collisionCP1.getCollisions().peek());
-        assertEquals(entity1, collisionCP2.getCollisions().peek());
+        assertEquals(entity2.getID(), collisionCP1.getCollisions().peek());
+        assertEquals(entity1.getID(), collisionCP2.getCollisions().peek());
     }
 
     @Test
@@ -76,8 +80,11 @@ public class CollisionDetectorTest {
 
         world.addEntity(entity1);
         world.addEntity(entity2);
+        world.update();
 
-        collisionDetectorSystem.update(gameData, world);
+        NodeSignature nodeSignature = new NodeSignature(new Class[] {CollisionCP.class,TransformCP.class},null);
+        world.addNode(nodeSignature);
+        collisionDetectorSystem.update(world.getNodes(nodeSignature),null, world);
 
         assertEquals(0, collisionCP1.getCollisions().size());
         assertEquals(0, collisionCP2.getCollisions().size());
@@ -103,14 +110,17 @@ public class CollisionDetectorTest {
 
         world.addEntity(entity1);
         world.addEntity(entity2);
+        world.update();
 
-        collisionDetectorSystem.update(gameData, world);
+        NodeSignature nodeSignature = new NodeSignature(new Class[] {CollisionCP.class,TransformCP.class},null);
+        world.addNode(nodeSignature);
+        collisionDetectorSystem.update(world.getNodes(nodeSignature),null, world);
 
         assertEquals(1, collisionCP1.getCollisions().size());
         assertEquals(1, collisionCP2.getCollisions().size());
 
-        assertEquals(entity2, collisionCP1.getCollisions().peek());
-        assertEquals(entity1, collisionCP2.getCollisions().peek());
+        assertEquals(entity2.getID(), collisionCP1.getCollisions().peek());
+        assertEquals(entity1.getID(), collisionCP2.getCollisions().peek());
     }
 
     @Test
@@ -134,14 +144,17 @@ public class CollisionDetectorTest {
 
         world.addEntity(entity1);
         world.addEntity(entity2);
+        world.update();
 
-        collisionDetectorSystem.update(gameData, world);
+        NodeSignature nodeSignature = new NodeSignature(new Class[] {CollisionCP.class,TransformCP.class},null);
+        world.addNode(nodeSignature);
+        collisionDetectorSystem.update(world.getNodes(nodeSignature),null, world);
 
         assertEquals(1, collisionCP1.getCollisions().size());
         assertEquals(1, collisionCP2.getCollisions().size());
 
-        assertEquals(entity2, collisionCP1.getCollisions().peek());
-        assertEquals(entity1, collisionCP2.getCollisions().peek());
+        assertEquals(entity2.getID(), collisionCP1.getCollisions().peek());
+        assertEquals(entity1.getID(), collisionCP2.getCollisions().peek());
     }
 
     @Test
@@ -172,16 +185,20 @@ public class CollisionDetectorTest {
         world.addEntity(entity1);
         world.addEntity(entity2);
         world.addEntity(entity3);
+        world.update();
 
-        collisionDetectorSystem.update(gameData, world);
+        NodeSignature nodeSignature = new NodeSignature(new Class[] {CollisionCP.class,TransformCP.class},null);
+        world.addNode(nodeSignature);
+        collisionDetectorSystem.update(world.getNodes(nodeSignature),null, world);
 
         assertEquals(2, collisionCP1.getCollisions().size());
         assertEquals(1, collisionCP2.getCollisions().size());
         assertEquals(1, collisionCP3.getCollisions().size());
 
-        assertTrue(collisionCP1.getCollisions().contains(entity2));
-        assertTrue(collisionCP1.getCollisions().contains(entity3));
-        assertEquals(entity1, collisionCP2.getCollisions().peek());
-        assertEquals(entity1, collisionCP3.getCollisions().peek());
+        assertTrue(collisionCP1.getCollisions().contains(entity2.getID()));
+        assertTrue(collisionCP1.getCollisions().contains(entity3.getID()));
+        assertEquals(entity1.getID(), collisionCP2.getCollisions().peek());
+        assertEquals(entity1.getID(), collisionCP3.getCollisions().peek());
+
     }
 }

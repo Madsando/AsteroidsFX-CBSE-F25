@@ -1,14 +1,10 @@
 package dk.sdu.cbse.collision;
 
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.data.Entity;
-import dk.sdu.cbse.common.entitycomponents.CollisionCP;
-import dk.sdu.cbse.common.entitycomponents.CollisionIgnoreSelfCP;
-import dk.sdu.cbse.common.entitycomponents.DamageCP;
-import dk.sdu.cbse.common.entitycomponents.HealthCP;
+import dk.sdu.cbse.common.data.*;
+import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.ISystemService;
 
+import java.util.Collection;
 import java.util.Queue;
 
 public class CollisionHandlerSystem implements ISystemService {
@@ -18,26 +14,35 @@ public class CollisionHandlerSystem implements ISystemService {
     }
 
     @Override
-    public void update(GameData gameData, World world) {
-        for (Entity e : world.getEntitiesWithComponent(CollisionCP.class)) {
-            CollisionCP collisionCP = e.getComponent(CollisionCP.class);
-            Queue<Entity> collisions = collisionCP.getCollisions();
+    public NodeSignature getNodeSignature() {
+        return new NodeSignature(
+                new Class[]{CollisionCP.class},
+                new Class[]{CollisionIgnoreSelfCP.class, HealthCP.class}
+        );
+    }
+
+    @Override
+    public void update(Collection<Node> nodes, GameData gameData, World world) {
+        for (Node n : nodes) {
+            CollisionCP collisionCP = (CollisionCP) n.getComponent(CollisionCP.class);
+            Queue<String> collisions = collisionCP.getCollisions();
 
             while (!collisions.isEmpty()) {
-                Entity collidingEntity = collisions.poll();
+                Entity collidedEntity = world.getEntity(collisions.poll());
+                if (collidedEntity == null) {
+                    continue;
+                }
 
-                CollisionIgnoreSelfCP entityCollisionIgnoreSelfCP = e.getComponent(CollisionIgnoreSelfCP.class);
-
-                if (entityCollisionIgnoreSelfCP != null) {
-                    if (e.getTypeID() == collidingEntity.getTypeID()) {
+                System.out.println();
+                if (n.getOptionalComponent(CollisionIgnoreSelfCP.class).isPresent()) {
+                    if (n.getTypeID() == collidedEntity.getTypeID()) {
                         continue;
                     }
                 }
 
-                DamageCP damageCP = collidingEntity.getComponent(DamageCP.class);
-                HealthCP healthCP = e.getComponent(HealthCP.class);
-
-                if (damageCP != null & healthCP != null) {
+                DamageCP damageCP = collidedEntity.getComponent(DamageCP.class);
+                if (damageCP != null & n.getOptionalComponent(HealthCP.class).isPresent()) {
+                    HealthCP healthCP = (HealthCP) n.getOptionalComponent(HealthCP.class).get();
                     healthCP.subtractHealth(damageCP.getDamage());
                 }
             }

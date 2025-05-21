@@ -8,17 +8,17 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class CollisionCP implements IEntityComponent {
-    private final BlockingQueue<Entity> collisions;
+    private final BlockingQueue<String> collisions;
 
     public CollisionCP() {
         this.collisions = new ArrayBlockingQueue<>(3);
     }
 
-    public void addCollision(Entity entity) {
-        collisions.offer(entity); // Offer collision to queue. If the queue is full, it ignores it
+    public void addCollision(String entityID) {
+        collisions.offer(entityID); // Offer collision to queue. If the queue is full, it ignores it
     }
 
-    public Queue<Entity> getCollisions() {
+    public Queue<String> getCollisions() {
         return collisions;
     }
 }
