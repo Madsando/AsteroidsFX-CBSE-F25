@@ -33,7 +33,6 @@ public class CollisionHandlerSystem implements ISystemService {
                     continue;
                 }
 
-                System.out.println();
                 if (n.getOptionalComponent(CollisionIgnoreSelfCP.class).isPresent()) {
                     if (n.getTypeID() == collidedEntity.getTypeID()) {
                         continue;
