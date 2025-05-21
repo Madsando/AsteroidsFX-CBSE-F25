@@ -14,16 +14,21 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CollisionDetectorTest {
     private GameData gameData;
     private World world;
+    private NodeSignature collisionSystemSignature;
 
     @BeforeEach
     public void init() {
         world = World.getInstance();
         gameData = GameData.getInstance();
+        collisionSystemSignature = new NodeSignature(new Class[] {CollisionCP.class,TransformCP.class},null);
+        world.addNode(collisionSystemSignature);
     }
 
     @BeforeEach
     public void cleanup() {
-        world.getEntities().clear();
+        for (Entity e : world.getEntities()) {
+            world.removeEntity(e);
+        }
     }
 
     @Test
@@ -48,9 +53,7 @@ public class CollisionDetectorTest {
         world.addEntity(entity2);
         world.update();
 
-        NodeSignature nodeSignature = new NodeSignature(new Class[] {CollisionCP.class,TransformCP.class},null);
-        world.addNode(nodeSignature);
-        collisionDetectorSystem.update(world.getNodes(nodeSignature),null, world);
+        collisionDetectorSystem.update(world.getNodes(collisionSystemSignature),null, world);
 
         assertEquals(1, collisionCP1.getCollisions().size());
         assertEquals(1, collisionCP2.getCollisions().size());
@@ -82,9 +85,7 @@ public class CollisionDetectorTest {
         world.addEntity(entity2);
         world.update();
 
-        NodeSignature nodeSignature = new NodeSignature(new Class[] {CollisionCP.class,TransformCP.class},null);
-        world.addNode(nodeSignature);
-        collisionDetectorSystem.update(world.getNodes(nodeSignature),null, world);
+        collisionDetectorSystem.update(world.getNodes(collisionSystemSignature),null, world);
 
         assertEquals(0, collisionCP1.getCollisions().size());
         assertEquals(0, collisionCP2.getCollisions().size());
@@ -112,9 +113,7 @@ public class CollisionDetectorTest {
         world.addEntity(entity2);
         world.update();
 
-        NodeSignature nodeSignature = new NodeSignature(new Class[] {CollisionCP.class,TransformCP.class},null);
-        world.addNode(nodeSignature);
-        collisionDetectorSystem.update(world.getNodes(nodeSignature),null, world);
+        collisionDetectorSystem.update(world.getNodes(collisionSystemSignature),null, world);
 
         assertEquals(1, collisionCP1.getCollisions().size());
         assertEquals(1, collisionCP2.getCollisions().size());
@@ -146,9 +145,7 @@ public class CollisionDetectorTest {
         world.addEntity(entity2);
         world.update();
 
-        NodeSignature nodeSignature = new NodeSignature(new Class[] {CollisionCP.class,TransformCP.class},null);
-        world.addNode(nodeSignature);
-        collisionDetectorSystem.update(world.getNodes(nodeSignature),null, world);
+        collisionDetectorSystem.update(world.getNodes(collisionSystemSignature),null, world);
 
         assertEquals(1, collisionCP1.getCollisions().size());
         assertEquals(1, collisionCP2.getCollisions().size());
@@ -187,9 +184,7 @@ public class CollisionDetectorTest {
         world.addEntity(entity3);
         world.update();
 
-        NodeSignature nodeSignature = new NodeSignature(new Class[] {CollisionCP.class,TransformCP.class},null);
-        world.addNode(nodeSignature);
-        collisionDetectorSystem.update(world.getNodes(nodeSignature),null, world);
+        collisionDetectorSystem.update(world.getNodes(collisionSystemSignature),null, world);
 
         assertEquals(2, collisionCP1.getCollisions().size());
         assertEquals(1, collisionCP2.getCollisions().size());
