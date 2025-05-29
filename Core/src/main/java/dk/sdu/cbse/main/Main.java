@@ -1,7 +1,7 @@
 package dk.sdu.cbse.main;
 
 import dk.sdu.cbse.common.data.*;
-import dk.sdu.cbse.common.graphics.IGraphicsComponent;
+import dk.sdu.cbse.common.ui.IGraphicsService;
 import dk.sdu.cbse.common.services.*;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class Main extends Application {
     private final GameData gameData = GameData.getInstance();
     private final World world = World.getInstance();
     private final Pane gameWindow = new Pane();
-    private final List<IGraphicsComponent> graphicsComponents = new ArrayList<>();
+    private final List<IGraphicsService> graphicsComponents = new ArrayList<>();
     private final List<ISystemService> systemServices = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -42,7 +42,7 @@ public class Main extends Application {
         }
 
         graphicsComponents.addAll(ModuleConfig.getIGraphicComponents());
-        for (IGraphicsComponent graphicsComponent : graphicsComponents) {
+        for (IGraphicsService graphicsComponent : graphicsComponents) {
             gameWindow.getChildren().add(graphicsComponent.createComponent(gameData, world));
         }
 
@@ -76,7 +76,7 @@ public class Main extends Application {
     }
 
     private void draw() {
-        for (IGraphicsComponent graphicsComponent : graphicsComponents) {
+        for (IGraphicsService graphicsComponent : graphicsComponents) {
             graphicsComponent.updateComponent(gameData, world);
         }
     }

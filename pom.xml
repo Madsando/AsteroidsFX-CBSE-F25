@@ -15,12 +15,11 @@
 
         <!-- Common modules -->
         <module>Common</module>
-        <module>CommonInput</module>
         <module>CommonMovement</module>
         <module>CommonBullet</module>
         <module>CommonEntityComponents</module>
         <module>CommonCollision</module>
-        <module>CommonGraphics</module>
+        <module>CommonUI</module>
 
         <!-- Entities -->
         <module>Player</module>

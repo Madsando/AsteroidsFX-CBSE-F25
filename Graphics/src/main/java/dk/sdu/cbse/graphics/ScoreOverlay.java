@@ -2,12 +2,12 @@ package dk.sdu.cbse.graphics;
 
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.graphics.IGraphicsComponent;
+import dk.sdu.cbse.common.ui.IGraphicsService;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class ScoreOverlay implements IGraphicsComponent {
+public class ScoreOverlay implements IGraphicsService {
     private Text scoreText;
 
     @Override

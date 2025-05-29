@@ -1,6 +1,6 @@
 package dk.sdu.cbse.bullet;
 
-import dk.sdu.cbse.common.bullet.IBulletSPI;
+import dk.sdu.cbse.common.bullet.IBulletService;
 import dk.sdu.cbse.common.data.*;
 import dk.sdu.cbse.common.bullet.BulletCP;
 import dk.sdu.cbse.common.services.ISystemService;
@@ -48,7 +48,7 @@ public class BulletSystem implements ISystemService {
         return (System.currentTimeMillis() - lastAttack > attackCooldown);
     }
 
-    private Collection<? extends IBulletSPI> getIBulletSPI() {
-        return ServiceLoader.load(IBulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    private Collection<? extends IBulletService> getIBulletSPI() {
+        return ServiceLoader.load(IBulletService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

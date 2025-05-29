@@ -23,7 +23,7 @@ public class FeatureFlagLoader implements IFeatureFlag {
     }
 
     @Override
-    public boolean isFeatureEnabled(String feature) {
-        return Boolean.parseBoolean(properties.getProperty(feature, "false"));
+    public boolean isFeatureEnabled(String featureTag) {
+        return Boolean.parseBoolean(properties.getProperty(featureTag, "false"));
     }
 }

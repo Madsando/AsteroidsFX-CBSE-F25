@@ -6,10 +6,10 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.*;
 import dk.sdu.cbse.common.services.IGamePluginService;
-import dk.sdu.cbse.common.bullet.IBulletSPI;
+import dk.sdu.cbse.common.bullet.IBulletService;
 import dk.sdu.cbse.common.movement.*;
 
-public class BulletPlugin implements IGamePluginService, IBulletSPI {
+public class BulletPlugin implements IGamePluginService, IBulletService {
     private static int typeId = 0;
 
     @Override

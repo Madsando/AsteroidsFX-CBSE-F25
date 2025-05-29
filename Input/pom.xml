@@ -38,7 +38,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CommonInput</artifactId>
+            <artifactId>CommonUI</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

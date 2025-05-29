@@ -38,12 +38,12 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CommonInput</artifactId>
+            <artifactId>CommonMovement</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CommonMovement</artifactId>
+            <artifactId>CommonCollision</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

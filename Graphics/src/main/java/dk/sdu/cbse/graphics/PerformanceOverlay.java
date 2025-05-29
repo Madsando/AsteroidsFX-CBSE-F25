@@ -2,13 +2,13 @@ package dk.sdu.cbse.graphics;
 
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.graphics.IGraphicsComponent;
+import dk.sdu.cbse.common.ui.IGraphicsService;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class PerformanceOverlay implements IGraphicsComponent {
+public class PerformanceOverlay implements IGraphicsService {
     private final Runtime runtime = Runtime.getRuntime();
     private final long[] frameTimes = new long[100];
     private int frameTimeIndex = 0 ;

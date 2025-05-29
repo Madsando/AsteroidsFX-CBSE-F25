@@ -1,20 +1,20 @@
-import dk.sdu.cbse.common.graphics.IBackgroundComponent;
-import dk.sdu.cbse.common.graphics.IGraphicsComponent;
+import dk.sdu.cbse.common.ui.IBackgroundService;
+import dk.sdu.cbse.common.ui.IGraphicsService;
 
 import dk.sdu.cbse.graphics.*;
 
 module Graphics {
     requires Common;
     requires CommonEntityComponents;
-    requires CommonGraphics;
+    requires CommonUI;
     requires javafx.graphics;
 
-    provides IGraphicsComponent with
+    provides IGraphicsService with
             EntityRenderer,
             ScoreOverlay,
             PerformanceOverlay;
 
-    provides IBackgroundComponent with
+    provides IBackgroundService with
             SceneBackground;
 }
 

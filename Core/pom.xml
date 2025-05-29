@@ -45,7 +45,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CommonGraphics</artifactId>
+            <artifactId>CommonUI</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

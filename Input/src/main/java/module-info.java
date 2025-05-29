@@ -1,10 +1,10 @@
-import dk.sdu.cbse.common.input.IInputSPI;
+import dk.sdu.cbse.common.ui.IInputService;
 
 module Input {
     requires Common;
-    requires CommonInput;
+    requires CommonUI;
     requires javafx.graphics;
-    provides IInputSPI with dk.sdu.cbse.input.InputHandler;
+    provides IInputService with dk.sdu.cbse.input.InputHandler;
 }
 
 

@@ -44,17 +44,17 @@ public class World {
     }
 
     public Collection<Entity> getEntities() {
-        return entityMap.values();
+        return Collections.unmodifiableCollection(entityMap.values());
     }
 
-    public List<Entity> getEntities(int typeId) {
-        List<Entity> r = new ArrayList<>();
+    public Collection<Entity> getEntities(int typeId) {
+        Collection<Entity> entities = new ArrayList<>();
         for (Entity e : getEntities()) {
             if (e.getTypeID() == typeId) {
-                r.add(e);
+                entities.add(e);
             }
         }
-        return r;
+        return Collections.unmodifiableCollection(entities);
     }
 
     public Collection<Node> getNodes(NodeSignature signature) {

@@ -5,7 +5,7 @@ import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
 import dk.sdu.cbse.common.entitycomponents.TransformCP;
 import dk.sdu.cbse.common.entitycomponents.ShapeCP;
-import dk.sdu.cbse.common.graphics.IGraphicsComponent;
+import dk.sdu.cbse.common.ui.IGraphicsService;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -14,7 +14,7 @@ import javafx.scene.shape.Polygon;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class EntityRenderer implements IGraphicsComponent {
+public class EntityRenderer implements IGraphicsService {
     private Pane entityPane;
     private Map<Entity, Polygon> polygons;
 
