@@ -1,14 +1,13 @@
 package dk.sdu.cbse.main;
 
 import dk.sdu.cbse.common.data.*;
-import dk.sdu.cbse.common.graphics.IBackgroundComponent;
-import dk.sdu.cbse.common.graphics.IGraphicsComponent;
-import dk.sdu.cbse.common.input.spi.IInputSPI;
+import dk.sdu.cbse.common.ui.*;
 import dk.sdu.cbse.common.services.*;
 
 import java.util.List;
 
 import dk.sdu.cbse.common.data.World;
+import dk.sdu.cbse.common.ui.IGraphicsService;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
@@ -16,27 +15,24 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class Game {
-    private final GameData gameData = new GameData();
-    private final World world = new World();
+    private final GameData gameData = GameData.getInstance();
+    private final World world = World.getInstance();
     private final Pane gameWindow = new Pane();
 
     @Autowired
-    private List<IGraphicsComponent> iGraphicsComponents;
+    private List<IGraphicsService> graphicsservices;
 
     @Autowired
-    private List<IEntityProcessingService> iEntityProcessingServices;
+    private List<ISystemService> systemServices;
 
     @Autowired
-    private List<IPostEntityProcessingService> iPostEntityProcessingServices;
+    private List<IGamePluginService> gamePluginServices;
 
     @Autowired
-    private List<IGamePluginService> iGamePluginServices;
+    private List<IInputService> inputServices;
 
     @Autowired
-    private List<IInputSPI> iInputSPIs;
-
-    @Autowired
-    private List<IBackgroundComponent> iBackgroundComponents;
+    private List<IBackgroundService> backgroundServices;
 
     public void start(Stage window) throws Exception {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
@@ -49,17 +45,21 @@ public class Game {
             gameData.setDisplayWidth(newValue.intValue());
         });
 
-        gameWindow.setBackground(iBackgroundComponents.getFirst().getBackground());
-        scene.setOnKeyPressed(iInputSPIs.getFirst().getInputHandlerPress(gameData));
-        scene.setOnKeyReleased(iInputSPIs.getFirst().getInputHandlerRelease(gameData));
+        gameWindow.setBackground(backgroundServices.getFirst().getBackground());
+        scene.setOnKeyPressed(inputServices.getFirst().getInputHandlerPress(gameData.getInputs()));
+        scene.setOnKeyReleased(inputServices.getFirst().getInputHandlerRelease(gameData.getInputs()));
 
         // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : iGamePluginServices) {
+        for (IGamePluginService iGamePlugin : gamePluginServices) {
             iGamePlugin.start(gameData, world);
         }
 
-        for (IGraphicsComponent graphicsComponent : iGraphicsComponents) {
+        for (IGraphicsService graphicsComponent : graphicsservices) {
             gameWindow.getChildren().add(graphicsComponent.createComponent(gameData, world));
+        }
+
+        for (ISystemService iSystemService : systemServices) {
+            world.addNode(iSystemService.getNodeSignature());
         }
 
         render();
@@ -68,7 +68,7 @@ public class Game {
         window.show();
     }
 
-    public void render() {
+    private void render() {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -80,16 +80,14 @@ public class Game {
     }
 
     private void update() {
-        for (IEntityProcessingService entityProcessorService : iEntityProcessingServices) {
-            entityProcessorService.process(gameData, world);
+        for (ISystemService systemService: systemServices) {
+            systemService.update(world.getNodes(systemService.getNodeSignature()), gameData, world);
         }
-        for (IPostEntityProcessingService postEntityProcessorService : iPostEntityProcessingServices) {
-            postEntityProcessorService.process(gameData, world);
-        }
+        world.update();
     }
 
     private void draw() {
-        for (IGraphicsComponent graphicsComponent : iGraphicsComponents) {
+        for (IGraphicsService graphicsComponent : graphicsservices) {
             graphicsComponent.updateComponent(gameData, world);
         }
     }

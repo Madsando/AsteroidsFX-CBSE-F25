@@ -16,6 +16,5 @@ public class Main extends Application {
 
         Game game = ctx.getBean(Game.class);
         game.start(stage);
-        game.render();
     }
 }
