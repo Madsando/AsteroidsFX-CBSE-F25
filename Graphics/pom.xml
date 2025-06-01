@@ -46,5 +46,10 @@
             <artifactId>CommonUI</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonScore</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

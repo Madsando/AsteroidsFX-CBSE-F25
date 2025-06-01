@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @RestController
 public class ScoreSystemApplication {
+	private int score = 0;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ScoreSystemApplication.class, args);
@@ -17,8 +18,7 @@ public class ScoreSystemApplication {
 
 	@GetMapping("/score")
 	public int calculateScore(@RequestParam(value = "point") int score) {
-		GameData gameData = GameData.getInstance();
-		gameData.addScore(score);
-		return gameData.getScore();
+		this.score += score;
+		return this.score;
 	}
 }

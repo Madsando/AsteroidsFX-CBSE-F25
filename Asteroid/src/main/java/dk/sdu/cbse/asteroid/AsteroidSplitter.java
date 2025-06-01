@@ -3,13 +3,20 @@ package dk.sdu.cbse.asteroid;
 import dk.sdu.cbse.common.data.Entity;
 import dk.sdu.cbse.common.data.GameData;
 import dk.sdu.cbse.common.data.World;
+import dk.sdu.cbse.common.score.ScoreService;
 import dk.sdu.cbse.common.services.ICustomEntityBehaviour;
 import dk.sdu.cbse.common.entitycomponents.*;
+import dk.sdu.cbse.common.services.IGamePluginService;
+
+import java.util.List;
+import java.util.ServiceLoader;
+
+import static java.util.stream.Collectors.toList;
 
 public class AsteroidSplitter implements ICustomEntityBehaviour {
     @Override
     public void process(GameData gameData, World world, Entity entity) {
-        gameData.addScore(1);
+        getScoreServices().stream().findFirst().ifPresent(scoreService -> {scoreService.updateScore(1);});
 
         TransformCP transformCP = entity.getComponent(TransformCP.class);
         double x = transformCP.getX();
@@ -30,5 +37,9 @@ public class AsteroidSplitter implements ICustomEntityBehaviour {
 
             world.addEntity(asteroid);
         }
+    }
+
+    public static List<ScoreService> getScoreServices() {
+        return ServiceLoader.load(ScoreService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

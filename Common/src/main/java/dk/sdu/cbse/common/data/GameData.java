@@ -7,7 +7,6 @@ public class GameData {
 
     private int displayWidth  = 800 ;
     private int displayHeight = 800;
-    private int score = 0;
     private final GameInputs inputs = new GameInputs();
 
     private GameData() {}
@@ -37,13 +36,5 @@ public class GameData {
 
     public int getDisplayHeight() {
         return displayHeight;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void addScore(int score) {
-        this.score += score;
     }
 }
