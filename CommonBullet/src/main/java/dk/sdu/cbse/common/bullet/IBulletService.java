@@ -13,7 +13,7 @@ public interface IBulletService {
     /**{@code createBullet} is used create a bullet when called.<br></br>
      * <b>Pre-conditions</b>
      * <ul>
-     *  <li> The interface has been implemented </li>
+     *  <li> A Bullet has not been spawned </li>
      *  <li> Note: The implementation may feature a cooldown, which needs to be over for it to spawn a bullet</li>
      * </ul> <br>
      * <b>Post-conditions</b>

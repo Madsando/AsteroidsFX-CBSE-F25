@@ -25,7 +25,7 @@ public interface ISystemService {
      * The corresponding {@link Node} will later be added to {@link World} by the game engine for use by this {@link ISystemService}. <br></br>
      * <b> Pre-conditions </b>
      * <ul>
-     *  <li> {@code update} has not been called in this cycle</li>
+     *  <li> {@link World} does not contain the given NodeSignature </li>
      * </ul> <br>
      * <b> Post-conditions </b>
      * <ul>
