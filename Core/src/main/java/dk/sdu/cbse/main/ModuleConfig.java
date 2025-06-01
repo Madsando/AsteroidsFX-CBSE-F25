@@ -15,7 +15,7 @@ import static java.util.stream.Collectors.toList;
 @Configuration
 public class ModuleConfig {
     @Bean
-    public Game game() {
+    public static Game game() {
         return new Game();
     }
 
